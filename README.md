@@ -15,5 +15,5 @@ This is an app for people who love to travel.
 - Firebase 
 
 ### Relevant Links
-- (Firebase Database)[https://console.firebase.google.com/project/nss-capstone-75d59/database]
-- (Trello)[https://trello.com/b/Tzkh8R6N/capstone]
+- [Firebase Database](https://console.firebase.google.com/project/nss-capstone-75d59/database)
+- [Trello](https://trello.com/b/Tzkh8R6N/capstone)
