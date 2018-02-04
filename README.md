@@ -9,6 +9,11 @@ This is an app for people who love to travel.
 - Publish your trips to a map
 - Discover new trips by other users and star your favorites
 
-Technology
+### Technology
+- Angular JS
 - Google Maps JavaScript API
 - Firebase 
+
+### Relevant Links
+- (Firebase Database)[https://console.firebase.google.com/project/nss-capstone-75d59/database]
+- (Trello)[https://trello.com/b/Tzkh8R6N/capstone]
