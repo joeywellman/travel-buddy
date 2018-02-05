@@ -25,3 +25,8 @@ $border-color: rgb(209, 208, 208);
   border: 1px solid $border-color;
 }
 
+.browse-trips{
+  nav{
+    background-color: $secondary-color;
+  }
+}
