@@ -1,0 +1,27 @@
+$primary-color: rgb(112, 112, 172);
+$secondary-color: rgb(170, 209, 170);
+$border-color: rgb(209, 208, 208);
+
+.places-search{
+  padding: 2rem;
+  nav{
+    background-color: $secondary-color;
+  }
+  .trip-builder-map{
+    border: 1px solid $border-color;
+    height: 20vh;
+  }
+
+  .search-results{
+    height: 60vh;
+  }
+}
+
+.my-trip{
+  float: right !important;
+}
+
+.map{
+  border: 1px solid $border-color;
+}
+
