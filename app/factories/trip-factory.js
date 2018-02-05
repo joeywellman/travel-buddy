@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module("NationalParks").factory("ForestFactory", (FBUrl, $http, $q) => {
+angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
   // HELPER FUNCTIONS
   function addKeys(dataObject){
