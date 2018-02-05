@@ -28,11 +28,11 @@ angular
         controller: "EditTripCtrl",
       })
       .otherwise("/browse");
-  })
-  .run(FBCreds => {
-    let authConfig = {
-      apiKey: FBCreds.key,
-      authDomain: FBCreds.authDomain
-    };
-    firebase.initializeApp(authConfig);
   });
+  // .run(FBCreds => {
+  //   let authConfig = {
+  //     apiKey: FBCreds.key,
+  //     authDomain: FBCreds.authDomain
+  //   };
+  //   firebase.initializeApp(authConfig);
+  // });

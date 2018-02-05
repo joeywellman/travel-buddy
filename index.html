@@ -4,14 +4,15 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <script src = 'lib/node_modules/firebase'></script>
+  <script src='lib/node_modules/firebase'></script>
   <script src="lib/node_modules/angular/angular.min.js"></script>
   <script src="lib/node_modules/angular-route/angular-route.min.js"></script>
   <link rel='stylesheet' type='text/css' href='styles/css/main.css'>
   <title>Travel Buddy</title>
 </head>
+
 <body ng-app = "TravelBuddy">
-  <div ng-include=" 'partials/navbar.html' "></div>
+  <!-- <div ng-include=" 'partials/nav.html' "></div> -->
   <div ng-view></div>
   
 
@@ -23,11 +24,11 @@
   <script src='app/factories/trip-factory.js'></script>
   <script src='app/factories/user-factory.js'></script>
   <!-- Controllers -->
-  <script src='brose-trips.js'></script>
-  <script src='edit-trip.js'></script>
-  <script src='footer.js'></script>
-  <script src='trip-builder.js'></script>
-  <script src='trip-details.js'></script>
-  <script src='user-console.js'></script>
+  <script src='app/controllers/browse-trips.js'></script>
+  <script src='app/controllers/edit-trip.js'></script>
+  <script src='app/controllers/footer.js'></script>
+  <script src='app/controllers/trip-builder.js'></script>
+  <script src='app/controllers/trip-details.js'></script>
+  <script src='app/controllers/user-console.js'></script>
 </body>
 </html>
