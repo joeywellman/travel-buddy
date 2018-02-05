@@ -22,6 +22,7 @@
   "dependencies": {
     "angular": "^1.6.5",
     "angular-route": "^1.6.5",
-    "firebase": "^4.1.5"
+    "firebase": "^4.1.5",
+    "materialize-css": "^0.100.2"
   }
 }
