@@ -1,1 +1,40 @@
-<h1>{{title}}</h1>
+<h2>Create A Trip</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-md search-container">
+      <div id="search-bar-container">
+        <h5>Search for places and add them to your trip</h5>
+        <textarea class="search-bar"></textarea>
+        <button class="btn btn-secondary" id="search-button">Search</button>
+      </div>
+      <div class="search-results-container" id="search-results-container">
+      </div>
+    </div>
+
+    <div class="col-md trip-container">
+      <h2>Your Trip</h2>
+      <form class="options">
+        <div class="form-group">
+          <label for="trip-name">Name</label>
+          <input type="text" class="form-control" id="trip-name" placeholder="Best Hikes in Nashville">
+        </div>
+        <div class="form-group">
+          <label for="trip-description">Description</label>
+          <input type="text" class="form-control" id="trip-description" placeholder="Awesome hikes less than 2 hours away">
+        </div>
+        <p>This trip is a:</p>
+        <select class="form-group" id="trip-type">
+          <option value="itenerary">Itenerary</option>
+          <option value="collection">Collection</option>
+        </select>
+      </form>
+
+      <div id="my-trip"> 
+        <!-- places will go here -->
+      </div>
+
+      <button class="btn btn-secondary" id="save-trip-button">Save</button>
+      <button class="btn btn-secondary" id="publish-trip-button">Publish</button>
+    </div>
+  </div>
+</div>

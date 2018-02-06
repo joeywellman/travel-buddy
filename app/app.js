@@ -2,8 +2,7 @@
 
 angular
   .module("TravelBuddy", ["ngRoute"])
-  .constant("FBUrl", "https://nss-capstone-75d59.firebaseio.com/" 
-  )
+  .constant("FBUrl", "https://nss-capstone-75d59.firebaseio.com/")
   .config($routeProvider => {
     $routeProvider
       .when("/browse", {
