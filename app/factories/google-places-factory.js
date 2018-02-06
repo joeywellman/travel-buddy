@@ -11,16 +11,7 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
     });
   }
 
-  function getImage(imageKey) {
-    return $q((resolve, reject) => {
-      $http.get(`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`)
-        .then((image) => {
-          resolve(image);
-        });
-    });
-  }
 
-
-  return {placesSearch, getImage};
+  return {placesSearch};
 
 });
