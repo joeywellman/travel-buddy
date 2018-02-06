@@ -1,5 +1,6 @@
 node_modules
-values/fb-creds.js
+app/values/fb-creds.js
+app/values/google-creds.js
 .DS_Store
 lib/package-lock.json
 lib/.sass-cache
