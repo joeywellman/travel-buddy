@@ -20,16 +20,19 @@
 
       <div id="map" class="trip-builder-map"></div>
 
-      <div class = "search-results">
-        <div class="card">
-          <div class="card-content">
-            <span class="card-title">Search Result Name</span>
-            <p>Search Result Address</p>
-            <a class="btn-floating halfway-fab waves-effect waves-light">
+        <div class="card" ng-repeat="place in places">
+          <div class="card-image">
+            <img ng-src="{{image}}">
+            <span class="card-title">{{place.name}}</span>
+            <a class="btn-floating halfway-fab waves-effect waves-light red">
               <i class="material-icons">add</i>
             </a>
           </div>
-        </div>  
+          <div class="card-content">
+            <p>{{place.formatted_address}}</p>
+            <p>Google Rating: {{place.rating}}</p>
+          </div>
+        </div>
       </div>
     </div>
     <!-- <div class = "col s2 divider hide-on-med-and-down"></div> -->
@@ -43,8 +46,8 @@
 
       <div class="card">
         <div class="card-content">
-          <span class="card-title">Place Name</span>
-          <p>Place Address</p>
+          <span class="card-title">Name</span>
+          <p>Title</p>
           <div class="row">
             <form class="col s12">
               <div class="row">

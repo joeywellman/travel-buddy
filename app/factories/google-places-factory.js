@@ -2,18 +2,25 @@
 
 angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) => {
 
-  function placesSearch() {
+  function placesSearch(searchString) {
     return $q((resolve, reject) => {
-      console.log(GMapsCreds.apiKey);
-      $http.get(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=500&type=restaurante&key=${GMapsCreds.apiKey}`)
-        .then(({ data }) => {
-          console.log("thisis what you get back in the promise", data);
-          resolve(data);
+      $http.get(`https://maps.googleapis.com/maps/api/place/textsearch/json?query=${searchString}&key=${GMapsCreds.apiKey}`)
+        .then((places) => {
+          resolve(places.data.results);
+        });
+    });
+  }
+
+  function getImage(imageKey) {
+    return $q((resolve, reject) => {
+      $http.get(`https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`)
+        .then((image) => {
+          resolve(image);
         });
     });
   }
 
 
-  return {placesSearch};
+  return {placesSearch, getImage};
 
 });
