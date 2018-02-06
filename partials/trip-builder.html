@@ -1,69 +1,40 @@
-<h2>{{title}}</h2>
-
-<div class = "container">
-  <div class = "row">
-    <div class="col s5 places-search">
-
-      <nav>
-        <div class="nav-wrapper">
-          <form>
-            <div class="input-field">
-              <input id="search" type="search" required>
-              <label class="label-icon" for="search">
-                <i class="material-icons">search</i>
-              </label>
-              <i class="material-icons">close</i>
-            </div>
-          </form>
-        </div>
-      </nav>
-
-      <div id="map" class="trip-builder-map"></div>
-
-        <div class="card" ng-repeat="place in places">
-          <div class="card-image">
-            <img ng-src="{{image}}">
-            <span class="card-title">{{place.name}}</span>
-            <a class="btn-floating halfway-fab waves-effect waves-light red">
-              <i class="material-icons">add</i>
-            </a>
-          </div>
-          <div class="card-content">
-            <p>{{place.formatted_address}}</p>
-            <p>Google Rating: {{place.rating}}</p>
-          </div>
-        </div>
+<h2>Create A Trip</h2>
+<div class="container">
+  <div class="row">
+    <div class="col-md search-container">
+      <div id="search-bar-container">
+        <h5>Search for places and add them to your trip</h5>
+        <textarea class="search-bar"></textarea>
+        <button class="btn btn-secondary" id="search-button">Search</button>
+      </div>
+      <div class="search-results-container" id="search-results-container">
       </div>
     </div>
-    <!-- <div class = "col s2 divider hide-on-med-and-down"></div> -->
-    <div class="col s6 my-trip">
-      <h5>My Trip</h5>
-        <textarea placeholder="Trip Title" , id="textarea1" class="materialize-textarea"></textarea>
-        <textarea placeholder="Trip Description" , id="textarea1" class="materialize-textarea"></textarea>
-        <textarea placeholder="Location" , id="textarea1" class="materialize-textarea"></textarea>
-        <textarea placeholder="Tags" , id="textarea1" class="materialize-textarea"></textarea>
-      
 
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Name</span>
-          <p>Title</p>
-          <div class="row">
-            <form class="col s12">
-              <div class="row">
-                <div class="input-field col s12">
-                  <textarea placeholder = "Insider tips, personal anecdotes, or fun facts", id="textarea1" class="materialize-textarea"></textarea>
-                </div>
-              </div>
-            </form>
-          </div>
+    <div class="col-md trip-container">
+      <h2>Your Trip</h2>
+      <form class="options">
+        <div class="form-group">
+          <label for="trip-name">Name</label>
+          <input type="text" class="form-control" id="trip-name" placeholder="Best Hikes in Nashville">
         </div>
+        <div class="form-group">
+          <label for="trip-description">Description</label>
+          <input type="text" class="form-control" id="trip-description" placeholder="Awesome hikes less than 2 hours away">
+        </div>
+        <p>This trip is a:</p>
+        <select class="form-group" id="trip-type">
+          <option value="itenerary">Itenerary</option>
+          <option value="collection">Collection</option>
+        </select>
+      </form>
+
+      <div id="my-trip"> 
+        <!-- places will go here -->
       </div>
 
-      <a class="waves-effect waves-light btn">Save</a>
-      <a class="waves-effect waves-light btn">Publish</a>
-
+      <button class="btn btn-secondary" id="save-trip-button">Save</button>
+      <button class="btn btn-secondary" id="publish-trip-button">Publish</button>
     </div>
   </div>
 </div>
-  

@@ -1,31 +1,10 @@
-<div class = "container">
-  <h2>{{title}}</h2>
-  <h5>Trip Title</h5>
-  <p>Author</p>
-  <p>Trip description</p>
-  <p>Tags</p>
+<div class="view-single-trip hidden" id="single-trip-section">
+  <h3>Trip Name</h3>
+  <h4>Author</h4>
+  <p class="trip-description">Description</p>
 
-  <div class = "row">
-    <div class="col s6 my-trip">
-      <div class="card">
-        <div class="card-content">
-          <span class="card-title">Place Name</span>
-          <p>Place Address</p>
-          <div class="row">
-            <form class="col s12">
-              <div class="row">
-                <div class="input-field col s12">
-                  <p>Insider tips, personal anecdotes, or fun facts</p>
-                </div>
-              </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="col s4 map" id="map">
-    </div>
-
+  <div class="container">
+    <div id="single-trip-map-container"></div>
+    <div id="details-container"></div>
   </div>
 </div>
