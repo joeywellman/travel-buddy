@@ -27,7 +27,14 @@ angular
         controller: "EditTripCtrl",
       })
       .otherwise("/browse");
-  });
+    });
+  // .config(function (uiGmapGoogleMapApiProvider) {
+  //   uiGmapGoogleMapApiProvider.configure({
+  //     key: ,
+  //     v: '3.20',
+  //     libraries: 'places'
+  //   });
+  // })
   // .run(FBCreds => {
   //   let authConfig = {
   //     apiKey: FBCreds.key,
