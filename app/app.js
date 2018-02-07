@@ -30,7 +30,7 @@ angular
     })
   .run(FBCreds => {
     let authConfig = {
-      apiKey: FBCreds.key,
+      apiKey: FBCreds.apiKey,
       authDomain: FBCreds.authDomain
     };
     firebase.initializeApp(authConfig);

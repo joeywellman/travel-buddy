@@ -1,5 +1,6 @@
 'use strict';
 angular.module("TravelBuddy").controller("NavCtrl", function ($scope, UserFactory) {
+
   $scope.login = () => {
     UserFactory.login()
     .then (() => {
