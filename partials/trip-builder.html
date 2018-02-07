@@ -24,21 +24,21 @@
       <form class="options">
         <div class="form-group">
           <label for="trip-name">Name</label>
-          <input type="text" class="form-control" id="trip-name" placeholder="Best Hikes in Nashville">
+          <input type="text" ng-model = "trip.name" class="form-control" id="trip-name" placeholder="Best Hikes in Nashville">
         </div>
         <div class="form-group">
           <label for="trip-description">Description</label>
-          <input type="text" class="form-control" id="trip-description" placeholder="Awesome hikes less than 2 hours away">
+          <input type="text" class="form-control" ng-model = "trip.description" id="trip-description" placeholder="Awesome hikes less than 2 hours away">
         </div>
         <p>This trip is a:</p>
-        <select class="form-group" id="trip-type">
+        <select class="form-group" ng-model = "trip.type" id="trip-type">
           <option value="itenerary">Itenerary</option>
           <option value="collection">Collection</option>
         </select>
       </form>
 
       <div id="my-trip"> 
-        <div ng-repeat = "tripLocation in tripLocations" class="card" id="tripLocation.id" style="width: 20rem;">
+        <div ng-repeat = "tripLocation in tripLocations track by $index" class="card" id="tripLocation.id" style="width: 20rem;">
           <img class="card-img-top" ng-src="{{tripLocation.image}}" alt="Picture of a place">
           <div class="card-block">
             <h4 class="card-title">{{tripLocation.name}}</h4>

@@ -50,28 +50,41 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
     $scope.tripLocations = tripLocations;
   };
   
-  const buildPlaceObjects = () => {
+  const savePlaceObjects = () => {
     tripLocations.forEach ((location) => {
       let placeObj = {
         description: location.description,
         id: location.place_id
-      }
-      console.log(placeObj);
+      };
+      // post placeObj to firebase
     });
   };
 
   const buildTripObject = () => {
-
+    // $scope.trip.uid = firebase.auth().currentUser.uid;
+    console.log("this is the original array of place objects", tripLocations);
+    const tripIds = tripLocations.map(location => {
+      location = location.place_id;
+      console.log("this should be the trip id", location);
+      return location;
+    });
+    console.log("this should be an array of Ids", tripIds);
   };
 
+
   $scope.saveTrip = () => {
-    buildPlaceObjects();
+    savePlaceObjects();
     buildTripObject();
+    // tripObj.private = true;
+    // post to firebase
+
   };
 
   $scope.publishTrip = () => {
-    buildPlaceObjects();
-    buildTripObject();
+    savePlaceObjects();
+    buildTripObject(); 
+    // tripObj.private = false;
+    // post to firebase
   };
 
 
