@@ -52,39 +52,44 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
   
   const savePlaceObjects = () => {
     tripLocations.forEach ((location) => {
-      let placeObj = {
+      let place = {
         description: location.description,
         id: location.place_id
       };
-      // post placeObj to firebase
+      TripFactory.postPlace(place);
     });
   };
 
   const buildTripObject = () => {
     // $scope.trip.uid = firebase.auth().currentUser.uid;
-    console.log("this is the original array of place objects", tripLocations);
     const tripIds = tripLocations.map(location => {
       location = location.place_id;
-      console.log("this should be the trip id", location);
       return location;
     });
-    console.log("this should be an array of Ids", tripIds);
+    $scope.trip.locations = tripIds; // right now this is google place ids, could it be firebase ids at some point? should it be?
+    $scope.trip.uid = 1234;
+    return $scope.trip;
   };
 
 
   $scope.saveTrip = () => {
     savePlaceObjects();
-    buildTripObject();
-    // tripObj.private = true;
-    // post to firebase
-
+    let trip = buildTripObject();
+    trip.private = true;
+    TripFactory.postTrip(trip)
+    .then(data => {
+      console.log("the places were posted");
+    });
   };
 
   $scope.publishTrip = () => {
     savePlaceObjects();
-    buildTripObject(); 
-    // tripObj.private = false;
-    // post to firebase
+    let trip = buildTripObject();
+    trip.private = false;
+    TripFactory.postTrip(trip)
+    .then(data => {
+      console.log("the trip was posted!");
+    });
   };
 
 
