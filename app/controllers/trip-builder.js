@@ -1,16 +1,16 @@
 'use strict';
 angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, TripFactory, GMapsFactory, GMapsCreds) {
-  $scope.title = "This is the Build Trip View!";
+  $scope.title = "Build A Trip";
 
   $scope.searchPlaces = () => {
-    const searchString = $scope.searchString;
-    console.log(searchString);
-    GMapsFactory.placesSearch(searchString)
+    GMapsFactory.placesSearch($scope.searchString)
     .then((places) => {
-      console.log("this is the places from the controller", places);
+      places.map((place) => {
+        let imageKey = place.photos[0].photo_reference; 
+        place.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+      });
+      console.log("this should have an image key attached", places)
       $scope.places = places;
-      let imageKey = places[0].photos[0].photo_reference;
-      $scope.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
     });
   };
   
