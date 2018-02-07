@@ -15,4 +15,13 @@ angular.module("TravelBuddy").controller("NavCtrl", function ($scope, UserFactor
       console.log("User logged out!");
     });
   };
+
+  // check if user is logged in, hides and shows login/logout buttons accordingly
+
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      $scope.userIsLoggedIn = true;
+    }
+  });
+ 
 });
