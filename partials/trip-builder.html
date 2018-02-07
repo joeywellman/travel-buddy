@@ -38,17 +38,20 @@
       </form>
 
       <div id="my-trip"> 
-        <div ng-show = "tripLocation !== null" class="card" id="place.id" style="width: 20rem;">
+        <div ng-repeat = "tripLocation in tripLocations" class="card" id="tripLocation.id" style="width: 20rem;">
           <img class="card-img-top" ng-src="{{tripLocation.image}}" alt="Picture of a place">
           <div class="card-block">
             <h4 class="card-title">{{tripLocation.name}}</h4>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Insider tips, funny stories, or detailed descriptions of this place </label>
+              <textarea class="form-control" ng-model = "tripLocation.description" rows="3"></textarea>
+            </div>
           </div>
         </div>
-
       </div>
 
-      <button class="btn btn-secondary" id="save-trip-button">Save</button>
-      <button class="btn btn-secondary" id="publish-trip-button">Publish</button>
+      <button class="btn btn-secondary" ng-click = "saveTrip()">Save</button>
+      <button class="btn btn-secondary" ng-click = "publishTrip()">Publish</button>
     </div>
   </div>
 </div>

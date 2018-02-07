@@ -1,6 +1,7 @@
 'use strict';
 angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, TripFactory, GMapsFactory, GMapsCreds) {
   $scope.title = "Build A Trip";
+  const tripLocations = [];
 
   const dummyData = [
     {
@@ -44,9 +45,37 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
   };
 
   $scope.addToTrip = (place) => {
-    $scope.tripLocation = place;
+    tripLocations.push(place);
+    // TODO: add buttons to reorder trip
+    $scope.tripLocations = tripLocations;
   };
   
+  const buildPlaceObjects = () => {
+    tripLocations.forEach ((location) => {
+      let placeObj = {
+        description: location.description,
+        id: location.place_id
+      }
+      console.log(placeObj);
+    });
+  };
+
+  const buildTripObject = () => {
+
+  };
+
+  $scope.saveTrip = () => {
+    buildPlaceObjects();
+    buildTripObject();
+  };
+
+  $scope.publishTrip = () => {
+    buildPlaceObjects();
+    buildTripObject();
+  };
+
+
+
 
   //empty trip object on scope bound to input
   // name
