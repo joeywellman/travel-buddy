@@ -4,10 +4,18 @@
     <div class="col-md search-container">
       <div id="search-bar-container">
         <h5>Search for places and add them to your trip</h5>
-        <textarea class="search-bar"></textarea>
-        <button class="btn btn-secondary" id="search-button">Search</button>
+        <textarea class="search-bar" ng-model = "searchString"></textarea>
+        <button class="btn btn-secondary" ng-click = "searchPlaces()">Search</button>
       </div>
-      <div class="search-results-container" id="search-results-container">
+      <div class="search-results-container">
+        <div ng-repeat = "place in places" class="card" id = "place.id" style="width: 20rem;">
+          <img class="card-img-top" ng-src="{{place.image}}" alt="Picture of a place">
+          <div class="card-block">
+            <h4 class="card-title">{{place.name}}</h4>
+            <p class="card-text">{{place.formatted_address}}</p>
+            <button ng-click = "addToTrip(place)" class="btn btn-primary">Add To Trip</button>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -16,25 +24,34 @@
       <form class="options">
         <div class="form-group">
           <label for="trip-name">Name</label>
-          <input type="text" class="form-control" id="trip-name" placeholder="Best Hikes in Nashville">
+          <input type="text" ng-model = "trip.name" class="form-control" id="trip-name" placeholder="Best Hikes in Nashville">
         </div>
         <div class="form-group">
           <label for="trip-description">Description</label>
-          <input type="text" class="form-control" id="trip-description" placeholder="Awesome hikes less than 2 hours away">
+          <input type="text" class="form-control" ng-model = "trip.description" id="trip-description" placeholder="Awesome hikes less than 2 hours away">
         </div>
         <p>This trip is a:</p>
-        <select class="form-group" id="trip-type">
+        <select class="form-group" ng-model = "trip.type" id="trip-type">
           <option value="itenerary">Itenerary</option>
           <option value="collection">Collection</option>
         </select>
       </form>
 
       <div id="my-trip"> 
-        <!-- places will go here -->
+        <div ng-repeat = "tripLocation in tripLocations track by $index" class="card" id="tripLocation.id" style="width: 20rem;">
+          <img class="card-img-top" ng-src="{{tripLocation.image}}" alt="Picture of a place">
+          <div class="card-block">
+            <h4 class="card-title">{{tripLocation.name}}</h4>
+            <div class="form-group">
+              <label for="exampleFormControlTextarea1">Insider tips, funny stories, or detailed descriptions of this place </label>
+              <textarea class="form-control" ng-model = "tripLocation.description" rows="3"></textarea>
+            </div>
+          </div>
+        </div>
       </div>
 
-      <button class="btn btn-secondary" id="save-trip-button">Save</button>
-      <button class="btn btn-secondary" id="publish-trip-button">Publish</button>
+      <button class="btn btn-secondary" ng-click = "saveTrip()">Save</button>
+      <button class="btn btn-secondary" ng-click = "publishTrip()">Publish</button>
     </div>
   </div>
 </div>

@@ -30,12 +30,34 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     // resolves a single place obj
   }
 
-  function addTrip(tripObj){
-    // posts trip object to firebase
+  // posts trip object to firebase
+  function postTrip(tripObj){
+    return $q((resolve, reject) => {
+      $http
+        .post(`${FBUrl}/trips.json`, JSON.stringify(tripObj))
+        .then(data => {
+          resolve(data);
+        })
+        .catch(error => {
+          console.log(error); 
+          reject(error);
+        });
+    });
   }
 
-  function addPlace(placeObj){
-    //posts place object to firebase
+  //posts place object to firebase
+  function postPlace(placeObj){
+    return $q((resolve, reject) => {
+      $http
+        .post(`${FBUrl}/places.json`, JSON.stringify(placeObj))
+        .then(data => {
+          resolve(data);
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+    });
   }
 
   function updateTrip(tripObj){
@@ -73,6 +95,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
   
 
-  return {getAllTrips, getTripDetails, getPlaceDetails, addTrip, addPlace, updateTrip, getMyTrips, addFavorite, getMyFavorites, getSingleTrip};
+  return {getAllTrips, getTripDetails, getPlaceDetails, postTrip, postPlace, updateTrip, getMyTrips, addFavorite, getMyFavorites, getSingleTrip};
 
 });
