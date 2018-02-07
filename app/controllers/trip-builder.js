@@ -51,7 +51,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
       return location;
     });
     $scope.trip.locations = tripIds; // right now this is google place ids, could it be firebase ids at some point? should it be?
-    $scope.trip.uid = 1234;
+    $scope.trip.uid = firebase.auth().currentUser.uid;
     return $scope.trip;
   };
 
