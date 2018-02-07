@@ -8,6 +8,14 @@
         <button class="btn btn-secondary" ng-click = "searchPlaces()">Search</button>
       </div>
       <div class="search-results-container">
+        <div ng-repeat = "place in places" class="card" id = "place.id" style="width: 20rem;">
+          <img class="card-img-top" ng-src="{{place.image}}" alt="Picture of a place">
+          <div class="card-block">
+            <h4 class="card-title">{{place.name}}</h4>
+            <p class="card-text">{{place.formatted_address}}</p>
+            <button ng-click = "addToTrip()" class="btn btn-primary">Add To Trip</button>
+          </div>
+        </div>
       </div>
     </div>
 

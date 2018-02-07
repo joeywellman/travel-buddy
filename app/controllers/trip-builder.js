@@ -9,9 +9,13 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
         let imageKey = place.photos[0].photo_reference; 
         place.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
       });
-      console.log("this should have an image key attached", places)
+      console.log("this should have an image key attached", places);
       $scope.places = places;
     });
+  };
+
+  $scope.addToTrip = () => {
+    console.log("place added to trip!");
   };
   
 
