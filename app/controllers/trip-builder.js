@@ -2,14 +2,17 @@
 angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, TripFactory, GMapsFactory, GMapsCreds) {
   $scope.title = "This is the Build Trip View!";
 
-  GMapsFactory.placesSearch("churches in Romania")
-  .then((places) => {
-    console.log("this is the places from the controller", places);
-    console.log($scope.searchString);
-    $scope.places = places;
-    let imageKey = places[0].photos[0].photo_reference;
-    $scope.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-  });
+  $scope.searchPlaces = () => {
+    const searchString = $scope.searchString;
+    console.log(searchString);
+    GMapsFactory.placesSearch(searchString)
+    .then((places) => {
+      console.log("this is the places from the controller", places);
+      $scope.places = places;
+      let imageKey = places[0].photos[0].photo_reference;
+      $scope.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+    });
+  };
   
 
   //empty trip object on scope bound to input
