@@ -27,18 +27,11 @@ angular
         controller: "EditTripCtrl",
       })
       .otherwise("/browse");
-    });
-  // .config(function (uiGmapGoogleMapApiProvider) {
-  //   uiGmapGoogleMapApiProvider.configure({
-  //     key: 'AIzaSyBray2LUSZF_iOrl73bRjMwjjg3PgyRcWs', // p sure I can call GMapsCreds.apiKey but let's try it first
-  //     v: '3.20',
-  //     libraries: 'places'
-  //   });
-  // });
-  // .run(FBCreds => {
-  //   let authConfig = {
-  //     apiKey: FBCreds.key,
-  //     authDomain: FBCreds.authDomain
-  //   };
-  //   firebase.initializeApp(authConfig);
-  // });
+    })
+  .run(FBCreds => {
+    let authConfig = {
+      apiKey: FBCreds.key,
+      authDomain: FBCreds.authDomain
+    };
+    firebase.initializeApp(authConfig);
+  });
