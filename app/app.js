@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module("TravelBuddy", ["ngRoute"])
+  .module("TravelBuddy", ['ngRoute', 'ngMap'])
   .constant("FBUrl", "https://nss-capstone-75d59.firebaseio.com/")
   .config($routeProvider => {
     $routeProvider
@@ -30,11 +30,11 @@ angular
     });
   // .config(function (uiGmapGoogleMapApiProvider) {
   //   uiGmapGoogleMapApiProvider.configure({
-  //     key: ,
+  //     key: 'AIzaSyBray2LUSZF_iOrl73bRjMwjjg3PgyRcWs', // p sure I can call GMapsCreds.apiKey but let's try it first
   //     v: '3.20',
   //     libraries: 'places'
   //   });
-  // })
+  // });
   // .run(FBCreds => {
   //   let authConfig = {
   //     apiKey: FBCreds.key,

@@ -1,15 +1,21 @@
 <section class="browse-section" id="browse-section">
   <h2>Browse Trips</h2>
-  <div class="browse-container container">
+  <div class="container">
     <div class="row">
-      <div class="col-md">
-        <div class="trip-card">
+      <div class="col-md-8">
+        <div class="trip-card col-sm-4">
           <h4 class="trip-name">Trip Name</h4>
-          <h5 class="trip-author">Trip Author</h4>
+          <h5 class="trip-author">Trip Author</h5>
             <p class="trip-description">Trip Description</p>
             <button class="btn btn-secondary view-trip" id="{{this.id}}">View Trip</button>
         </div>
       </div>
+      <div class = "col-md-4">
+      <div map-lazy-load="https://maps.google.com/maps/api/js" map-lazy-load-params="{{googleMapsUrl}}">
+        <ng-map class="google-map-container" center="41,-87" zoom="3"></ng-map>
+        </div>
+      </div>
     </div>
   </div>
+ 
 </section>
