@@ -1,14 +1,49 @@
 'use strict';
 angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, TripFactory) {
-  $scope.title = "This is the user console view!";
 
-  //TripFactory.getMyTrips(uid)
-  // set to scope
+  const favoriteTrips = [];
 
-  // TripFactory.getMyFavorites(uid)
-  // set to scope
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      TripFactory.getMyTrips(user.uid)
+      .then((trips) => {
+        $scope.trips = trips;
+        return TripFactory.getMyFavorites(user.uid);
+      })
+      .then((favoriteData) => {
+        for (let favorite in favoriteData){
+          TripFactory.getTripDetails(favoriteData[favorite].id)
+          .then ((tripDetails) => {
+            favoriteTrips.push(tripDetails);
+          });
+        }
+        $scope.faves = favoriteTrips;
+      });
+    }
+  });
 
-  // click on one of your trips --> route to edit trip view
+  // delete trip and then re-fetch trips
+  $scope.deleteTrip = (tripId) => {
+    TripFactory.deleteTrip(tripId)
+    .then(() => {
+      TripFactory.getMyTrips(firebase.auth().currentUser.uid)
+      .then((trips) => {
+        $scope.trips = trips;
+      });
+    });
+  };
 
-  // click on star --> delete from favorites
+  // delete fave and then re-fetch fave
+  // need to figure out a way to do this without deleting the trip
+  $scope.deleteFave = (trip) => {
+    console.log("You deleted this fave", trip);
+  //   TripFactory.deleteFave(tripId)
+  //   .then(() => {
+  //     TripFactory.getMyFavorites(firebase.auth().currentUser.uid)
+  //     .then((faves) => {
+  //       $scope.faves = faves;
+  //     });
+  //   });
+  };
+
 });

@@ -7,6 +7,7 @@
         <h5 class="trip-author">Trip Author</h5>
           <p class="trip-description">{{trip.description}}</p>
           <button class="btn btn-secondary view-trip"><a ng-href = "#!/view/{{trip.id}}">View Trip</a></button>
+          <button class="btn btn-secondary add-favorite" ng-click="addFavorite(trip.id)">Add To Favorites</button>
       </div>
     </div>
   </div>
