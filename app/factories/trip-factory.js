@@ -37,11 +37,13 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
   //promises details of specified trip
   // resolves an object
   function getTripDetails(tripId){
+    console.log("this is the trip id from within the factory", tripId);
     return $q((resolve, reject) => {
       $http
         .get(`${FBUrl}/trips/${tripId}.json`)
-        .then(item => {
-          resolve(item.data);
+        .then((trip) => {
+          console.log("this is what the getTripDetails is resolving", trip);
+          resolve(trip.data);
         })
         .catch(err => {
           reject(err);
@@ -144,8 +146,8 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     return $q((resolve, reject) => {
       $http.get(`${FBUrl}/favorites.json?orderBy="uid"&equalTo="${uid}"`)
         .then(({ data }) => {
-          let tripArray = formatData(data);
-          resolve(tripArray);
+          console.log(data);
+          resolve(data);
         });
     });
   }
@@ -162,6 +164,7 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
       $http
         .delete(`${FBUrl}/trips/${tripId}.json`)
         .then(() => {
+          deleteFave(tripId);
           resolve();
         })
         .catch(err => {
@@ -186,6 +189,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
   
 
-  return {getAllPublicTrips, getTripDetails, getPlaceDetails, postTrip, postPlace, updateTrip, getMyTrips, addFavorite, getMyFavorites};
+  return {getAllPublicTrips, getTripDetails, getPlaceDetails, postTrip, postPlace, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave};
 
 });

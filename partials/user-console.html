@@ -8,15 +8,17 @@
           <div class="trip-card col-sm-6" ng-repeat="trip in trips" ng-show = "trip.public">
             <h4 class="trip-name">{{trip.name}}</h4>
             <p class="trip-description">{{trip.description}}</p>
-            <button class="btn btn-secondary edit-trip">
-              <a ng-href="#!/edit/{{trip.id}}">Edit</a>
-            </button>
-            <button class="btn btn-secondary delete-trip">
-              <a ng-click="deleteTrip(trip.id)">Delete</a>
-            </button>
-            <button class="btn btn-secondary view-trip">
-              <a ng-href="#!/view/{{trip.id}}">View</a>
-            </button>
+            <div class = "button-group">
+              <button class="btn btn-secondary edit-trip">
+                <a ng-href="#!/edit/{{trip.id}}">Edit</a>
+              </button>
+              <button class="btn btn-secondary delete-trip">
+                <a ng-click="deleteTrip(trip.id)">Delete</a>
+              </button>
+              <button class="btn btn-secondary view-trip">
+                <a ng-href="#!/view/{{trip.id}}">View</a>
+              </button>
+            </div>
           </div>
       </div>
       <div class = "row p-2">
@@ -24,22 +26,24 @@
           <div class="trip-card col-sm-6" ng-repeat="trip in trips" ng-show = "!trip.public">
             <h4 class="trip-name">{{trip.name}}</h4>
             <p class="trip-description">{{trip.description}}</p>
-            <button class="btn btn-secondary edit-trip">
-              <a ng-href="#!/edit/{{trip.id}}">Edit</a>
-            </button>
-            <button class="btn btn-secondary delete-trip" ng-click = "deleteTrip(trip.id)">Delete</button>
-            <button class="btn btn-secondary view-trip">
-              <a ng-href="#!/view/{{trip.id}}">View</a>
-            </button>
+            <div class = "button-group">
+              <button class="btn btn-secondary edit-trip">
+                <a ng-href="#!/edit/{{trip.id}}">Edit</a>
+              </button>
+              <button class="btn btn-secondary delete-trip" ng-click = "deleteTrip(trip.id)">Delete</button>
+              <button class="btn btn-secondary view-trip">
+                <a ng-href="#!/view/{{trip.id}}">View</a>
+              </button>
+            </div>
           </div>
       </div>
     </div>
     <div class = "col-sm-6 p-2 my-favorites"></div>
     <h5>My Favorites</h5>
-      <div class="trip-card col-sm-6" ng-repeat="trip in publicTrips">
-        <h4 class="trip-name">{{trip.name}}</h4>
+      <div class="trip-card col-sm-6" ng-repeat="fave in faves track by $index">
+        <h4 class="trip-name">{{fave.name}}</h4>
         <p>Trip Author</p>
-        <p class="trip-description">{{trip.description}}</p>
+        <p class="trip-description">{{fave.description}}</p>
         <button class="btn btn-secondary view-trip">
           <a ng-href="#!/view/{{trip.id}}">View</a>
         </button>

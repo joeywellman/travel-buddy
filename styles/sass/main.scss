@@ -13,13 +13,11 @@ $border-color: rgb(209, 208, 208);
 }
 
 .trip-card{
-    width: 20vw;
-    height: 45vh;
+    height: auto;
     padding: 0;
     margin: 0.5em;
     border-radius: 0.1rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    position: relative;
     .trip-author{
        color: rgb(33, 33, 33);
        font-size: 1.2rem;
@@ -27,14 +25,15 @@ $border-color: rgb(209, 208, 208);
     .trip-description{
         font-size: 0.9em;
     }
-    .view-trip{
-        margin: 0;
-        width: 100%;
-        padding: 0.4em;
-        position: absolute;
-        bottom: 0; 
-        border-radius: 0;
-        height: 3em;
+    .button-group{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    button{
+        margin: 0.3em;
+    }
+    a{
+        color: white;
     }
 }
 
