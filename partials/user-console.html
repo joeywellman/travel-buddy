@@ -45,9 +45,9 @@
         <p>Trip Author</p>
         <p class="trip-description">{{fave.description}}</p>
         <button class="btn btn-secondary view-trip">
-          <a ng-href="#!/view/{{trip.id}}">View</a>
+          <a ng-href="#!/view/{{fave.id}}">View</a>
         </button>
-        <button class="btn btn-secondary remove-trip" ng-click = "removeFavorite(trip.id)">Remove From Favorites</button>
+        <button class="btn btn-secondary remove-trip" ng-click = "removeFavorite(fave)">Remove From Favorites</button>
       </div>
   </div>
 </div>

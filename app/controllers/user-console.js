@@ -11,16 +11,13 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
         return TripFactory.getMyFavorites(user.uid);
       })
       .then((favoriteData) => {
-        console.log("this is the user's favorites", favoriteData);
         for (let favorite in favoriteData){
-          console.log("this should be each individual trip id", favoriteData[favorite]); // this is a string
           TripFactory.getTripDetails(favoriteData[favorite].id)
           .then ((tripDetails) => {
             favoriteTrips.push(tripDetails);
           });
         }
         $scope.faves = favoriteTrips;
-        console.log("this is the faves array", $scope.faves);
       });
     }
   });
@@ -29,7 +26,7 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
   $scope.deleteTrip = (tripId) => {
     TripFactory.deleteTrip(tripId)
     .then(() => {
-      TripFactory.getMyTrips(firebase.auth().getCurrentUser.uid)
+      TripFactory.getMyTrips(firebase.auth().currentUser.uid)
       .then((trips) => {
         $scope.trips = trips;
       });
@@ -37,14 +34,16 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
   };
 
   // delete fave and then re-fetch fave
-  $scope.deleteFave = (tripId) => {
-    TripFactory.deleteFave(tripId)
-    .then(() => {
-      TripFactory.getMyFavorites(firebase.auth().getCurrentUser.uid)
-      .then((faves) => {
-        $scope.faves = faves;
-      });
-    });
+  // need to figure out a way to do this without deleting the trip
+  $scope.deleteFave = (trip) => {
+    console.log("You deleted this fave", trip);
+  //   TripFactory.deleteFave(tripId)
+  //   .then(() => {
+  //     TripFactory.getMyFavorites(firebase.auth().currentUser.uid)
+  //     .then((faves) => {
+  //       $scope.faves = faves;
+  //     });
+  //   });
   };
 
 });
