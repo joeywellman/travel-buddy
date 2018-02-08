@@ -1,9 +1,15 @@
 'use strict';
 angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, TripFactory) {
-  $scope.title = "This is the user console view!";
 
-  //TripFactory.getMyTrips(uid)
-  // set to scope
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      TripFactory.getMyTrips(firebase.auth().currentUser.uid)
+      .then((trips) => {
+        $scope.trips = trips;
+      });
+    }
+  });
+  
 
   // TripFactory.getMyFavorites(uid)
   // set to scope

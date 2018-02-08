@@ -114,9 +114,10 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     //resolves array of user's trips with keys
   function getMyTrips(uid){
     return $q((resolve, reject) => {
-      $http.get(`${FBUrl}/items.json?orderBy="uid"&equalTo="${uid}"`)
+      $http.get(`${FBUrl}/trips.json?orderBy="uid"&equalTo="${uid}"`)
         .then(({ data }) => {
           let tripArray = formatData(data);
+          console.log(tripArray);
           resolve(tripArray);
         });
       });
