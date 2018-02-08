@@ -3,11 +3,11 @@
   <div class="container">
     <div class="row">
       <div class="col-md-8">
-        <div class="trip-card col-sm-4">
-          <h4 class="trip-name">Trip Name</h4>
+        <div class="trip-card col-sm-4" ng-repeat ="trip in trips">
+          <h4 class="trip-name">{{trip.name}}</h4>
           <h5 class="trip-author">Trip Author</h5>
-            <p class="trip-description">Trip Description</p>
-            <button class="btn btn-secondary view-trip" id="{{this.id}}">View Trip</button>
+            <p class="trip-description">{{trip.description}}</p>
+            <button class="btn btn-secondary view-trip"><a href = "#!/view/{{trip.id}}">View Trip</a></button>
         </div>
       </div>
       <div class = "col-md-4">

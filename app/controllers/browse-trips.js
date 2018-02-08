@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, TripFactory, NgMap, GMapsCreds) {
-  $scope.title = "This is the Browse All Trips View!";
+  $scope.title = "Brose Trips";
   $scope.googleMapsUrl = `https://maps.googleapis.com/maps/api/js?key=${GMapsCreds.apiKey}`;
   NgMap.getMap().then(function (map) {
     console.log(map.getCenter());
@@ -10,6 +10,11 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
   });
 
  
+  TripFactory.getAllPublicTrips()
+  .then (trips => {
+    console.log("these are the trips from the controller");
+    $scope.trips = trips;
+  });
  
   
 
