@@ -2,22 +2,38 @@
 
 angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
-  // HELPER FUNCTIONS
-  function addKeys(dataObject){
-    // adds firebase keys to firebase data
-  }
+  // // HELPER FUNCTIONS
+  // function addKeys(dataObject){
+  //   // adds firebase keys to firebase data
+  // }
 
-  function convertToArray(dataObject){
-    // converts firebase data to array
+  // converts to array and attaches firebase keys
+  function formatData(dataObject){
+    Object.keys(dataObject).map(key => {
+      dataObject[key].id = key;
+      return dataObject[key];
+    });
+    return dataObject;
   } 
 
 
   //EXPORTED FUNCTIONS
-  function getAllTrips() {
-  // promises all PUBLIC trips
+
+   // promises all PUBLIC trips
   // adds keys
   // converts to array
   // resolves array with keys
+  function getAllPublicTrips() {
+    return $q((resolve, reject) => {
+      $http
+        .get(`${FBUrl}/trips.json?orderBy="private"&equalTo=false`)
+        .then(({ data }) => {
+          console.log("trips", data);
+          let tripArray = formatData(data);
+          console.log("this should be an array with firebase keys attached", tripArray);
+          resolve(tripArray);
+        });
+    });
   }
 
   function getTripDetails(tripId){
@@ -95,6 +111,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
   
 
-  return {getAllTrips, getTripDetails, getPlaceDetails, postTrip, postPlace, updateTrip, getMyTrips, addFavorite, getMyFavorites, getSingleTrip};
+  return {getAllPublicTrips, getTripDetails, getPlaceDetails, postTrip, postPlace, updateTrip, getMyTrips, addFavorite, getMyFavorites, getSingleTrip};
 
 });
