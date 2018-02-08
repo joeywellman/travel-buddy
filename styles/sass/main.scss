@@ -3,10 +3,16 @@ $secondary-color: rgb(170, 209, 170);
 $border-color: rgb(209, 208, 208);
 
 
+
 *{
     padding: 0.5em;
+    font-family: 'Roboto', sans-serif;
+    
 }
 
+h1, h2, h3, h4, h5{
+    font-family: 'Montserrat', sans-serif;
+}
 .searchbar{
     height: 1.5em;
     background-color: rgb(224, 224, 224);
