@@ -28,22 +28,40 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
       $http
         .get(`${FBUrl}/trips.json?orderBy="private"&equalTo=false`)
         .then(({ data }) => {
-          console.log("trips", data);
           let tripArray = formatData(data);
-          console.log("this should be an array with firebase keys attached", tripArray);
           resolve(tripArray);
         });
     });
   }
 
+  //promises details of specified trip
+  // resolves an object
   function getTripDetails(tripId){
-    //promises details of specified trip
-    // resolves an object
+    return $q((resolve, reject) => {
+      $http
+        .get(`${FBUrl}/trips/${tripId}.json`)
+        .then(item => {
+          resolve(item.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
   }
 
-  function getPlaceDetails(placeId){
-    // gets place details (gmaps id)
+  // gets place details (gmaps id)
     // resolves a single place obj
+  function getPlaceDetails(placeId){
+    return $q((resolve, reject) => {
+      $http
+        .get(`${FBUrl}/places.json?/orderBy="id"&equalTo="${placeId}"`)
+        .then(item => {
+          resolve(item.data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
   }
 
   // posts trip object to firebase
@@ -76,41 +94,97 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     });
   }
 
-  function updateTrip(tripObj){
-    // puts tripObj to firebase
+  function updateTrip(tripObj, tripId){
+    return $q((resolve, reject) => {
+      $http
+        .put(`${FBUrl}/trips/${tripId}.json`,
+        JSON.stringify(tripObj)
+        )
+        .then((data) => {
+          resolve(data);
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
   }
 
-  function getMyTrips(uid){
-    // fetches all trips the user has created, both public and private
+   // fetches all trips the user has created, both public and private
     // adds keys and converts to array
     //resolves array of user's trips with keys
+  function getMyTrips(uid){
+    return $q((resolve, reject) => {
+      $http.get(`${FBUrl}/items.json?orderBy="uid"&equalTo="${uid}"`)
+        .then(({ data }) => {
+          let tripArray = formatData(data);
+          resolve(tripArray);
+        });
+      });
   }
 
-  function addFavorite(obj){
-    // posts favorite object to firebase
+  // posts favorite object to firebase
+  function addFavorite(faveObj){
+    return $q((resolve, reject) => {
+      $http
+        .post(`${FBUrl}/favorites.json`, JSON.stringify(faveObj))
+        .then(data => {
+          resolve(data);
+        })
+        .catch(error => {
+          console.log(error);
+          reject(error);
+        });
+    });
   }
 
-  function getMyFavorites(uid){
-    // promises user's favorites
+  // promises user's favorites
     // resolves an array of favorite objects
+  function getMyFavorites(uid){
+    return $q((resolve, reject) => {
+      $http.get(`${FBUrl}/favorites.json?orderBy="uid"&equalTo="${uid}"`)
+        .then(({ data }) => {
+          let tripArray = formatData(data);
+          resolve(tripArray);
+        });
+    });
   }
 
-  function getSingleTrip(tripId){
-    // promises a single trip by id
-    // adds firebase key
-    // this will be used in a loop after the favorites return from getMyFavorites
-  }
+  // function getSingleTrip(tripId){
+  //   // promises a single trip by id
+  //   // adds firebase key
+  //   // this will be used in a loop after the favorites return from getMyFavorites
+  // }
 
+  // deletes trip from firebase
   function deleteTrip(tripId){
-    // deletes trip from firebase
+    return $q((resolve, reject) => {
+      $http
+        .delete(`${FBUrl}/trips/${tripId}.json`)
+        .then(() => {
+          resolve();
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
   }
 
   function deleteFave(faveId){
     // deletes favorite object from firebase
+    return $q((resolve, reject) => {
+      $http
+        .delete(`${FBUrl}/favorites/${faveId}.json`)
+        .then(() => {
+          resolve();
+        })
+        .catch(err => {
+          reject(err);
+        });
+    });
   }
 
   
 
-  return {getAllPublicTrips, getTripDetails, getPlaceDetails, postTrip, postPlace, updateTrip, getMyTrips, addFavorite, getMyFavorites, getSingleTrip};
+  return {getAllPublicTrips, getTripDetails, getPlaceDetails, postTrip, postPlace, updateTrip, getMyTrips, addFavorite, getMyFavorites};
 
 });
