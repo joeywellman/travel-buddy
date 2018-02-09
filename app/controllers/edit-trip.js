@@ -14,6 +14,13 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
       TripFactory.getPlaceDetails(locationId)
       .then((placeDetails) => {
         console.log("this is what the controller gets", placeDetails);
+        for (let place in placeDetails){
+          GMapsFactory.getPlaceInfo(placeDetails[place].id)
+            .then(placeInfo => {
+              console.log("this is what you get back from the api call", placeInfo);
+            });
+        }
+      
       });
     });
   });
