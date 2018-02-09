@@ -25,7 +25,6 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
         } 
       });
     });
-    console.log("this is the triplocations array", tripLocations);
     $scope.tripLocations = tripLocations;
   });
 
@@ -65,6 +64,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   // posts each place object to firebase 
   const savePlaceObjects = () => {
     tripLocations.forEach((location) => {
+      // need to refactor so it doesn't just add all the places again??? add a property of new place to place object?
       let place = {
         description: location.description,
         id: location.place_id
@@ -94,7 +94,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
     savePlaceObjects();
     let trip = buildTripObject();
     trip.private = true;
-    TripFactory.postTrip(trip)
+    TripFactory.updateTrip(trip, trip.id)
       .then((data) => {
         $location.url("/browse");
       });
@@ -108,7 +108,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
     savePlaceObjects();
     let trip = buildTripObject();
     trip.private = false;
-    TripFactory.postTrip(trip)
+    TripFactory.updateTrip(trip, trip.id)
       .then((data) => {
         $location.url("/browse");
       });
