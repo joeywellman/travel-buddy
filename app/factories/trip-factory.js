@@ -56,7 +56,7 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
   function getPlaceDetails(placeId){
     return $q((resolve, reject) => {
       $http
-        .get(`${FBUrl}/places.json?/orderBy="id"&equalTo="${placeId}"`)
+        .get(`${FBUrl}/places.json?orderBy="id"&equalTo="${placeId}"`)
         .then(item => {
           resolve(item.data);
         })

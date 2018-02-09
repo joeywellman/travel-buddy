@@ -9,7 +9,16 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   TripFactory.getTripDetails($routeParams.tripId)
   .then(trip => {
     $scope.trip = trip;
+    let locations = trip.locations;
+    locations.forEach((locationId) => {
+      TripFactory.getPlaceDetails(locationId)
+      .then((placeDetails) => {
+        console.log("this is what the controller gets", placeDetails);
+      });
+    });
   });
+
+
 
   // PLACES SEARCH
   // fires on search button click
