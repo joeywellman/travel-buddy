@@ -3,6 +3,13 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
   $scope.title = "Build A Trip";
   const tripLocations = [];
 
+  // resets dom
+  function clearTrip(){
+    $scope.tripLocations = null; // clear trip
+    $scope.places = null;
+    $scope.trip = null;
+  }
+
   // PLACES SEARCH
   // fires on search button click
   // passes in input from search box and feeds into Google Places Web Service Text Search
@@ -40,6 +47,8 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
       };
       TripFactory.postPlace(place);
     });
+    clearTrip();
+
   };
 
   // creates a trip object from $scope inputs, adds an array of location ids
@@ -65,6 +74,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
     trip.private = true;
     TripFactory.postTrip(trip);
     // TODO: print a success message or load a new route?
+    clearTrip();
   };
 
   //saves all places in trip
