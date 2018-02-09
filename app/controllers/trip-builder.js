@@ -33,7 +33,6 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   // pushes place object into global array 
   $scope.addToTrip = (place) => {
     tripLocations.push(place);
-    console.log("this is the trip location array", tripLocations);
     // TODO: add buttons to reorder trip
     $scope.tripLocations = tripLocations;
   };

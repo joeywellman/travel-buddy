@@ -2,6 +2,7 @@
 angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripFactory, $routeParams, GMapsFactory, GMapsCreds, $location) {
   $scope.title = "Edit Your Trip";
   const tripLocations = [];
+  const searchResults = [];
 
 // TODO: figure out why getPlaceDetails returns two objects with the same place id? it's calling for google place id, not firebase id, which is weird...
 // need to return some shit here
@@ -15,11 +16,16 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
         for (let place in placeDetails){
           GMapsFactory.getPlaceInfo(placeDetails[place].id)
             .then(placeInfo => {
-              tripLocations.push(placeInfo.result);
+              if (placeInfo.data.result.photos[0].photo_reference !== null) {
+                let imageKey = placeInfo.data.result.photos[0].photo_reference;
+                placeInfo.data.result.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+              }
+              tripLocations.push(placeInfo.data.result);
             });
         } 
       });
     });
+    console.log("this is the triplocations array", tripLocations);
     $scope.tripLocations = tripLocations;
   });
 
@@ -34,16 +40,19 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   $scope.searchPlaces = () => {
     GMapsFactory.placesSearch($scope.searchString)
       .then((places) => {
-        places.map((place) => {
-          if (place.photos[0].photo_reference !== null) {
-            let imageKey = place.photos[0].photo_reference;
-            place.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-          }
+        places.forEach((place) => {
+          GMapsFactory.getPlaceInfo(place.place_id)
+            .then(placeDetails => {
+              if (placeDetails.data.result.photos[0].photo_reference !== null) {
+                let imageKey = place.photos[0].photo_reference;
+                placeDetails.data.result.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+              }
+              searchResults.push(placeDetails.data.result);
+            });
         });
-        $scope.places = places;
+        $scope.searchResults = searchResults;
       });
   };
-
   // fired when user clicks 'add to trip' button on a place card
   // pushes place object into global array 
   $scope.addToTrip = (place) => {
