@@ -10,11 +10,11 @@
         </div>
       </div>
       <div class="search-results-container">
-        <div ng-repeat = "place in places" class="card" id = "place.id" style="width: 20rem;">
-          <img class="card-img-top" ng-src="{{place.image}}" alt="Picture of a place">
+        <div ng-repeat = "result in searchResults track by $index" class="card" id = "place.id" style="width: 20rem;">
+          <img class="card-img-top" ng-src="{{result.image}}" alt="Picture of a place">
           <div class="card-block">
-            <h4 class="card-title">{{place.name}}</h4>
-            <p class="card-text">{{place.formatted_address}}</p>
+            <h4 class="card-title">{{result.name}}</h4>
+            <p class="card-text">{{result.formatted_address}}</p>
             <button ng-click = "addToTrip(place)" class="btn btn-primary">Add To Trip</button>
           </div>
         </div>

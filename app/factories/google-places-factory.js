@@ -12,11 +12,9 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
   }
 
   function getPlaceInfo(placeId) {
-    console.log("this is the place id that the google factory gets", placeId);
     return $q((resolve, reject) => {
       $http.get(`https://travel-buddy-proxy-server.herokuapp.com/api/maps/api/place/details/json?placeid=${placeId}&key=${GMapsCreds.apiKey}`)
         .then((placeDetails) => {
-          console.log("this is the whole return fro the place  details call", placeDetails);
           resolve(placeDetails);
         });
     });

@@ -2,6 +2,7 @@
 angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds) {
   $scope.title = "Build A Trip";
   const tripLocations = [];
+  const searchResults = [];
 
 
   // PLACES SEARCH
@@ -28,12 +29,14 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     GMapsFactory.placesSearch($scope.searchString)
       .then((places) => {
         places.forEach((place) => {
-          console.log("this should be the indivdual place result from the search", place);
           GMapsFactory.getPlaceInfo(place.place_id)
           .then(placeDetails => {
-            console.log("this should be each place detail", placeDetails);
+            console.log("this is place details", placeDetails.data.result);
+            searchResults.push(placeDetails.data.result);
           });
         });
+        console.log("this is the array of serach results", searchResults);
+        $scope.searchResults = searchResults;
       });
   };
 
