@@ -1,14 +1,8 @@
 'use strict';
-angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, TripFactory, GMapsFactory, GMapsCreds) {
+angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds) {
   $scope.title = "Build A Trip";
   const tripLocations = [];
 
-  // resets dom
-  function clearTrip(){
-    $scope.tripLocations = null; // clear trip
-    $scope.places = null;
-    $scope.trip = null;
-  }
 
   // PLACES SEARCH
   // fires on search button click
@@ -47,8 +41,6 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
       };
       TripFactory.postPlace(place);
     });
-    clearTrip();
-
   };
 
   // creates a trip object from $scope inputs, adds an array of location ids
@@ -72,9 +64,11 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
     savePlaceObjects();
     let trip = buildTripObject();
     trip.private = true;
-    TripFactory.postTrip(trip);
+    TripFactory.postTrip(trip)
+    .then((data) => {
+      $location.url("/browse");
+    });
     // TODO: print a success message or load a new route?
-    clearTrip();
   };
 
   //saves all places in trip
@@ -84,7 +78,10 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
     savePlaceObjects();
     let trip = buildTripObject();
     trip.private = false;
-    TripFactory.postTrip(trip);
+    TripFactory.postTrip(trip)
+    .then((data) => {
+      $location.url("/browse");
+    });
     // TODO: print a success message or load a new route?
   };
 
