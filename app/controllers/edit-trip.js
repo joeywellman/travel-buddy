@@ -3,9 +3,8 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   $scope.title = "Edit Your Trip";
   const tripLocations = [];
 
-  // empty object on scope bound to input
-  // TripFactory.updateTrip
-
+// TODO: figure out why getPlaceDetails returns two objects with the same place id? it's calling for google place id, not firebase id, which is weird...
+// need to return some shit here
   TripFactory.getTripDetails($routeParams.tripId)
   .then(trip => {
     $scope.trip = trip;
@@ -13,16 +12,15 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
     locations.forEach((locationId) => {
       TripFactory.getPlaceDetails(locationId)
       .then((placeDetails) => {
-        console.log("this is what the controller gets", placeDetails);
         for (let place in placeDetails){
           GMapsFactory.getPlaceInfo(placeDetails[place].id)
             .then(placeInfo => {
-              console.log("this is what you get back from the api call", placeInfo);
+              tripLocations.push(placeInfo.result);
             });
-        }
-      
+        } 
       });
     });
+    $scope.tripLocations = tripLocations;
   });
 
 
