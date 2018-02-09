@@ -31,11 +31,13 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
         places.forEach((place) => {
           GMapsFactory.getPlaceInfo(place.place_id)
           .then(placeDetails => {
-            console.log("this is place details", placeDetails.data.result);
+            if (placeDetails.data.result.photos[0].photo_reference !== null) {
+              let imageKey = place.photos[0].photo_reference;
+              placeDetails.data.result.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+            }
             searchResults.push(placeDetails.data.result);
           });
         });
-        console.log("this is the array of serach results", searchResults);
         $scope.searchResults = searchResults;
       });
   };
