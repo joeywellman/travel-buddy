@@ -1,7 +1,8 @@
 'use strict';
-angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, TripFactory, GMapsFactory, GMapsCreds) {
+angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds) {
   $scope.title = "Build A Trip";
   const tripLocations = [];
+
 
   // PLACES SEARCH
   // fires on search button click
@@ -63,7 +64,10 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
     savePlaceObjects();
     let trip = buildTripObject();
     trip.private = true;
-    TripFactory.postTrip(trip);
+    TripFactory.postTrip(trip)
+    .then((data) => {
+      $location.url("/browse");
+    });
     // TODO: print a success message or load a new route?
   };
 
@@ -74,7 +78,10 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, Tr
     savePlaceObjects();
     let trip = buildTripObject();
     trip.private = false;
-    TripFactory.postTrip(trip);
+    TripFactory.postTrip(trip)
+    .then((data) => {
+      $location.url("/browse");
+    });
     // TODO: print a success message or load a new route?
   };
 

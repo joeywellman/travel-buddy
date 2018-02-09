@@ -4,8 +4,10 @@
     <div class="col-md search-container">
       <div id="search-bar-container">
         <h5>Search for places and add them to your trip</h5>
-        <textarea class="search-bar" ng-model = "searchString"></textarea>
-        <button class="btn btn-secondary" ng-click = "searchPlaces()">Search</button>
+        <div class = "row">
+          <input class="col-sm-8 form-control" ng-model = "searchString" type="text" placeholder="Hot chicken in Nashville">
+          <button class="col-sm-4 btn btn-secondary" ng-click = "searchPlaces()">Search</button>
+        </div>
       </div>
       <div class="search-results-container">
         <div ng-repeat = "place in places" class="card" id = "place.id" style="width: 20rem;">
@@ -31,7 +33,7 @@
           <input type="text" class="form-control" ng-model = "trip.description" id="trip-description" placeholder="Awesome hikes less than 2 hours away">
         </div>
         <p>This trip is a:</p>
-        <select class="form-group" ng-model = "trip.type" id="trip-type">
+        <select class="form-control" ng-model = "trip.type" id="trip-type">
           <option value="itenerary">Itenerary</option>
           <option value="collection">Collection</option>
         </select>

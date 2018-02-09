@@ -1,12 +1,25 @@
-$primary-color: rgb(112, 112, 172);
+$primary-color: rgb(151, 199, 41);
 $secondary-color: rgb(170, 209, 170);
 $border-color: rgb(209, 208, 208);
 
 
+
 *{
     padding: 0.5em;
+    font-family: 'Roboto', sans-serif;
+    
 }
 
+nav{
+    background-color: $primary-color;
+    a{
+        color: white;
+    }
+}
+
+h1, h2, h3, h4, h5{
+    font-family: 'Montserrat', sans-serif;
+}
 .searchbar{
     height: 1.5em;
     background-color: rgb(224, 224, 224);
