@@ -10,18 +10,51 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   // resolves an array of places
   // adds property of photo link to each place object
   // sets places array to scope variable
+
+  // $scope.searchPlaces = () => {
+  //   GMapsFactory.placesSearch($scope.searchString)
+  //   .then((places) => {
+  //     places.map((place) => {
+  //       if (place.photos[0].photo_reference !== null){
+  //         let imageKey = place.photos[0].photo_reference;
+  //         place.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+  //       }
+  //     });
+  //     $scope.places = places;
+  //   });
+  // };
+
   $scope.searchPlaces = () => {
     GMapsFactory.placesSearch($scope.searchString)
-    .then((places) => {
-      places.map((place) => {
-        if (place.photos[0].photo_reference !== null){
-          let imageKey = place.photos[0].photo_reference;
-          place.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-        }
+      .then((places) => {
+        places.forEach((place) => {
+          console.log("this should be the indivdual place result from the search", place);
+          GMapsFactory.getPlaceInfo(place.place_id)
+          .then(placeDetails => {
+            console.log("this should be each place detail", placeDetails);
+          });
+        });
       });
-      $scope.places = places;
-    });
   };
+
+
+  // TripFactory.getTripDetails($routeParams.tripId)
+  //   .then(trip => {
+  //     $scope.trip = trip;
+  //     let locations = trip.locations;
+  //     locations.forEach((locationId) => {
+  //       TripFactory.getPlaceDetails(locationId)
+  //         .then((placeDetails) => {
+  //           for (let place in placeDetails) {
+  //             GMapsFactory.getPlaceInfo(placeDetails[place].id)
+  //               .then(placeInfo => {
+  //                 tripLocations.push(placeInfo.result);
+  //               });
+  //           }
+  //         });
+  //     });
+  //     $scope.tripLocations = tripLocations;
+  //   });
 
   // fired when user clicks 'add to trip' button on a place card
   // pushes place object into global array 
