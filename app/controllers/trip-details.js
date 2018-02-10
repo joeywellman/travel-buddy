@@ -24,9 +24,11 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
       });
       console.log("trip locations", tripLocations);
       $scope.tripLocations = tripLocations;
+      $scope.centerLat = tripLocations[0].geometry.location.lat;
+      $scope.centerLong = tripLocations[0].geometry.location.lng;
     });
 
-  $scope.center = "41,-87";
+  
 
   
 
