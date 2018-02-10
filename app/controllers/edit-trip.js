@@ -94,11 +94,12 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
     savePlaceObjects();
     let trip = buildTripObject();
     trip.private = true;
-    TripFactory.updateTrip(trip, trip.id)
+    console.log("this is the trip that you're putting", trip);
+    console.log("this is the trip id", $routeParams.tripId);
+    TripFactory.updateTrip(trip, $routeParams.tripId)
       .then((data) => {
         $location.url("/browse");
       });
-    // TODO: print a success message or load a new route?
   };
 
   //saves all places in trip
@@ -112,7 +113,6 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
       .then((data) => {
         $location.url("/browse");
       });
-    // TODO: print a success message or load a new route?
   };
 
 });

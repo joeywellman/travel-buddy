@@ -37,12 +37,10 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
   //promises details of specified trip
   // resolves an object
   function getTripDetails(tripId){
-    console.log("this is the trip id from within the factory", tripId);
     return $q((resolve, reject) => {
       $http
         .get(`${FBUrl}/trips/${tripId}.json`)
         .then((trip) => {
-          console.log("this is what the getTripDetails is resolving", trip);
           resolve(trip.data);
         })
         .catch(err => {
@@ -119,7 +117,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
       $http.get(`${FBUrl}/trips.json?orderBy="uid"&equalTo="${uid}"`)
         .then(({ data }) => {
           let tripArray = formatData(data);
-          console.log(tripArray);
           resolve(tripArray);
         });
       });
