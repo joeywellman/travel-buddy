@@ -1,14 +1,41 @@
 <div class="view-single-trip hidden" id="single-trip-section">
-  <h3>Trip Name</h3>
+  <h3>{{trip.name}}</h3>
   <h4>Author</h4>
-  <p class="trip-description">Description</p>
+  <p class="trip-description">{{trip.description}}</p>
 
   <div class="container">
+
+    <div class = "row">
+      <div class = "col-sm-6 p-2">
+        <div ng-repeat="location in tripLocations track by $index" class="card col-md-4 p-1" id="place.id" style="width: 20rem;">
+          <img class="card-img-top" ng-src="{{location.image}}" alt="Picture of a place">
+          <div class="card-block">
+            <h4 class="card-title">{{location.name}}</h4>
+            <p class="card-text">{{location.formatted_address}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="single-trip-map-container">
       <div class="col-md-4">
         <ng-map class="google-map-container" center={{center}} zoom="5" pan-control="true" zoom-control="true" scale-control="true">
-          <marker position="-25.363882,131.044922" title="Hello World!"></marker>
+          <marker ng-repeat = "location in tripLocations" position={{location.formatted_address}} title={{location.name}}></marker>
         </ng-map>
+
+        <!-- <div class="mapContainer">
+          <ng-map zoom="4" center="[37.0902, -95.7129]" style="width:500px; height:300px">
+            <marker ng-repeat="stay in stays" position="{{stay.address}}" id={{stay.stayId}} on-click="showDetail(stay)"></marker>
+            <info-window id="stayInfoWindow">
+              <div ng-non-bindable>
+                <h6>{{selectedStay.name}}</h6>
+                <strong>Address:</strong> {{selectedStay.address}}
+                <br>
+                <strong>Your Review:</strong> {{selectedStay.review}}
+              </div>
+            </info-window>
+          </ng-map>
+        </div> -->
+        
       </div>
     </div>
     <div id="details-container"></div>

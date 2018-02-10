@@ -2,11 +2,7 @@
 
 angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
-  // // HELPER FUNCTIONS
-  // function addKeys(dataObject){
-  //   // adds firebase keys to firebase data
-  // }
-
+  // // HELPER FUNCTION
   // converts to array and attaches firebase keys
   function formatData(dataObject){
     Object.keys(dataObject).map(key => {
