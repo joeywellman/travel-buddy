@@ -2,6 +2,7 @@
 angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds) {
   $scope.title = "Build A Trip";
   const tripLocations = [];
+  const searchResults = [];
 
 
   // PLACES SEARCH
@@ -10,17 +11,22 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   // resolves an array of places
   // adds property of photo link to each place object
   // sets places array to scope variable
+
   $scope.searchPlaces = () => {
     GMapsFactory.placesSearch($scope.searchString)
-    .then((places) => {
-      places.map((place) => {
-        if (place.photos[0].photo_reference !== null){
-          let imageKey = place.photos[0].photo_reference;
-          place.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-        }
+      .then((places) => {
+        places.forEach((place) => {
+          GMapsFactory.getPlaceInfo(place.place_id)
+          .then(placeDetails => {
+            if (placeDetails.data.result.photos[0].photo_reference !== null) {
+              let imageKey = place.photos[0].photo_reference;
+              placeDetails.data.result.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+            }
+            searchResults.push(placeDetails.data.result);
+          });
+        });
+        $scope.searchResults = searchResults;
       });
-      $scope.places = places;
-    });
   };
 
   // fired when user clicks 'add to trip' button on a place card

@@ -11,7 +11,19 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
     });
   }
 
+  function getPlaceInfo(placeId) {
+    return $q((resolve, reject) => {
+      $http.get(`https://travel-buddy-proxy-server.herokuapp.com/api/maps/api/place/details/json?placeid=${placeId}&key=${GMapsCreds.apiKey}`)
+        .then((placeDetails) => {
+          resolve(placeDetails);
+        });
+    });
+  }
 
-  return {placesSearch};
+
+  
+
+
+  return {placesSearch, getPlaceInfo};
 
 });
