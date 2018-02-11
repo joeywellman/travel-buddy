@@ -5,11 +5,13 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
   // // HELPER FUNCTION
   // converts to array and attaches firebase keys
   function formatData(dataObject){
-    Object.keys(dataObject).map(key => {
+    const dataArray = [];
+    let fbKeys = Object.keys(dataObject);
+    fbKeys.forEach(key => {
       dataObject[key].id = key;
-      return dataObject[key];
+      dataArray.push(dataObject[key]);
     });
-    return dataObject;
+    return dataArray;
   } 
 
 

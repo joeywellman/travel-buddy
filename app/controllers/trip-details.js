@@ -8,6 +8,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
 
 
 // eventually this needs to go in a factory I think
+// also needs to be broken out into smaller chunks
   TripFactory.getTripDetails($routeParams.tripId)
     .then(trip => {
       $scope.trip = trip;
