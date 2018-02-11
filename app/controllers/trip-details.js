@@ -5,8 +5,6 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
   const firebasePlaces = []; 
   let location = {}; 
 
-
-
 // eventually this needs to go in a factory I think
 // also needs to be broken out into smaller chunks
   TripFactory.getTripDetails($routeParams.tripId)
@@ -38,34 +36,17 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
       });
   
 
-  
-
-  // let user = firebase.auth().currentUser.uid;
-
-  // FbFactory.getPastStays(user)
-  //   .then((stays) => {
-  //     $scope.stays = stays;
-  //     console.log("data received by stayMap controller", stays);
-  //   });
 
 
-  // $scope.showDetail = function (e, selectedStay) {
-  //   $scope.selectedStay = selectedStay;
-  //   // console.log("What is selectedStay", $scope.selectedStay.stayId);
-  //   $scope.map.showInfoWindow("stayInfoWindow", selectedStay.stayId);
-  // };
+  $scope.showDetail = function (e, selectedLocation) {
+    $scope.selectedLocation= selectedLocation;
+    $scope.map.showInfoWindow("locationDetails", selectedLocation.id);
+  };
 
-  // $scope.hideDetail = function () {
-  //   $scope.map.hideInfoWindow("stayInfoWindow");
-  // };
+  $scope.hideDetail = function () {
+    $scope.map.hideInfoWindow("locationDetails");
+  };
 
-
-  // TripFactory.getTripDetails($routeParams.tripId)
-  // should get back one trip object
-  // set to scope
-
-  //loop through place array, pass each place into TripFactory.getPlaceDetails
-  // pass gmaps id to map
 
   // on click --> add to Faves(uid, tripId)
 
