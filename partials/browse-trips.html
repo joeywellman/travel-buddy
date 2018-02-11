@@ -2,7 +2,10 @@
   <h2>Browse Trips</h2>
   <div class="container">
     <div class="row">
-      <div class="trip-card col-sm-4" ng-repeat ="trip in trips">
+      <input class="col-sm-8 form-control" ng-model="searchTerm" type="text" placeholder="Search trips">
+    </div>
+    <div class="row">
+      <div class="trip-card col-sm-4" ng-repeat ="trip in trips | filter: {description: searchTerm}">
         <h4 class="trip-name">{{trip.name}}</h4>
         <h5 class="trip-author">Trip Author</h5>
           <p class="trip-description">{{trip.description}}</p>
