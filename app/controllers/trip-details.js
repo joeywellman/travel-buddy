@@ -2,32 +2,39 @@
 angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, TripFactory, $routeParams, GMapsCreds, GMapsFactory, NgMap) {
 
   const tripLocations = [];
+  const firebasePlaces = []; 
+  let location = {}; 
+
+
+
 // eventually this needs to go in a factory I think
   TripFactory.getTripDetails($routeParams.tripId)
     .then(trip => {
       $scope.trip = trip;
       let locations = trip.locations;
-      locations.forEach((locationId) => {
-        TripFactory.getPlaceDetails(locationId)
-          .then((placeDetails) => {
-            for (let place in placeDetails) {
-              GMapsFactory.getPlaceInfo(placeDetails[place].id)
-                .then(placeInfo => {
-                  if (placeInfo.data.result.photos[0].photo_reference !== null) {
-                    let imageKey = placeInfo.data.result.photos[0].photo_reference;
-                    placeInfo.data.result.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-                  }
-                  tripLocations.push(placeInfo.data.result);
-                });
-            }
-          });
+      locations.forEach(locationId => {
+        firebasePlaces.push(TripFactory.getPlaceDetails(locationId));
       });
-      console.log("trip locations", tripLocations);
-      $scope.tripLocations = tripLocations;
-      $scope.centerLat = tripLocations[0].geometry.location.lat;
-      $scope.centerLong = tripLocations[0].geometry.location.lng;
-    });
-
+      return Promise.all(firebasePlaces); // array of promises to get firebase place details
+    })
+    .then(placeDetails => {
+      placeDetails.forEach(placeObject => { // this will fix itself once we query by firebase keys rather than place ids
+        for (let place in placeObject){
+          // place.description = placeObject[place].description;
+          GMapsFactory.getPlaceInfo(placeObject[place].id)
+          .then(placeDetails => {
+            location.address = placeDetails.data.result.formatted_address;
+            location.name = placeDetails.data.result.name;
+            if (placeDetails.data.result.photos[0].photo_reference !== null) {
+              let imageKey = placeDetails.data.result.photos[0].photo_reference;
+              location.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+            }
+            tripLocations.push(location);
+            $scope.tripLocations = tripLocations;
+            });
+          }
+        });
+      });
   
 
   
