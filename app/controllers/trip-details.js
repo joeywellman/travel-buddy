@@ -22,7 +22,6 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
                     placeInfo.data.result.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
                   }
                   tripLocations.push(placeInfo.data.result);
-                  console.log(tripLocations[0]);
                   let firstLat = tripLocations[0].geometry.location.lat;
                   let firstLong = tripLocations[0].geometry.location.lng;
                   $scope.mapCenter = `${firstLat}, ${firstLong}`;
@@ -35,9 +34,11 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
 
 
 
-  $scope.showDetail = function (e, selectedLocation) {
-    $scope.selectedLocation= selectedLocation;
-    $scope.map.showInfoWindow("locationDetails", selectedLocation.id);
+  $scope.showDetails = function (event, location) {
+    console.log("you clicked on this location", location);
+    console.log("this is the event", event);
+    $scope.selectedLocation= location;
+    $scope.map.showInfoWindow(event, 'details');
   };
 
   $scope.hideDetail = function () {

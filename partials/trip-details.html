@@ -17,7 +17,7 @@
     <div class = "col-sm-6 p-2">
       <ng-map class="google-map-container" center="{{mapCenter}}" zoom="9" pan-control="true" zoom-control="true" scale-control="true">
         <marker ng-repeat = "location in tripLocations track by $index" position={{location.formatted_address}} title={{location.name}} id={{location.id}} on-click = "showDetails(location)"></marker>
-        <info-window id="locationDetails">
+        <info-window id="details">
           <div ng-non-bindable>
             <h5>{{selectedLocation.name}}</h5>
             <p>{{selectedLocation.address}}</p>
