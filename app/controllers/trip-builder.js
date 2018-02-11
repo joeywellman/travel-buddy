@@ -3,6 +3,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   $scope.title = "Build A Trip";
   const tripLocations = [];
   const searchResults = [];
+  const placeIds = [];
 
 
   // PLACES SEARCH
@@ -45,19 +46,16 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
         description: location.description,
         id: location.place_id
       };
-      TripFactory.postPlace(place);
+      TripFactory.postPlace(place)
+      .then(data => placeIds.push(data.data.name));
     });
   };
 
   // creates a trip object from $scope inputs, adds an array of location ids
   // returns a trip object
   const buildTripObject = () => {
-    // $scope.trip.uid = firebase.auth().currentUser.uid;
-    const tripIds = tripLocations.map(location => {
-      location = location.place_id;
-      return location;
-    });
-    $scope.trip.locations = tripIds; // right now this is google place ids, could it be firebase ids at some point? should it be?
+    console.log("this should be a bunch of firebase ids", placeIds);
+    $scope.trip.locations = placeIds;
     $scope.trip.uid = firebase.auth().currentUser.uid;
     return $scope.trip;
   };
