@@ -35,8 +35,6 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
 
 
   $scope.showDetails = function (event, location) {
-    console.log("you clicked on this location", location);
-    console.log("this is the event", event);
     $scope.selectedLocation= location;
     $scope.map.showInfoWindow(event, 'details');
   };
