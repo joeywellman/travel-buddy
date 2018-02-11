@@ -6,7 +6,7 @@
     <div class = "col-sm-6 p-2">
       <div class = "row">
         <div ng-repeat="location in tripLocations track by $index" class="card col-md-8 m-1" id="place.id" style="width: 20rem;">
-          <img class="card-img-top" ng-src="{{location.image}}" alt="Picture of a place">
+          <img class="card-img-top" ng-src="{{location.image}}" alt="{{location.name}}">
           <div class="card-block">
             <h4 class="card-title">{{location.name}}</h4>
             <p class="card-text">{{location.address}}</p>
@@ -15,8 +15,8 @@
       </div>
     </div>
     <div class = "col-sm-6 p-2">
-      <ng-map class="google-map-container" center="{{centerLat}}, {{centerLong}]" zoom="5" pan-control="true" zoom-control="true" scale-control="true">
-        <marker ng-repeat = "location in tripLocations" position={{location.formatted_address}} title={{location.name}} id={{location.id}} on-click = "showDetails(location)"></marker>
+      <ng-map class="google-map-container" center="{{mapCenter}}" zoom="9" pan-control="true" zoom-control="true" scale-control="true">
+        <marker ng-repeat = "location in tripLocations track by $index" position={{location.formatted_address}} title={{location.name}} id={{location.id}} on-click = "showDetails(location)"></marker>
         <info-window id="locationDetails">
           <div ng-non-bindable>
             <h5>{{selectedLocation.name}}</h5>

@@ -2,39 +2,36 @@
 angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, TripFactory, $routeParams, GMapsCreds, GMapsFactory, NgMap) {
 
   const tripLocations = [];
-  const firebasePlaces = []; 
-  let location = {}; 
+  // const firebasePlaces = []; 
+  // let location = {}; 
+  
 
-// eventually this needs to go in a factory I think
-// also needs to be broken out into smaller chunks
+  // TODO: this needs to print descriptions too!
   TripFactory.getTripDetails($routeParams.tripId)
     .then(trip => {
       $scope.trip = trip;
       let locations = trip.locations;
-      locations.forEach(locationId => {
-        firebasePlaces.push(TripFactory.getPlaceDetails(locationId));
-      });
-      return Promise.all(firebasePlaces); // array of promises to get firebase place details
-    })
-    .then(placeDetails => {
-      placeDetails.forEach(placeObject => { // this will fix itself once we query by firebase keys rather than place ids
-        for (let place in placeObject){
-          // place.description = placeObject[place].description;
-          GMapsFactory.getPlaceInfo(placeObject[place].id)
-          .then(placeDetails => {
-            location.address = placeDetails.data.result.formatted_address;
-            location.name = placeDetails.data.result.name;
-            if (placeDetails.data.result.photos[0].photo_reference !== null) {
-              let imageKey = placeDetails.data.result.photos[0].photo_reference;
-              location.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-            }
-            tripLocations.push(location);
-            $scope.tripLocations = tripLocations;
-            });
-          }
+      locations.forEach((locationId) => {
+        TripFactory.getPlaceDetails(locationId)
+          .then((placeDetails) => {
+            for (let place in placeDetails) {
+              GMapsFactory.getPlaceInfo(placeDetails[place].id)
+                .then(placeInfo => {
+                  if (placeInfo.data.result.photos[0].photo_reference !== null) {
+                    let imageKey = placeInfo.data.result.photos[0].photo_reference;
+                    placeInfo.data.result.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+                  }
+                  tripLocations.push(placeInfo.data.result);
+                  console.log(tripLocations[0]);
+                  let firstLat = tripLocations[0].geometry.location.lat;
+                  let firstLong = tripLocations[0].geometry.location.lng;
+                  $scope.mapCenter = `${firstLat}, ${firstLong}`;
+                  $scope.tripLocations = tripLocations; // this shouldn't be in a loop! aaaaaahh
+                });
+              }
+          });
         });
       });
-  
 
 
 

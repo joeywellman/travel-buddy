@@ -182,6 +182,37 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     });
   }
 
+  // MONSTER FUNCTION THAT NEEDS SERIOUS HELP
+  // // eventually this needs to go in a factory I think
+// // also needs to be broken out into smaller chunks
+//   TripFactory.getTripDetails($routeParams.tripId)
+//     .then(trip => {
+//       $scope.trip = trip;
+//       let locations = trip.locations;
+//       locations.forEach(locationId => {
+//         firebasePlaces.push(TripFactory.getPlaceDetails(locationId));
+//       });
+//       return Promise.all(firebasePlaces); // array of promises to get firebase place details
+//     })
+//     .then(placeDetails => {
+//       placeDetails.forEach(placeObject => { // this will fix itself once we query by firebase keys rather than place ids
+//         for (let place in placeObject){
+//           // place.description = placeObject[place].description;
+//           GMapsFactory.getPlaceInfo(placeObject[place].id)
+//           .then(placeDetails => {
+//             location.address = placeDetails.data.result.formatted_address;
+//             location.name = placeDetails.data.result.name;
+//             if (placeDetails.data.result.photos[0].photo_reference !== null) {
+//               let imageKey = placeDetails.data.result.photos[0].photo_reference;
+//               location.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+//             }
+//             tripLocations.push(location);
+//             console.log(tripLocations);
+//             $scope.tripLocations = tripLocations;
+//             });
+//           }
+//         });
+//       });
   
 
   return {getAllPublicTrips, getTripDetails, getPlaceDetails, postTrip, postPlace, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave};
