@@ -29,10 +29,26 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
     return $q.all(promises);
   }
 
+  // destructures data and adds image key to places 
+  function formatPlaces(placeData) {
+    const formattedPlaces = placeData.map(place => {
+      addImageKey(place.data.result);
+      return place.data.result;
+    });
+    return formattedPlaces;
+  }
+
+  function addImageKey(placeObject) {
+    if (placeObject.photos[0].photo_reference !== null) {
+      let imageKey = placeObject.photos[0].photo_reference;
+      placeObject.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+    }
+  }
+
 
   
 
 
-  return {placesSearch, getPlaceInfo, getPlaceDetails};
+  return {placesSearch, getPlaceInfo, getPlaceDetails, formatPlaces};
 
 });
