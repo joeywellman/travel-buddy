@@ -1,7 +1,7 @@
 'use strict';
 angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripFactory, $routeParams, GMapsFactory, GMapsCreds, $location) {
   $scope.title = "Edit Your Trip";
-  const tripLocations = [];
+  let tripLocations = [];
   const searchResults = [];
 
   // right now this posts a new undefined trip rather than updates a trip!
@@ -28,7 +28,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
       return GMapsFactory.getGooglePlaces(formattedData);
     })
     .then(placeDetails => { // gets place details from google places
-      let tripLocations = GMapsFactory.formatPlaces(placeDetails);
+      tripLocations = GMapsFactory.formatPlaces(placeDetails);
       $scope.tripLocations = tripLocations;
     });
 
@@ -46,7 +46,6 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   $scope.addToTrip = (place) => {
     tripLocations.push(place);
     // TODO: add buttons to reorder trip
-    $scope.tripLocations = tripLocations;
   };
 
   // creates place object for each location in the trip (description and google place id), posts each place object to firebase 
