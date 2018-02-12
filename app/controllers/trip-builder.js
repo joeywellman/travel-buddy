@@ -3,7 +3,6 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   $scope.title = "Build A Trip";
   const tripLocations = [];
   const searchResults = [];
-  const placeIds = [];
 
 // passes user search into google maps api calls, fetches search results and then details for each search result
   $scope.searchPlaces = () => {
@@ -36,58 +35,44 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     return placeObjects;
   };
 
-  $scope.saveTrip = () => {
-    const fbPlaces = buildPlaceObjects();
-    console.log("this is what'sgetting sent to firebase", fbPlaces);
-    TripFactory.postPlaces(fbPlaces)
-    .then(fbData => {
-      console.log("firebase return", fbData);
+  const getFirebaseIds = (fbPostData) => {
+    let ids = fbPostData.map(post => {
+      post = post.data.name;
+      return post;
     });
+    return ids;
+  };
+
+  // this function adds locations, uid, and privacy status to trip objects (everything that wasn't added directly via user input)
+  const buildTripObject = (placeIds, status) => {
+    console.log("place ids from within build trip obect", placeIds); // evaluated after! this is not actually posting to firebase
+    $scope.trip.locations = placeIds;
+    $scope.trip.uid = firebase.auth().currentUser.uid;
+    $scope.trip.status = status;
+    return $scope.trip;
+  };
+
+  const postTrip = (status) => {
+    const fbPlaces = buildPlaceObjects();
+    TripFactory.postPlaces(fbPlaces)
+      .then(fbData => {
+        let placeIds = getFirebaseIds(fbData);
+        console.log("these should be firebase ids", placeIds);
+        const trip = buildTripObject(placeIds, status);
+        console.log("trip you're sending to firebase", trip);
+        return TripFactory.postTrip(trip);
+      })
+      .then((data)=> {
+        $location.url("/browse");
+      });
+  };
+
+  $scope.saveTrip = () => {
+    postTrip("private");
   };
 
   $scope.publishTrip = () => {
-
+    postTrip("public");
   };
-  
-  
-
-  // // creates a trip object from $scope inputs, adds an array of location ids
-  // // returns a trip object
-  // const buildTripObject = () => {
-  //   console.log("place ids from within build trip obect", placeIds); // evaluated after! this is not actually posting to firebase
-  //   $scope.trip.locations = placeIds;
-  //   $scope.trip.uid = firebase.auth().currentUser.uid;
-  //   console.log("this is what's getting posted to firebase, should have firebase ids attached", $scope.trip);
-  //   return $scope.trip;
-  // };
-
-
-  // // saves all places in trip
-  // // sets trip as PRIVATE
-  // // posts trip to Firebase
-  // $scope.saveTrip = () => {
-  //   savePlaceObjects();
-  //   let trip = buildTripObject();
-  //   trip.private = true;
-  //   TripFactory.postTrip(trip)
-  //   .then((data) => {
-  //     $location.url("/browse");
-  //   });
-  //   // TODO: print a success message or load a new route?
-  // };
-
-  // //saves all places in trip
-  // // sets trip as PUBLIC
-  // // post trip to firebase
-  // $scope.publishTrip = () => {
-  //   savePlaceObjects();
-  //   let trip = buildTripObject();
-  //   trip.private = false;
-  //   TripFactory.postTrip(trip)
-  //   .then((data) => {
-  //     $location.url("/browse");
-  //   });
-  //   // TODO: print a success message or load a new route?
-  // };
 
 });
