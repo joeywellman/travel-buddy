@@ -15,6 +15,8 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
   } 
 
 
+
+
   //EXPORTED FUNCTIONS
 
    // promises all PUBLIC trips
@@ -52,7 +54,7 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
   function getPlaceDetails(placeId){
     return $q((resolve, reject) => {
       $http
-        .get(`${FBUrl}/places.json?orderBy="id"&equalTo="${placeId}"`)
+        .get(`${FBUrl}/trips/${placeId}.json`)
         .then(item => {
           resolve(item.data);
         })
@@ -146,12 +148,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
         });
     });
   }
-
-  // function getSingleTrip(tripId){
-  //   // promises a single trip by id
-  //   // adds firebase key
-  //   // this will be used in a loop after the favorites return from getMyFavorites
-  // }
 
   // deletes trip from firebase
   function deleteTrip(tripId){

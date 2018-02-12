@@ -5,29 +5,16 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   const searchResults = [];
   const placeIds = [];
 
-
-  // PLACES SEARCH
-  // fires on search button click
-  // passes in input from search box and feeds into Google Places Web Service Text Search
-  // resolves an array of places
-  // adds property of photo link to each place object
-  // sets places array to scope variable
-
+// passes user search into google maps api calls, fetches search results and then details for each search result
   $scope.searchPlaces = () => {
     GMapsFactory.placesSearch($scope.searchString)
-      .then((places) => {
-        places.forEach((place) => {
-          GMapsFactory.getPlaceInfo(place.place_id)
-          .then(placeDetails => {
-            if (placeDetails.data.result.photos[0].photo_reference !== null) {
-              let imageKey = place.photos[0].photo_reference;
-              placeDetails.data.result.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-            }
-            searchResults.push(placeDetails.data.result);
-          });
-        });
-        $scope.searchResults = searchResults;
-      });
+    .then(places => {
+      return GMapsFactory.getPlaceDetails(places);
+    })
+    .then(placeDetails => {
+      console.log("this is the controller's place details", placeDetails);
+      $scope.searchResults = placeDetails;
+    });
   };
 
   // fired when user clicks 'add to trip' button on a place card
@@ -47,16 +34,20 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
         id: location.place_id
       };
       TripFactory.postPlace(place)
-      .then(data => placeIds.push(data.data.name));
+      .then(data => {
+        placeIds.push(data.data.name);
+        // NEED TO BUILD TRIP OBJECT IN THIS .THEN
+      });
     });
   };
 
   // creates a trip object from $scope inputs, adds an array of location ids
   // returns a trip object
   const buildTripObject = () => {
-    console.log("this should be a bunch of firebase ids", placeIds);
+    console.log("place ids from within build trip obect", placeIds); // evaluated after! this is not actually posting to firebase
     $scope.trip.locations = placeIds;
     $scope.trip.uid = firebase.auth().currentUser.uid;
+    console.log("this is what's getting posted to firebase, should have firebase ids attached", $scope.trip);
     return $scope.trip;
   };
 
