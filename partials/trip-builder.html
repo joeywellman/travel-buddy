@@ -10,11 +10,24 @@
         </div>
       </div>
       <div class="search-results-container">
-        <div ng-repeat = "result in searchResults track by $index" class="card" id = "place.id" style="width: 20rem;">
+        <div ng-repeat = "result in searchResults" class="card trip-card" id = "place.id" style="width: 20rem;">
+          <!-- <img class = "icon" ng-src = "{{result.icon}}"> -->
           <img class="card-img-top" ng-src="{{result.image}}" alt="Picture of a place">
           <div class="card-block">
             <h4 class="card-title">{{result.name}}</h4>
             <p class="card-text">{{result.formatted_address}}</p>
+            <p class="card-text">Google Rating: {{result.rating}}</p>
+            <button type="button" class="btn btn-secondary" ng-click="toggleReviews(result)">View Reviews</button>
+             <!-- ng-click="isCollapsed = !isCollapsed" -->
+            <div ng-show="isCollapsed">
+              <div ng-repeat = "review in result.reviews track by $index" ng-show = "isCurrent($index)">
+                <p>Rating: {{review.rating}}</p> 
+                <p>Author: {{review.author_name}}</p> 
+                <p>{{review.relative_time_description}}</p> 
+                <p>Review: {{review.text}}</p> 
+              </div>
+              <button type = "button" class = "btn btn-secondary" ng-click = "nextReview()">Next Review</button>
+            </div>
             <button ng-click = "addToTrip(result)" class="btn btn-primary">Add To Trip</button>
           </div>
         </div>

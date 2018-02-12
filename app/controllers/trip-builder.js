@@ -3,6 +3,10 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   $scope.title = "Build A Trip";
   const tripLocations = [];
   const searchResults = [];
+  $scope.isCollapsed = false;
+  let reviewsLength = null;
+  
+
 
 // passes user search into google maps api calls, fetches search results and then details for each search result
   $scope.searchPlaces = () => {
@@ -11,10 +15,34 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
       return GMapsFactory.getGooglePlaces(places); // returns an array of promises
     })
     .then(placeDetails => {
-      $scope.searchResults = GMapsFactory.formatPlaces(placeDetails); 
+      let searchResults = GMapsFactory.formatPlaces(placeDetails);
+      $scope.searchResults = searchResults;
+      $scope.currentIndex = 0;
     });
   };
 
+  $scope.toggleReviews = (result) => {
+    reviewsLength = result.reviews.length;
+    $scope.isCollapsed = !$scope.isCollapsed;
+  };
+
+  $scope.isCurrent = ($index) => {
+    if ($index == $scope.currentIndex){
+      return true;
+    } else{
+      return false;
+    }
+  };
+
+  $scope.nextReview = () => {
+    $scope.currentIndex += 1;
+    if ($scope.currentIndex === reviewsLength){
+      $scope.currentIndex = 0;
+    }
+  };
+  
+  
+ 
 
   // fired when user clicks 'add to trip' button on a place card, pushes place object into global array
   $scope.addToTrip = (place) => {
