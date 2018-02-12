@@ -12,10 +12,28 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
       return GMapsFactory.getPlaceDetails(places);
     })
     .then(placeDetails => {
-      console.log("this is the controller's place details", placeDetails);
-      $scope.searchResults = placeDetails;
+      let formattedPlaces = formatPlaces(placeDetails);
+      $scope.searchResults = formattedPlaces;
     });
   };
+
+// destructures data and adds image key to places 
+  function formatPlaces(placeData){
+    const formattedPlaces = placeData.map(place => {
+      addImageKey(place.data.result);
+      return place.data.result;
+    });
+    return formattedPlaces;
+  }
+
+  function addImageKey(placeObject){
+    if (placeObject.photos[0].photo_reference !== null) {
+      let imageKey = placeObject.photos[0].photo_reference;
+      placeObject.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+    }
+  }
+
+
 
   // fired when user clicks 'add to trip' button on a place card
   // pushes place object into global array 
