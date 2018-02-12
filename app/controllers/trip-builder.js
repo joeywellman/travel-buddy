@@ -35,6 +35,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     return placeObjects;
   };
 
+  // takes firebase id from POST, returns array of fb ids
   const getFirebaseIds = (fbPostData) => {
     let ids = fbPostData.map(post => {
       post = post.data.name;
@@ -43,23 +44,21 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     return ids;
   };
 
-  // this function adds locations, uid, and privacy status to trip objects (everything that wasn't added directly via user input)
+  //adds locations, uid, and privacy status to trip objects
   const buildTripObject = (placeIds, status) => {
-    console.log("place ids from within build trip obect", placeIds); // evaluated after! this is not actually posting to firebase
     $scope.trip.locations = placeIds;
     $scope.trip.uid = firebase.auth().currentUser.uid;
     $scope.trip.status = status;
     return $scope.trip;
   };
 
+  // posts places, grabs fb ids of places, posts trip
   const postTrip = (status) => {
     const fbPlaces = buildPlaceObjects();
     TripFactory.postPlaces(fbPlaces)
       .then(fbData => {
         let placeIds = getFirebaseIds(fbData);
-        console.log("these should be firebase ids", placeIds);
         const trip = buildTripObject(placeIds, status);
-        console.log("trip you're sending to firebase", trip);
         return TripFactory.postTrip(trip);
       })
       .then((data)=> {
