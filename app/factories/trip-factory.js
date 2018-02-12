@@ -15,6 +15,8 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
   } 
 
 
+
+
   //EXPORTED FUNCTIONS
 
    // promises all PUBLIC trips
@@ -29,8 +31,8 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
           let tripArray = formatData(data);
           resolve(tripArray);
         });
-    });
-  }
+      });
+    }
 
   //promises details of specified trip
   // resolves an object
@@ -47,19 +49,15 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     });
   }
 
-  // gets place details (gmaps id)
-    // resolves a single place obj
-  function getPlaceDetails(placeId){
-    return $q((resolve, reject) => {
-      $http
-        .get(`${FBUrl}/places.json?orderBy="id"&equalTo="${placeId}"`)
-        .then(item => {
-          resolve(item.data);
-        })
-        .catch(err => {
-          reject(err);
-        });
+  // accepts an array of firebase ids that match up to places
+  function getFirebasePlaces(placeArray){
+    const promises = [];
+    placeArray.forEach(place => {
+      console.log("place", place);
+      let promise = $http.get(`${FBUrl}/places/${place}.json`);
+      promises.push(promise);
     });
+    return $q.all(promises);
   }
 
   // posts trip object to firebase
@@ -77,20 +75,16 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     });
   }
 
-  //posts place object to firebase
-  function postPlace(placeObj){
-    return $q((resolve, reject) => {
-      $http
-        .post(`${FBUrl}/places.json`, JSON.stringify(placeObj))
-        .then(data => {
-          resolve(data);
-        })
-        .catch(error => {
-          console.log(error);
-          reject(error);
-        });
+  //accepts array of place objects, returns an array of promises to post each one to firebase
+  function postPlaces(placeObjects){
+    const promises = [];
+    placeObjects.forEach(place => {
+      let promise = $http.post(`${FBUrl}/places.json`, JSON.stringify(place));
+      promises.push(promise);
     });
+    return $q.all(promises);
   }
+
 
   function updateTrip(tripObj, tripId){
     return $q((resolve, reject) => {
@@ -141,17 +135,10 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     return $q((resolve, reject) => {
       $http.get(`${FBUrl}/favorites.json?orderBy="uid"&equalTo="${uid}"`)
         .then(({ data }) => {
-          console.log(data);
           resolve(data);
         });
     });
   }
-
-  // function getSingleTrip(tripId){
-  //   // promises a single trip by id
-  //   // adds firebase key
-  //   // this will be used in a loop after the favorites return from getMyFavorites
-  // }
 
   // deletes trip from firebase
   function deleteTrip(tripId){
@@ -182,39 +169,8 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     });
   }
 
-  // MONSTER FUNCTION THAT NEEDS SERIOUS HELP
-  // // eventually this needs to go in a factory I think
-// // also needs to be broken out into smaller chunks
-//   TripFactory.getTripDetails($routeParams.tripId)
-//     .then(trip => {
-//       $scope.trip = trip;
-//       let locations = trip.locations;
-//       locations.forEach(locationId => {
-//         firebasePlaces.push(TripFactory.getPlaceDetails(locationId));
-//       });
-//       return Promise.all(firebasePlaces); // array of promises to get firebase place details
-//     })
-//     .then(placeDetails => {
-//       placeDetails.forEach(placeObject => { // this will fix itself once we query by firebase keys rather than place ids
-//         for (let place in placeObject){
-//           // place.description = placeObject[place].description;
-//           GMapsFactory.getPlaceInfo(placeObject[place].id)
-//           .then(placeDetails => {
-//             location.address = placeDetails.data.result.formatted_address;
-//             location.name = placeDetails.data.result.name;
-//             if (placeDetails.data.result.photos[0].photo_reference !== null) {
-//               let imageKey = placeDetails.data.result.photos[0].photo_reference;
-//               location.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-//             }
-//             tripLocations.push(location);
-//             console.log(tripLocations);
-//             $scope.tripLocations = tripLocations;
-//             });
-//           }
-//         });
-//       });
-  
 
-  return {getAllPublicTrips, getTripDetails, getPlaceDetails, postTrip, postPlace, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave};
+
+  return {getAllPublicTrips, getTripDetails, getFirebasePlaces, postTrip, postPlaces, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave};
 
 });

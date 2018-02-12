@@ -6,32 +6,38 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
   // let location = {}; 
   
 
-  // TODO: this needs to print descriptions too!
-  TripFactory.getTripDetails($routeParams.tripId)
-    .then(trip => {
-      $scope.trip = trip;
-      let locations = trip.locations;
-      locations.forEach((locationId) => {
-        TripFactory.getPlaceDetails(locationId)
-          .then((placeDetails) => {
-            for (let place in placeDetails) {
-              GMapsFactory.getPlaceInfo(placeDetails[place].id)
-                .then(placeInfo => {
-                  if (placeInfo.data.result.photos[0].photo_reference !== null) {
-                    let imageKey = placeInfo.data.result.photos[0].photo_reference;
-                    placeInfo.data.result.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-                  }
-                  tripLocations.push(placeInfo.data.result);
-                  let firstLat = tripLocations[0].geometry.location.lat;
-                  let firstLong = tripLocations[0].geometry.location.lng;
-                  $scope.mapCenter = `${firstLat}, ${firstLong}`;
-                  $scope.tripLocations = tripLocations; // this shouldn't be in a loop! aaaaaahh
-                });
-              }
-          });
-        });
-      });
+  const setMapCenter = (placeDetails) => {
+    let firstLat = placeDetails[0].geometry.location.lat;
+    let firstLong = placeDetails[0].geometry.location.lng;
+    $scope.mapCenter = `${firstLat}, ${firstLong}`;
+  };
 
+  // destructures place data from firebase and adds property of place_id
+  // should this go in factory?
+  const formatPlaceData = (fbPlaceData) => {
+    let formattedData = fbPlaceData.map(place => {
+      place = place.data;
+      place.place_id = place.id;
+      return place;
+    });
+    return formattedData;
+  };
+
+  // gets trip info from firebase
+  TripFactory.getTripDetails($routeParams.tripId)
+  .then((tripDetails => {
+    $scope.trip = tripDetails;
+    return TripFactory.getFirebasePlaces(tripDetails.locations);
+  }))
+  .then(fbPlaceData => { // gets place details from firebase
+    let formattedData = formatPlaceData(fbPlaceData);
+    return GMapsFactory.getGooglePlaces(formattedData);
+  })
+  .then(placeDetails => { // gets place details from google places
+    let tripLocations = GMapsFactory.formatPlaces(placeDetails);
+    $scope.tripLocations = tripLocations;
+    setMapCenter(tripLocations);
+  });
 
 
   $scope.showDetails = function (event, location) {
@@ -42,9 +48,6 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
   $scope.hideDetail = function () {
     $scope.map.hideInfoWindow("locationDetails");
   };
-
-
-  // on click --> add to Faves(uid, tripId)
 
   // if this is the current user's trip, edit button appears
 
