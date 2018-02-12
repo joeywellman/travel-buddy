@@ -48,7 +48,11 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   const buildTripObject = (placeIds, status) => {
     $scope.trip.locations = placeIds;
     $scope.trip.uid = firebase.auth().currentUser.uid;
-    $scope.trip.status = status;
+    if (status == "private") {
+      $scope.trip.private = true;
+    } else if (status == "public") {
+      $scope.trip.private = false;
+    }
     return $scope.trip;
   };
 

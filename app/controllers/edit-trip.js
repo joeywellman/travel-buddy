@@ -4,11 +4,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   let tripLocations = [];
   const searchResults = [];
 
-  // right now this posts a new undefined trip rather than updates a trip!
-
-
   // destructures place data from firebase and adds property of place_id
-  // should this go in factory?
   const formatPlaceData = (fbPlaceData) => {
     let formattedData = fbPlaceData.map(place => {
       place = place.data;
@@ -73,7 +69,11 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   const buildTripObject = (placeIds, status) => {
     $scope.trip.locations = placeIds;
     $scope.trip.uid = firebase.auth().currentUser.uid;
-    $scope.trip.status = status;
+    if (status == "private"){
+      $scope.trip.private = true;
+    } else if (status == "public"){
+      $scope.trip.private = false;
+    }
     return $scope.trip;
   };
 
