@@ -6,33 +6,40 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
   // let location = {}; 
   
 
-  // TODO: this needs to print descriptions too!
-  TripFactory.getTripDetails($routeParams.tripId)
-    .then(trip => {
-      $scope.trip = trip;
-      console.log("this is the trip", trip);
-      let locations = trip.locations;
-      console.log("this is locations", locations);
-      locations.forEach((locationId) => {
-        TripFactory.getPlaceDetails(locationId)
-          .then((placeDetails) => {
-            console.log("this should be place details", placeDetails);
-            GMapsFactory.getPlaceInfo(placeDetails.id)
-              .then(placeInfo => {
-                if (placeInfo.data.result.photos[0].photo_reference !== null) {
-                  let imageKey = placeInfo.data.result.photos[0].photo_reference;
-                  placeInfo.data.result.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-                }
-                tripLocations.push(placeInfo.data.result);
-                let firstLat = tripLocations[0].geometry.location.lat;
-                let firstLong = tripLocations[0].geometry.location.lng;
-                $scope.mapCenter = `${firstLat}, ${firstLong}`;
-                $scope.tripLocations = tripLocations; // this shouldn't be in a loop! aaaaaahh
-              });
-        });
-        });
-      });
+  const setMapCenter = (placeDetails) => {
+    let firstLat = placeDetails[0].geometry.location.lat;
+    let firstLong = placeDetails[0].geometry.location.lng;
+    $scope.mapCenter = `${firstLat}, ${firstLong}`;
+  };
 
+  const formatPlaceData = (fbPlaceData) => {
+    let formattedData = fbPlaceData.map(place => {
+      place = place.data;
+      place.place_id = place.id;
+      return place;
+    });
+    return formattedData;
+  };
+
+  TripFactory.getTripDetails($routeParams.tripId)
+  .then((tripDetails => {
+    console.log("trip details", tripDetails);
+    $scope.trip = tripDetails;
+    return TripFactory.getFirebasePlaces(tripDetails.locations);
+  }))
+  .then(fbPlaceData => {
+    console.log("fbPlaceData", fbPlaceData);
+    let formattedData = formatPlaceData(fbPlaceData);
+    console.log("formatted data", formattedData);
+    return GMapsFactory.getGooglePlaces(formattedData);
+  })
+  .then(placeDetails => {
+    console.log("google palce details", placeDetails);
+    let tripLocations = GMapsFactory.formatPlaces(placeDetails);
+    console.log("trip locations", tripLocations);
+    $scope.tripLocations = tripLocations;
+    setMapCenter(tripLocations);
+  });
 
 
   $scope.showDetails = function (event, location) {

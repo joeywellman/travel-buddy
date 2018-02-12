@@ -8,7 +8,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   $scope.searchPlaces = () => {
     GMapsFactory.placesSearch($scope.searchString)
     .then(places => {
-      return GMapsFactory.getPlaceDetails(places); // returns an array of promises
+      return GMapsFactory.getGooglePlaces(places); // returns an array of promises
     })
     .then(placeDetails => {
       $scope.searchResults = GMapsFactory.formatPlaces(placeDetails); 

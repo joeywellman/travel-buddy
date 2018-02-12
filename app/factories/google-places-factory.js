@@ -20,7 +20,8 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
     });
   }
   
-  function getPlaceDetails(placeData){
+  // THE ISSUE IS PLACE.ID VS. PLACE.PLACE_ID
+  function getGooglePlaces(placeData){
     const promises = [];
     placeData.forEach(place => {
       let promise = $http.get(`https://travel-buddy-proxy-server.herokuapp.com/api/maps/api/place/details/json?placeid=${place.place_id}&key=${GMapsCreds.apiKey}`);
@@ -49,6 +50,6 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
   
 
 
-  return {placesSearch, getPlaceInfo, getPlaceDetails, formatPlaces};
+  return {placesSearch, getPlaceInfo, getGooglePlaces, formatPlaces};
 
 });
