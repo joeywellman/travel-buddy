@@ -6,7 +6,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
 
   // right now this posts a new undefined trip rather than updates a trip!
 
-  
+
   // destructures place data from firebase and adds property of place_id
   // should this go in factory?
   const formatPlaceData = (fbPlaceData) => {
@@ -85,7 +85,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
       .then(fbData => {
         let placeIds = getFirebaseIds(fbData);
         const trip = buildTripObject(placeIds, status);
-        return TripFactory.updateTrip(trip);
+        return TripFactory.updateTrip(trip, $routeParams.tripId);
       })
       .then((data) => {
         $location.url("/browse");
