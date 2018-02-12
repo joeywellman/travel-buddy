@@ -31,8 +31,8 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
           let tripArray = formatData(data);
           resolve(tripArray);
         });
-    });
-  }
+      });
+    }
 
   //promises details of specified trip
   // resolves an object
@@ -79,20 +79,16 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     });
   }
 
-  //posts place object to firebase
-  function postPlace(placeObj){
-    return $q((resolve, reject) => {
-      $http
-        .post(`${FBUrl}/places.json`, JSON.stringify(placeObj))
-        .then(data => {
-          resolve(data);
-        })
-        .catch(error => {
-          console.log(error);
-          reject(error);
-        });
+  //accepts array of place objects, returns an array of promises to post each one to firebase
+  function postPlaces(placeObjects){
+    const promises = [];
+    placeObjects.forEach(place => {
+      let promise = $http.post(`${FBUrl}/places.json`, JSON.stringify(place));
+      promises.push(promise);
     });
+    return $q.all(promises);
   }
+
 
   function updateTrip(tripObj, tripId){
     return $q((resolve, reject) => {
@@ -211,6 +207,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 //       });
   
 
-  return {getAllPublicTrips, getTripDetails, getPlaceDetails, postTrip, postPlace, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave};
+  return {getAllPublicTrips, getTripDetails, getPlaceDetails, postTrip, postPlaces, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave};
 
 });
