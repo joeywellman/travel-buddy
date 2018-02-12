@@ -135,7 +135,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     return $q((resolve, reject) => {
       $http.get(`${FBUrl}/favorites.json?orderBy="uid"&equalTo="${uid}"`)
         .then(({ data }) => {
-          console.log(data);
           resolve(data);
         });
     });
