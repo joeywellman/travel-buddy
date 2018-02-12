@@ -12,6 +12,8 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
     $scope.mapCenter = `${firstLat}, ${firstLong}`;
   };
 
+  // destructures place data from firebase and adds property of place_id
+  // should this go in factory?
   const formatPlaceData = (fbPlaceData) => {
     let formattedData = fbPlaceData.map(place => {
       place = place.data;
@@ -21,22 +23,18 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
     return formattedData;
   };
 
+  // gets trip info from firebase
   TripFactory.getTripDetails($routeParams.tripId)
   .then((tripDetails => {
-    console.log("trip details", tripDetails);
     $scope.trip = tripDetails;
     return TripFactory.getFirebasePlaces(tripDetails.locations);
   }))
-  .then(fbPlaceData => {
-    console.log("fbPlaceData", fbPlaceData);
+  .then(fbPlaceData => { // gets place details from firebase
     let formattedData = formatPlaceData(fbPlaceData);
-    console.log("formatted data", formattedData);
     return GMapsFactory.getGooglePlaces(formattedData);
   })
-  .then(placeDetails => {
-    console.log("google palce details", placeDetails);
+  .then(placeDetails => { // gets place details from google places
     let tripLocations = GMapsFactory.formatPlaces(placeDetails);
-    console.log("trip locations", tripLocations);
     $scope.tripLocations = tripLocations;
     setMapCenter(tripLocations);
   });
@@ -50,9 +48,6 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
   $scope.hideDetail = function () {
     $scope.map.hideInfoWindow("locationDetails");
   };
-
-
-  // on click --> add to Faves(uid, tripId)
 
   // if this is the current user's trip, edit button appears
 
