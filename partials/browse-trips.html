@@ -6,11 +6,14 @@
     </div>
     <div class="row">
       <div class="trip-card col-sm-4" ng-repeat ="trip in trips | filter: {description: searchTerm}">
-        <h4 class="trip-name">{{trip.name}}</h4>
-        <h5 class="trip-author">Trip Author</h5>
-          <p class="trip-description">{{trip.description}}</p>
-          <button class="btn btn-secondary view-trip"><a ng-href = "#!/view/{{trip.id}}">View Trip</a></button>
-          <button class="btn btn-secondary add-favorite" ng-click="addFavorite(trip.id)">Add To Favorites</button>
+        <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
+        <div class = "card-body">
+          <h4 class="trip-name">{{trip.name}}</h4>
+          <h5 class="trip-author">Trip Author</h5>
+            <p class="trip-description">{{trip.description}}</p>
+            <button class="btn btn-secondary view-trip"><a ng-href = "#!/view/{{trip.id}}">View Trip</a></button>
+            <button class="btn btn-secondary add-favorite" ng-click="addFavorite(trip.id)">Add To Favorites</button>
+        </div>
       </div>
     </div>
   </div>
