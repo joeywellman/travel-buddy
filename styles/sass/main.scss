@@ -29,6 +29,10 @@ h1, h2, h3, h4, h5{
     background-color: rgb(224, 224, 224);
 }
 
+.trip-container{
+    height: 80vh;
+    overflow: scroll;
+}
 .trip-card{
     img{
         object-fit: cover;
