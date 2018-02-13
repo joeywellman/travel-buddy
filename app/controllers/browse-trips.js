@@ -14,6 +14,7 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
     TripFactory.addFavorite(faveObj);
   };
 
+  // grabs first location from each trip's location array
   const getStartingPoints = (trips) => {
     let startingPoints = trips.map(trip => {
       let startingPoint = trip.locations[0];
@@ -22,15 +23,16 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
     return startingPoints;
   };
 
+  // adds starting point addresses onto trips
   const addStartingPoints= (googlePlaces) => {
     let tripsWithStartingPoints = publicTrips.map((trip, index) => {
       trip.startingPoint = googlePlaces[index].data.result.formatted_address;
-      console.log("public trip in loop, should have starting point", trip);
       return trip;
     });
     return tripsWithStartingPoints;
   };
 
+  // this is wonky function that solves a bug with place.id vs place.place_id, need to refactor
   const formatPlaceData = (fbPlaceData) => {
     let formattedData = fbPlaceData.map(place => {
       place = place.data;
@@ -45,20 +47,21 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
   .then (trips => {
     publicTrips = trips;
     let startingPoints = getStartingPoints(publicTrips);
-    console.log("this should be each trip's starting point", startingPoints);
     TripFactory.getFirebasePlaces(startingPoints)
     .then(fbPlaces => {
       let userPlaces = formatPlaceData(fbPlaces);
-      console.log("firebase place details", userPlaces);
       return GMapsFactory.getGooglePlaces(userPlaces);
     })
     .then(googlePlaces => {
-      console.log("google places", googlePlaces);
       let tripsWithStartingPoints = addStartingPoints(googlePlaces);
-      console.log(tripsWithStartingPoints);
       $scope.trips = tripsWithStartingPoints;
       $scope.mapCenter = tripsWithStartingPoints[0].startingPoint;
     });
+
+    $scope.setMapCenter = (trip) => {
+      console.log("starting point", trip.startingPoint);
+      $scope.mapCenter = trip.startingPoint;
+    };
     
 
   }); 
