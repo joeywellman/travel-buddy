@@ -39,10 +39,12 @@
         <div class="form-group">
           <label for="trip-name">Name</label>
           <input type="text" ng-model = "trip.name" class="form-control" id="trip-name" placeholder="Best Hikes in Nashville">
-        </div>
-        <div class="form-group">
           <label for="trip-description">Description</label>
           <input type="text" class="form-control" ng-model = "trip.description" id="trip-description" placeholder="Awesome hikes less than 2 hours away">
+          <label for="trip-location">General Location</label>
+          <input type="text" class="form-control" ng-model = "trip.location" id="trip-location" placeholder="Nashville, TN">
+          <label for="trip-tags">Tags</label>
+          <input type="text" class="form-control" ng-model = "trip.tags" id="trip-tags" placeholder="#outdoors, #hiking, #nashville, #nature">
         </div>
         <p>This trip is a:</p>
         <select class="form-control" ng-model = "trip.type" id="trip-type">
@@ -61,9 +63,14 @@
               <textarea id = "description" class="form-control" ng-model = "tripLocation.description" rows="3"></textarea>
               <div class = "form-check">
                 <div class = "row">
-                  <input class="form-check-input col-sm-2" type="checkbox" ng-click = "setCoverPhoto(tripLocation.image)" id="coverPhoto">
+                  <input class="form-check-input col-sm-2" type="checkbox" ng-click = "setCoverPhoto(tripLocation)" id="coverPhoto">
                   <label class="form-check-label col-sm-10" for="coverPhoto">Make this my trip's cover photo</label>
                 </div>
+                <div class = "row">
+                  <button class = "btn btn-secondary btn-sm" ng-click = "moveUp(tripLocation, $index)">Move Up</button>
+                  <button class = "btn btn-secondary btn-sm" ng-click = "moveDown(tripLocation, $index)">Move Down</button>
+                </div>
+                <button class = "btn btn-danger btn-block" ng-click = "removeFromTrip($index)">Remove From Trip</button>
               </div>
             </div>
           </div>

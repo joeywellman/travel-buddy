@@ -44,17 +44,26 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   };
   
   
- 
-
   // fired when user clicks 'add to trip' button on a place card, pushes place object into global array
   $scope.addToTrip = (place) => {
+    console.log("tripLocation", place);
     tripLocations.push(place);
-    // TODO: add buttons to reorder trip
     $scope.tripLocations = tripLocations;
   };
 
-  $scope.setCoverPhoto = imageURL => {
-    $scope.trip.coverPhoto = imageURL;
+
+  $scope.moveUp = (tripLocation, index) => {
+    tripLocations[index] = tripLocations[index-1];
+    tripLocations[index-1] = tripLocation;
+  };
+
+  $scope.moveDown = (tripLocation, index) => {
+    tripLocations[index] = tripLocations[index+1];
+    tripLocations[index+1] = tripLocation;
+  };
+
+  $scope.removeFromTrip = (index) => {
+    tripLocations.splice(index, 1);
   };
 
   // creates place object for each location in the trip (description and google place id), posts each place object to firebase 
@@ -78,10 +87,15 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     return ids;
   };
 
+  $scope.setCoverPhoto = location => {
+    $scope.trip.coverPhoto = location.image;
+  };
+
   //adds locations, uid, and privacy status to trip objects
   const buildTripObject = (placeIds, status) => {
     $scope.trip.locations = placeIds;
     $scope.trip.uid = firebase.auth().currentUser.uid;
+    $scope.trip.tags = $scope.trip.tags.split(', ');
     if (status == "private") {
       $scope.trip.private = true;
     } else if (status == "public") {
