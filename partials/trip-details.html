@@ -8,8 +8,10 @@
         <div ng-repeat="location in tripLocations track by $index" class="card col-md-8 m-1" id="place.id" style="width: 20rem;">
           <img class="card-img-top" ng-src="{{location.image}}" alt="{{location.name}}">
           <div class="card-block">
-            <h4 class="card-title">{{location.name}}</h4>
-            <p class="card-text">{{location.address}}</p>
+            <h4><a class="card-title" href = "{{location.website}}" target = "_blank">{{location.name}}</a></h4>
+            <span class="card-text">{{location.vicinity}}</span><br>
+            <strong>Insider tips:</strong>
+            <span class="card-text">{{location.description}}</span><br>
           </div>
         </div>
       </div>
@@ -20,7 +22,7 @@
         <info-window id="details">
           <div ng-non-bindable>
             <h5>{{selectedLocation.name}}</h5>
-            <p>{{selectedLocation.address}}</p>
+            <p>{{selectedLocation.formatted_address}}</p>
           </div>
         </info-window>
       </ng-map>
