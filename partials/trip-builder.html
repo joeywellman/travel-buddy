@@ -10,25 +10,24 @@
         </div>
       </div>
       <div class="search-results-container">
-        <div ng-repeat = "result in searchResults" class="card trip-card" id = "place.id" style="width: 20rem;">
-          <!-- <img class = "icon" ng-src = "{{result.icon}}"> -->
-          <img class="card-img-top" ng-src="{{result.image}}" alt="Picture of a place">
+        <div ng-repeat = "result in searchResults" class="card trip-card search-result" id = "place.id" style="width: 20rem;">
+          <img class="card-img-top image" ng-src="{{result.image}}" alt="Picture of a place">
           <div class="card-block">
-            <h4 class="card-title">{{result.name}}</h4>
-            <p class="card-text">{{result.formatted_address}}</p>
-            <p class="card-text">Google Rating: {{result.rating}}</p>
-            <button type="button" class="btn btn-secondary" ng-click="toggleReviews(result)">View Reviews</button>
-             <!-- ng-click="isCollapsed = !isCollapsed" -->
+            <h4 class="card-title name">{{result.name}}</h4>
+            <span class="card-text address">{{result.formatted_address}}</span>
+            <br>
+            <span class="card-text rating">Avg Rating: {{result.rating}}</span>
+            <button type="button" class="btn btn-secondary btn-sm btn-block" ng-click="toggleReviews(result)">{{reviewButtonText}}</button>
             <div ng-show="isCollapsed">
-              <div ng-repeat = "review in result.reviews track by $index" ng-show = "isCurrent($index)">
-                <p>Rating: {{review.rating}}</p> 
-                <p>Author: {{review.author_name}}</p> 
-                <p>{{review.relative_time_description}}</p> 
-                <p>Review: {{review.text}}</p> 
+              <div class = "review-container" ng-repeat = "review in result.reviews track by $index" ng-show = "isCurrent($index)">
+                <span>Rating: {{review.rating}}</span><br>
+                <span>Author: {{review.author_name}}</span><br>
+                <span>About {{review.relative_time_description}}</span><br>
+                <span class = "review-text">Review: {{review.text}}</span><br>
               </div>
-              <button type = "button" class = "btn btn-secondary" ng-click = "nextReview()">Next Review</button>
+              <button type = "button" class = "btn btn-secondary btn-sm btn-block" ng-click = "nextReview()">Next Review</button>
             </div>
-            <button ng-click = "addToTrip(result)" class="btn btn-primary">Add To Trip</button>
+            <button ng-click = "addToTrip(result)" class="btn btn-primary btn-block">Add To Trip</button>
           </div>
         </div>
       </div>
@@ -53,20 +52,26 @@
       </form>
 
       <div id="my-trip"> 
-        <div ng-repeat = "tripLocation in tripLocations track by $index" class="card" id="tripLocation.id" style="width: 20rem;">
+        <div ng-repeat = "tripLocation in tripLocations track by $index" class="card trip-card" id="tripLocation.id">
           <img class="card-img-top" ng-src="{{tripLocation.image}}" alt="Picture of a place">
           <div class="card-block">
             <h4 class="card-title">{{tripLocation.name}}</h4>
             <div class="form-group">
-              <label for="exampleFormControlTextarea1">Insider tips, funny stories, or detailed descriptions of this place </label>
-              <textarea class="form-control" ng-model = "tripLocation.description" rows="3"></textarea>
+              <label for="description">Insider tips, funny stories, or detailed descriptions of this place </label>
+              <textarea id = "description" class="form-control" ng-model = "tripLocation.description" rows="3"></textarea>
+              <div class = "form-check">
+                <div class = "row">
+                  <input class="form-check-input col-sm-2" type="checkbox" ng-click = "setCoverPhoto(tripLocation.image)" id="coverPhoto">
+                  <label class="form-check-label col-sm-10" for="coverPhoto">Make this my trip's cover photo</label>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <button class="btn btn-secondary" ng-click = "saveTrip()">Save</button>
-      <button class="btn btn-secondary" ng-click = "publishTrip()">Publish</button>
+      <button class="btn btn-primary btn-lg" ng-click = "saveTrip()">Save</button>
+      <button class="btn btn-primary btn-lg" ng-click = "publishTrip()">Publish</button>
     </div>
   </div>
 </div>

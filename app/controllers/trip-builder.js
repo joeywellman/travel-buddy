@@ -4,6 +4,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   const tripLocations = [];
   const searchResults = [];
   $scope.isCollapsed = false;
+  $scope.reviewButtonText = "View Reviews";
   let reviewsLength = null;
   
 
@@ -24,6 +25,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   $scope.toggleReviews = (result) => {
     reviewsLength = result.reviews.length;
     $scope.isCollapsed = !$scope.isCollapsed;
+    $scope.reviewButtonText = "Hide Reviews";
   };
 
   $scope.isCurrent = ($index) => {
@@ -49,6 +51,10 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     tripLocations.push(place);
     // TODO: add buttons to reorder trip
     $scope.tripLocations = tripLocations;
+  };
+
+  $scope.setCoverPhoto = imageURL => {
+    $scope.trip.coverPhoto = imageURL;
   };
 
   // creates place object for each location in the trip (description and google place id), posts each place object to firebase 
