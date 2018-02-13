@@ -3,6 +3,8 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   $scope.title = "Build A Trip";
   const tripLocations = [];
   const searchResults = [];
+  $scope.errorMessage = "Sorry, it looks like we couldn't find anything matching that search! Here are some helpful tips:";
+  $scope.hints = ["Make sure you spelled everything correctly.", "Try specifying a type of place and a location, i.e. 'Donut Shops in New York City' or 'Churches in Paris'", "Search for the name of a specific place, i.e. Wicked Weed Brewing"];
   $scope.isCollapsed = false;
   $scope.reviewButtonText = "View Reviews";
   let reviewsLength = null;
@@ -46,7 +48,6 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   
   // fired when user clicks 'add to trip' button on a place card, pushes place object into global array
   $scope.addToTrip = (place) => {
-    console.log("tripLocation", place);
     tripLocations.push(place);
     $scope.tripLocations = tripLocations;
   };

@@ -10,6 +10,12 @@
         </div>
       </div>
       <div class="search-results-container">
+        <div ng-show = "searchResults.length == 0">
+          <h4>{{errorMessage}}</h4>
+          <ul>
+            <li ng-repeat = "hint in hints">{{hint}}</li>
+          </ul>
+        </div>
         <div ng-repeat = "result in searchResults" class="card trip-card search-result" id = "place.id" style="width: 20rem;">
           <img class="card-img-top image" ng-src="{{result.image}}" alt="Picture of a place">
           <div class="card-block">
