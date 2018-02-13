@@ -24,13 +24,10 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
   };
 
   const addDescriptions = (googlePlaces) => {
-    console.log("google places", googlePlaces);
-    console.log("user places", userPlaces);
     let placesWithDescriptions = googlePlaces.map((place, index) => {
       place.description = userPlaces[index].description;
       return place;
     });
-    console.log("places with descriptions", placesWithDescriptions);
     return placesWithDescriptions;
   };
   // gets trip info from firebase
@@ -40,9 +37,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
     return TripFactory.getFirebasePlaces(tripDetails.locations);
   }))
   .then(fbPlaceData => { // gets place details from firebase
-    console.log("fbPlaceData", fbPlaceData);
     userPlaces = formatPlaceData(fbPlaceData);
-    console.log("user places in first .then", userPlaces);
     return GMapsFactory.getGooglePlaces(userPlaces);
   })
   .then(placeDetails => { // gets place details from google places

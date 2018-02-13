@@ -24,7 +24,7 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
   function getGooglePlaces(placeData){
     const promises = [];
     placeData.forEach(place => {
-      let promise = $http.get(`https://travel-buddy-proxy-server.herokuapp.com/api/maps/api/place/details/json?placeid=${place.place_id}&key=${GMapsCreds.apiKey}`);
+      let promise = $http.get(`https://travel-buddy-proxy-server.herokuapp.com/api/maps/api/place/details/json?placeid=${place.id}&key=${GMapsCreds.apiKey}`);
       promises.push(promise);
     });
     return $q.all(promises);
