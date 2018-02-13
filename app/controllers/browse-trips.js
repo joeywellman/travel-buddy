@@ -2,6 +2,8 @@
 
 angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, TripFactory, GMapsFactory, NgMap, GMapsCreds) {
   $scope.title = "Browse Trips";
+  let publicTrips = null;
+  
 
   // posts a trip to the user's favorites
   $scope.addFavorite = (tripId) => {
@@ -20,13 +22,13 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
     return startingPoints;
   };
 
-  const getAddresses = (googlePlaces) => {
-    let addresses = googlePlaces.map(place => {
-      console.log("place in get addresses loop", place.data.result);
-      let address = place.data.result.formatted_address;
-      return address;
+  const addStartingPoints= (googlePlaces) => {
+    let tripsWithStartingPoints = publicTrips.map((trip, index) => {
+      trip.startingPoint = googlePlaces[index].data.result.formatted_address;
+      console.log("public trip in loop, should have starting point", trip);
+      return trip;
     });
-    return addresses;
+    return tripsWithStartingPoints;
   };
 
   const formatPlaceData = (fbPlaceData) => {
@@ -41,8 +43,9 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
   // this should filter out the user's trips? or mark it if it's one of the user's trips
   TripFactory.getAllPublicTrips()
   .then (trips => {
-    let startingPoints = getStartingPoints(trips);
-    console.log("this should be each trip's starting point");
+    publicTrips = trips;
+    let startingPoints = getStartingPoints(publicTrips);
+    console.log("this should be each trip's starting point", startingPoints);
     TripFactory.getFirebasePlaces(startingPoints)
     .then(fbPlaces => {
       let userPlaces = formatPlaceData(fbPlaces);
@@ -51,11 +54,10 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
     })
     .then(googlePlaces => {
       console.log("google places", googlePlaces);
-      let markers = getAddresses(googlePlaces);
-      $scope.markers = markers;
-      console.log($scope.markers);
-      $scope.mapCenter = markers[0];
-      $scope.trips = trips;
+      let tripsWithStartingPoints = addStartingPoints(googlePlaces);
+      console.log(tripsWithStartingPoints);
+      $scope.trips = tripsWithStartingPoints;
+      $scope.mapCenter = tripsWithStartingPoints[0].startingPoint;
     });
     
 
