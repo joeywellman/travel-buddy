@@ -4,6 +4,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   const tripLocations = [];
   const searchResults = [];
   $scope.isCollapsed = false;
+  $scope.reviewButtonText = "View Reviews";
   let reviewsLength = null;
   
 
@@ -24,6 +25,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   $scope.toggleReviews = (result) => {
     reviewsLength = result.reviews.length;
     $scope.isCollapsed = !$scope.isCollapsed;
+    $scope.reviewButtonText = "Hide Reviews";
   };
 
   $scope.isCurrent = ($index) => {
