@@ -51,6 +51,10 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     $scope.tripLocations = tripLocations;
   };
 
+  $scope.setCoverPhoto = imageURL => {
+    $scope.trip.coverPhoto = imageURL;
+  };
+
   // creates place object for each location in the trip (description and google place id), posts each place object to firebase 
   const buildPlaceObjects = () => {
     const placeObjects = tripLocations.map(location => {
