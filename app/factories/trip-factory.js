@@ -34,6 +34,8 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
       });
     }
 
+  
+
   //promises details of specified trip
   // resolves an object
   function getTripDetails(tripId){
