@@ -56,16 +56,11 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   };
 
   $scope.moveUp = (tripLocation, index) => {
-    console.log("this is the trip location you're passing in", tripLocation);
-    console.log("tripLocations[index]", tripLocations[index]);
-    console.log("tripLocations[index-1]", tripLocations[index-1]);
     tripLocations[index] = tripLocations[index-1];
     tripLocations[index-1] = tripLocation;
   };
 
   $scope.moveDown = (tripLocation, index) => {
-    console.log("tripLocations[index]", tripLocations[index]);
-    console.log("tripLocations[index+1]", tripLocations[index + 1]);
     tripLocations[index] = tripLocations[index+1];
     tripLocations[index+1] = tripLocation;
   };
