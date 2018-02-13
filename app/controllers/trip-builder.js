@@ -47,7 +47,6 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   // fired when user clicks 'add to trip' button on a place card, pushes place object into global array
   $scope.addToTrip = (place) => {
     tripLocations.push(place);
-    // TODO: add buttons to reorder trip
     $scope.tripLocations = tripLocations;
   };
 
@@ -63,6 +62,10 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   $scope.moveDown = (tripLocation, index) => {
     tripLocations[index] = tripLocations[index+1];
     tripLocations[index+1] = tripLocation;
+  };
+
+  $scope.removeFromTrip = (index) => {
+    tripLocations.splice(index, 1);
   };
 
   // creates place object for each location in the trip (description and google place id), posts each place object to firebase 
