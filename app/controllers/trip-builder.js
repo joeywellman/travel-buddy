@@ -1,5 +1,5 @@
 'use strict';
-angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds, UserFactory){
+angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds, UserFactory, TripBuilderFactory){
   $scope.title = "Build A Trip";
   const tripLocations = [];
   const searchResults = [];
@@ -10,8 +10,8 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   let reviewsLength = null;
   $scope.showModal = true;
 
-  
-
+  $scope.trip = TripBuilderFactory;
+  console.log("this is the trip from trip builder ctrl", $scope.trip); 
 
 // passes user search into google maps api calls, fetches search results and then details for each search result
   $scope.searchPlaces = () => {
