@@ -4,7 +4,7 @@
   <p class="trip-description">{{trip.description}}</p>
   <div class = "row">
     <div class = "col-sm-6 p-2">
-      <div class = "row">
+      <div class = "row trip-container">
         <div ng-repeat="location in tripLocations track by $index" class="card col-md-8 m-1" id="place.id" style="width: 20rem;">
           <img class="card-img-top" ng-src="{{location.image}}" alt="{{location.name}}">
           <div class="card-block">

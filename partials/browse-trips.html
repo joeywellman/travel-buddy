@@ -6,7 +6,7 @@
     </div>
     <div class="row">
       <div class = "col-sm-6 m-1 trip-container">
-        <div class="trip-card card" ng-repeat ="trip in trips | filter: {searchTerm}" ng-mouseover = "setMapCenter(trip)">
+        <div class="trip-card card" ng-repeat ="trip in trips | filter: searchTerm" ng-mouseover = "setMapCenter(trip)">
           <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
           <div class = "card-body">
             <h4 class="trip-name">{{trip.name}}</h4>
