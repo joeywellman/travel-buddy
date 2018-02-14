@@ -3,7 +3,6 @@
 angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, TripFactory, GMapsFactory, NgMap, GMapsCreds, UserFactory) {
   $scope.title = "Browse Trips";
   let publicTrips = null;
-  
   const postFavorite = (tripId) => {
     let faveObj = {
       id: tripId,
@@ -23,8 +22,6 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
       });
     }
   };
-
- 
 
   // grabs first location from each trip's location array
   const getStartingPoints = (trips) => {
@@ -57,13 +54,13 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
   };
 
   // converts tags from array to strings
-  const sliceTags = (trips) => {
-    let tripsWithTags = trips.map(trip => {
-      trip.tags = trip.tags.join(', ');
-      return trip;
-    });
-    return tripsWithTags;
-  };
+  // const sliceTags = (trips) => {
+  //   let tripsWithTags = trips.map(trip => {
+  //     trip.tags = trip.tags.join(', ');
+  //     return trip;
+  //   });
+  //   return tripsWithTags;
+  // };
 
   // this should filter out the user's trips? or mark it if it's one of the user's trips
   TripFactory.getAllPublicTrips()
@@ -77,7 +74,7 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
     })
     .then(googlePlaces => {
       let tripsWithStartingPoints = addStartingPoints(googlePlaces); // adds google place data as a property on the trip object
-      tripsWithStartingPoints = sliceTags(tripsWithStartingPoints); // converts tags into strings from array
+      // tripsWithStartingPoints = sliceTags(tripsWithStartingPoints); // converts tags into strings from array
       $scope.trips = tripsWithStartingPoints; // sets variable to scope
       $scope.mapCenter = tripsWithStartingPoints[0].startingPoint.formatted_address; // center map to first location
     });
