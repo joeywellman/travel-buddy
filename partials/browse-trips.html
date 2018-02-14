@@ -20,12 +20,13 @@
       </div>
       <div class = "col-sm-5 m-1">
         <ng-map class="google-map-container" center="{{mapCenter}}" zoom="13" pan-control="true" zoom-control="true" scale-control="true">
-          <marker ng-repeat="trip in trips track by $index" position={{trip.startingPoint}} title={{trip.name}}
-            id={{location.id}} on-click="showDetails(location)"></marker>
+          <marker ng-repeat="trip in trips track by $index" position={{trip.startingPoint.formatted_address}} title={{trip.startingPoint.name}}
+            id={{trip.startingPoint.place_id}} on-click="showDetails(trip)"></marker>
           <info-window id="details">
             <div ng-non-bindable>
-              <h5>{{trip.name}}</h5>
-              <p>{{trip.description}}</p>
+              <h5>{{selectedTrip.name}}</h5>
+              <span>Starting point:</span><br>
+              <span>{{selectedTrip.startingPoint.name}}</span>
             </div>
           </info-window>
         </ng-map>

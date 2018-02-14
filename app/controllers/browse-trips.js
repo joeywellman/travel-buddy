@@ -26,11 +26,13 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
   // adds starting point addresses onto trips
   const addStartingPoints= (googlePlaces) => {
     let tripsWithStartingPoints = publicTrips.map((trip, index) => {
-      trip.startingPoint = googlePlaces[index].data.result.formatted_address;
-      let imageKey = googlePlaces[index].data.result.photos[0].photo_reference;
+      trip.startingPoint = googlePlaces[index].data.result;
+      console.log("should be whole trip object", trip.startingPoint);
+      let imageKey = trip.startingPoint.photos[0].photo_reference;
       trip.coverPhoto = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
       return trip;
     });
+    console.log("should have object starting points", tripsWithStartingPoints);
     return tripsWithStartingPoints;
   };
 
@@ -44,6 +46,7 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
     return formattedData;
   };
 
+  // converts tags from array to strings
   const sliceTags = (trips) => {
     let tripsWithTags = trips.map(trip => {
       trip.tags = trip.tags.join(', ');
@@ -66,13 +69,22 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
       let tripsWithStartingPoints = addStartingPoints(googlePlaces); // adds google place data as a property on the trip object
       tripsWithStartingPoints = sliceTags(tripsWithStartingPoints); // converts tags into strings from array
       $scope.trips = tripsWithStartingPoints; // sets variable to scope
-      $scope.mapCenter = tripsWithStartingPoints[0].startingPoint;
+      $scope.mapCenter = tripsWithStartingPoints[0].startingPoint.formatted_address;
     });
 
     $scope.setMapCenter = (trip) => {
-      $scope.mapCenter = trip.startingPoint;
+      $scope.mapCenter = trip.startingPoint.formatted_address;
     };
     
+    $scope.showDetails = function (event, trip) {
+      console.log("starting point", trip.startingPoint);
+      $scope.selectedTrip = trip;
+      $scope.map.showInfoWindow("details", trip.startingPoint.place_id);
+    };
+
+    $scope.hideDetail = function () {
+      $scope.map.hideInfoWindow("details");
+    };
 
   }); 
 });
