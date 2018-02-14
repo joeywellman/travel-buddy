@@ -49,12 +49,14 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
 
 
   $scope.showDetails = function (event, location) {
+    console.log("this is the location you're passing in", location);
     $scope.selectedLocation= location;
-    $scope.map.showInfoWindow(event, 'details');
+    $scope.map.showInfoWindow("details", location.id);
   };
 
   $scope.hideDetail = function () {
-    $scope.map.hideInfoWindow("locationDetails");
+    console.log("You hid the marker!");
+    $scope.map.hideInfoWindow("details");
   };
 
   // if this is the current user's trip, edit button appears
