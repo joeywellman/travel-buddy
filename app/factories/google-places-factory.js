@@ -24,7 +24,7 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
   function getGooglePlaces(placeData){
     const promises = [];
     placeData.forEach(place => {
-      let promise = $http.get(`https://travel-buddy-proxy-server.herokuapp.com/api/maps/api/place/details/json?placeid=${place.id}&key=${GMapsCreds.apiKey}`);
+      let promise = $http.get(`https://travel-buddy-proxy-server.herokuapp.com/api/maps/api/place/details/json?placeid=${place.place_id}&key=${GMapsCreds.apiKey}`);
       promises.push(promise);
     });
     return $q.all(promises);
@@ -40,7 +40,8 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
   }
 
   function addImageKey(placeObject) {
-    if (placeObject.photos[0].photo_reference !== null) {
+    console.log("this is what add image keys is getting", placeObject);
+    if (placeObject.hasOwnProperty('photos') && placeObject.photos.length > 0) {
       let imageKey = placeObject.photos[0].photo_reference;
       placeObject.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
     }

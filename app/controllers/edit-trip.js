@@ -3,6 +3,12 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   $scope.title = "Edit Your Trip";
   let tripLocations = [];
   const searchResults = [];
+  $scope.errorMessage = "Sorry, it looks like we couldn't find anything matching that search! Here are some helpful tips:";
+  $scope.hints = ["Make sure you spelled everything correctly.", "Try specifying a type of place and a location, i.e. 'Donut Shops in New York City' or 'Churches in Paris'", "Search for the name of a specific place, i.e. Wicked Weed Brewing"];
+  $scope.isCollapsed = false;
+  $scope.reviewButtonText = "View Reviews";
+  let reviewsLength = null;
+
 
   // destructures place data from firebase and adds property of place_id
   const formatPlaceData = (fbPlaceData) => {
@@ -28,20 +34,62 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
       $scope.tripLocations = tripLocations;
     });
 
+  // passes user search into google maps api calls, fetches search results and then details for each search result
   $scope.searchPlaces = () => {
     GMapsFactory.placesSearch($scope.searchString)
       .then(places => {
+        console.log("places from search", places);
         return GMapsFactory.getGooglePlaces(places); // returns an array of promises
       })
       .then(placeDetails => {
-        $scope.searchResults = GMapsFactory.formatPlaces(placeDetails);
+        console.log("place details", placeDetails);
+        let searchResults = GMapsFactory.formatPlaces(placeDetails);
+        $scope.searchResults = searchResults;
+        $scope.currentIndex = 0;
       });
   };
+
+  $scope.toggleReviews = (result) => {
+    reviewsLength = result.reviews.length;
+    $scope.isCollapsed = !$scope.isCollapsed;
+    $scope.reviewButtonText = "Hide Reviews";
+  };
+
+  $scope.isCurrent = ($index) => {
+    if ($index == $scope.currentIndex) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+  $scope.nextReview = () => {
+    $scope.currentIndex += 1;
+    if ($scope.currentIndex === reviewsLength) {
+      $scope.currentIndex = 0;
+    }
+  };
+
 
   // fired when user clicks 'add to trip' button on a place card, pushes place object into global array
   $scope.addToTrip = (place) => {
     tripLocations.push(place);
-    // TODO: add buttons to reorder trip
+    $scope.tripLocations = tripLocations;
+  };
+
+
+  $scope.moveUp = (tripLocation, index) => {
+    tripLocations[index] = tripLocations[index - 1];
+    tripLocations[index - 1] = tripLocation;
+  };
+
+  $scope.moveDown = (tripLocation, index) => {
+    tripLocations[index] = tripLocations[index + 1];
+    tripLocations[index + 1] = tripLocation;
+  };
+
+  $scope.removeFromTrip = (index) => {
+    tripLocations.splice(index, 1);
   };
 
   // creates place object for each location in the trip (description and google place id), posts each place object to firebase 
@@ -65,13 +113,18 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
     return ids;
   };
 
+  $scope.setCoverPhoto = location => {
+    $scope.trip.coverPhoto = location.image;
+  };
+
   //adds locations, uid, and privacy status to trip objects
   const buildTripObject = (placeIds, status) => {
     $scope.trip.locations = placeIds;
     $scope.trip.uid = firebase.auth().currentUser.uid;
-    if (status == "private"){
+    $scope.trip.tags = $scope.trip.tags.split(', ');
+    if (status == "private") {
       $scope.trip.private = true;
-    } else if (status == "public"){
+    } else if (status == "public") {
       $scope.trip.private = false;
     }
     return $scope.trip;
@@ -84,7 +137,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
       .then(fbData => {
         let placeIds = getFirebaseIds(fbData);
         const trip = buildTripObject(placeIds, status);
-        return TripFactory.updateTrip(trip, $routeParams.tripId);
+        return TripFactory.updateTrip(trip);
       })
       .then((data) => {
         $location.url("/browse");
@@ -98,5 +151,6 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   $scope.publishTrip = () => {
     postTrip("public");
   };
+
 
 });
