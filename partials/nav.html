@@ -4,8 +4,7 @@
   <a class="nav-item nav-link" href="#!/browse">Browse Trips</a>
   <a class="nav-item nav-link" href="#!/buildtrip">Build Trips</a>
   <a class="nav-item nav-link" href="#!/mytrips">My Trips</a>
-  <button ng-hide = "userIsLoggedIn" ng-click = "login()" type = "button" class = "btn btn-secondary">Login</button>
-  <button ng-show = "userIsLoggedIn" ng-click = "logout()" type = "button" class = "btn btn-secondary">Logout</button>
+  <button ng-click = "switchUserState()" type = "button" class = "btn btn-secondary">{{buttonText}}</button>
 </nav>
 
 </div>

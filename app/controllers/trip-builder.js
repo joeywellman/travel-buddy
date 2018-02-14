@@ -1,5 +1,5 @@
 'use strict';
-angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds) {
+angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds, UserFactory) {
   $scope.title = "Build A Trip";
   const tripLocations = [];
   const searchResults = [];
@@ -117,12 +117,27 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
       });
   };
 
+  // dry these up
   $scope.saveTrip = () => {
-    postTrip("private");
+    if (firebase.auth().currentUser !== null) {
+      postTrip("private");
+    }else{
+      UserFactory.login()
+      .then(()=> {
+        postTrip("private");
+      });
+    }
   };
 
   $scope.publishTrip = () => {
-    postTrip("public");
+    if (firebase.auth().currentUser !== null) {
+      postTrip("public");
+    } else {
+      UserFactory.login()
+        .then(() => {
+          postTrip("public");
+        });
+    }
   };
 
 });
