@@ -23,7 +23,6 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   TripFactory.getTripDetails($routeParams.tripId)
     .then((tripDetails => {
       tripDetails.tags = tripDetails.tags.join(', ');
-      console.log("tags should be comma seperated strings", tripDetails);
       $scope.trip = tripDetails;
       return TripFactory.getFirebasePlaces(tripDetails.locations);
     }))

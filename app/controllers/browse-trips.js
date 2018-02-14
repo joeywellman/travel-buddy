@@ -44,19 +44,28 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
     return formattedData;
   };
 
+  const sliceTags = (trips) => {
+    let tripsWithTags = trips.map(trip => {
+      trip.tags = trip.tags.join(', ');
+      return trip;
+    });
+    return tripsWithTags;
+  };
+
   // this should filter out the user's trips? or mark it if it's one of the user's trips
   TripFactory.getAllPublicTrips()
   .then (trips => {
     publicTrips = trips;
-    let startingPoints = getStartingPoints(publicTrips);
-    TripFactory.getFirebasePlaces(startingPoints)
+    let startingPoints = getStartingPoints(publicTrips); // grabs first firebase place id from each trip
+    TripFactory.getFirebasePlaces(startingPoints) // gets firebase places for each starting point
     .then(fbPlaces => {
-      let userPlaces = formatPlaceData(fbPlaces);
-      return GMapsFactory.getGooglePlaces(userPlaces);
+      let userPlaces = formatPlaceData(fbPlaces); // formats place data
+      return GMapsFactory.getGooglePlaces(userPlaces); // gets google place details from each firebase place
     })
     .then(googlePlaces => {
-      let tripsWithStartingPoints = addStartingPoints(googlePlaces);
-      $scope.trips = tripsWithStartingPoints;
+      let tripsWithStartingPoints = addStartingPoints(googlePlaces); // adds google place data as a property on the trip object
+      tripsWithStartingPoints = sliceTags(tripsWithStartingPoints); // converts tags into strings from array
+      $scope.trips = tripsWithStartingPoints; // sets variable to scope
       $scope.mapCenter = tripsWithStartingPoints[0].startingPoint;
     });
 
