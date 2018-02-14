@@ -1,4 +1,12 @@
 <h2>{{title}}</h2>
+
+<div ng-click = "showModal = !showModal">
+  <p>Show modal container- if you see this, click outside the modal</p>
+<div ng-show = "showModal" class="modal" id="myModal">
+    <h5>The modal is showing!</h5>
+</div>
+</div>
+
 <div class="container">
   <div class="row">
     <div class="col-md search-container">

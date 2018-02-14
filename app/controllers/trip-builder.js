@@ -8,6 +8,8 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   $scope.isCollapsed = false;
   $scope.reviewButtonText = "View Reviews";
   let reviewsLength = null;
+  $scope.showModal = true;
+
   
 
 

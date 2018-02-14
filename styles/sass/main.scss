@@ -1,5 +1,5 @@
-$primary-color: rgb(151, 199, 41);
-$secondary-color: rgb(170, 209, 170);
+$primary-color: rgb(108, 206, 168);
+$secondary-color: rgb(62, 53, 114);
 $font-color-medium: rgb(107, 107, 107);
 $font-color-dark: rgb(66, 65, 65);
 $font-color-light: rgb(240, 240, 240);
@@ -16,7 +16,11 @@ $font-color-light: rgb(240, 240, 240);
 nav{
     background-color: $primary-color;
     a{
-        color: $font-color-light;
+        color: $font-color-dark;
+    }
+    .logo{
+        width: 9.5rem;
+        height: 3rem;
     }
 }
 
