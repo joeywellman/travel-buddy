@@ -47,15 +47,24 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
     setMapCenter(tripLocations);
   });
 
+  $scope.addFavorite = () => {
+    let faveObj = {
+      id: $routeParams.tripId,
+      uid: firebase.auth().currentUser.uid
+    };
+    TripFactory.addFavorite(faveObj);
+  };
+
+  $scope.setMapCenter = (location) => {
+    $scope.mapCenter = location.formatted_address;
+  };
 
   $scope.showDetails = function (event, location) {
-    console.log("this is the location you're passing in", location);
     $scope.selectedLocation= location;
     $scope.map.showInfoWindow("details", location.id);
   };
 
   $scope.hideDetail = function () {
-    console.log("You hid the marker!");
     $scope.map.hideInfoWindow("details");
   };
 

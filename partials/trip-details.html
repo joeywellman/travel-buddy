@@ -1,11 +1,12 @@
 <div class="container">
   <h3>{{trip.name}}</h3>
+  <button type = "button" class = "btn btn-primary btn-lg" ng-click = "addFavorite()">Add To Favorites</button>
   <h4>Author</h4>
   <p class="trip-description">{{trip.description}}</p>
   <div class = "row">
     <div class = "col-sm-6 p-2">
       <div class = "row trip-container">
-        <div ng-repeat="location in tripLocations track by $index" class="card col-md-8 m-1" id="place.id" style="width: 20rem;">
+        <div ng-repeat="location in tripLocations track by $index" class="card col-md-8 m-1" id="place.id" style="width: 20rem;" ng-mouseover = "setMapCenter(location)">
           <img class="card-img-top" ng-src="{{location.image}}" alt="{{location.name}}">
           <div class="card-block">
             <h4><a class="card-title" href = "{{location.website}}" target = "_blank">{{location.name}}</a></h4>
