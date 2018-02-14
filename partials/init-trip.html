@@ -1,0 +1,27 @@
+<div class = "container form-container pl-2 pr-2">
+  <h4>Let's get started.</h4>
+  <form class="options">
+    <div class="form-group">
+      <label for="trip-name">Name</label>
+      <input type="text" ng-model="trip.name" class="form-control" id="trip-name" placeholder="Best Hikes in Nashville">
+    </div>
+    <div class = "form-group">
+      <label for="trip-description">Description</label>
+      <input type="text" class="form-control" ng-model="trip.description" id="trip-description" placeholder="Awesome hikes less than 2 hours away">
+    </div>
+    <div class = "form-group">
+      <label for="trip-location">General Location</label>
+      <input type="text" class="form-control" ng-model="trip.location" id="trip-location" placeholder="Nashville, TN">
+    </div>
+    <div class = "form-group">
+      <label for="trip-tags">Tags</label>
+      <input type="text" class="form-control" ng-model="trip.tags" id="trip-tags" placeholder="#outdoors, #hiking, #nashville, #nature">
+    </div>
+    <p>This trip is a:</p>
+    <select class="form-control" ng-model="trip.type" id="trip-type">
+      <option value="itenerary">Itenerary</option>
+      <option value="collection">Collection</option>
+    </select>
+  </form>
+  <button class = "btn btn-success btn-lg" ng-click = "saveTrip()">Onward!</button>
+</div>

@@ -1,12 +1,5 @@
 <h2>{{title}}</h2>
 
-<div ng-click = "showModal = !showModal">
-  <p>Show modal container- if you see this, click outside the modal</p>
-<div ng-show = "showModal" class="modal" id="myModal">
-    <h5>The modal is showing!</h5>
-</div>
-</div>
-
 <div class="container">
   <div class="row">
     <div class="col-md search-container">
@@ -47,27 +40,9 @@
       </div>
     </div>
 
-    <div class="col-md trip-container">
-      <h2>Your Trip</h2>
-      <form class="options">
-        <div class="form-group">
-          <label for="trip-name">Name</label>
-          <input type="text" ng-model = "trip.name" class="form-control" id="trip-name" placeholder="Best Hikes in Nashville">
-          <label for="trip-description">Description</label>
-          <input type="text" class="form-control" ng-model = "trip.description" id="trip-description" placeholder="Awesome hikes less than 2 hours away">
-          <label for="trip-location">General Location</label>
-          <input type="text" class="form-control" ng-model = "trip.location" id="trip-location" placeholder="Nashville, TN">
-          <label for="trip-tags">Tags</label>
-          <input type="text" class="form-control" ng-model = "trip.tags" id="trip-tags" placeholder="#outdoors, #hiking, #nashville, #nature">
-        </div>
-        <p>This trip is a:</p>
-        <select class="form-control" ng-model = "trip.type" id="trip-type">
-          <option value="itenerary">Itenerary</option>
-          <option value="collection">Collection</option>
-        </select>
-      </form>
-
+    <div class="col-md pr-2 trip-container">
       <div id="my-trip"> 
+        <h4>Your Trip</h4>
         <div ng-repeat = "tripLocation in tripLocations track by $index" class="card trip-card" id="tripLocation.id">
           <img class="card-img-top" ng-src="{{tripLocation.image}}" alt="Picture of a place">
           <div class="card-block">
@@ -87,8 +62,10 @@
         </div>
       </div>
 
-      <button class="btn btn-primary btn-lg" ng-click = "saveTrip()">Save</button>
-      <button class="btn btn-primary btn-lg" ng-click = "publishTrip()">Publish</button>
+      <div class = "row mt-4">
+        <button class="btn btn-primary btn-lg mr-2" ng-click = "saveTrip()">Save</button>
+        <button class="btn btn-primary btn-lg ml-2" ng-click = "publishTrip()">Publish</button>
+      </div>
     </div>
   </div>
 </div>
