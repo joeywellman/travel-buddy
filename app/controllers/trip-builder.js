@@ -90,10 +90,6 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     return ids;
   };
 
-  $scope.setCoverPhoto = location => {
-    $scope.trip.coverPhoto = location.image;
-  };
-
   //adds locations, uid, and privacy status to trip objects
   const buildTripObject = (placeIds, status) => {
     $scope.trip.locations = placeIds;

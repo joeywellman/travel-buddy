@@ -47,14 +47,25 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
     setMapCenter(tripLocations);
   });
 
+  $scope.addFavorite = () => {
+    let faveObj = {
+      id: $routeParams.tripId,
+      uid: firebase.auth().currentUser.uid
+    };
+    TripFactory.addFavorite(faveObj);
+  };
+
+  $scope.setMapCenter = (location) => {
+    $scope.mapCenter = location.formatted_address;
+  };
 
   $scope.showDetails = function (event, location) {
     $scope.selectedLocation= location;
-    $scope.map.showInfoWindow(event, 'details');
+    $scope.map.showInfoWindow("details", location.id);
   };
 
   $scope.hideDetail = function () {
-    $scope.map.hideInfoWindow("locationDetails");
+    $scope.map.hideInfoWindow("details");
   };
 
   // if this is the current user's trip, edit button appears

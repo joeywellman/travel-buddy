@@ -26,8 +26,8 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
   // adds starting point addresses onto trips
   const addStartingPoints= (googlePlaces) => {
     let tripsWithStartingPoints = publicTrips.map((trip, index) => {
-      trip.startingPoint = googlePlaces[index].data.result.formatted_address;
-      let imageKey = googlePlaces[index].data.result.photos[0].photo_reference;
+      trip.startingPoint = googlePlaces[index].data.result;
+      let imageKey = trip.startingPoint.photos[0].photo_reference;
       trip.coverPhoto = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
       return trip;
     });
@@ -44,26 +44,44 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
     return formattedData;
   };
 
+  // converts tags from array to strings
+  const sliceTags = (trips) => {
+    let tripsWithTags = trips.map(trip => {
+      trip.tags = trip.tags.join(', ');
+      return trip;
+    });
+    return tripsWithTags;
+  };
+
   // this should filter out the user's trips? or mark it if it's one of the user's trips
   TripFactory.getAllPublicTrips()
   .then (trips => {
     publicTrips = trips;
-    let startingPoints = getStartingPoints(publicTrips);
-    TripFactory.getFirebasePlaces(startingPoints)
+    let startingPoints = getStartingPoints(publicTrips); // grabs first firebase place id from each trip
+    TripFactory.getFirebasePlaces(startingPoints) // gets firebase places for each starting point
     .then(fbPlaces => {
-      let userPlaces = formatPlaceData(fbPlaces);
-      return GMapsFactory.getGooglePlaces(userPlaces);
+      let userPlaces = formatPlaceData(fbPlaces); // formats place data
+      return GMapsFactory.getGooglePlaces(userPlaces); // gets google place details from each firebase place
     })
     .then(googlePlaces => {
-      let tripsWithStartingPoints = addStartingPoints(googlePlaces);
-      $scope.trips = tripsWithStartingPoints;
-      $scope.mapCenter = tripsWithStartingPoints[0].startingPoint;
+      let tripsWithStartingPoints = addStartingPoints(googlePlaces); // adds google place data as a property on the trip object
+      tripsWithStartingPoints = sliceTags(tripsWithStartingPoints); // converts tags into strings from array
+      $scope.trips = tripsWithStartingPoints; // sets variable to scope
+      $scope.mapCenter = tripsWithStartingPoints[0].startingPoint.formatted_address; // center map to first location
     });
 
     $scope.setMapCenter = (trip) => {
-      $scope.mapCenter = trip.startingPoint;
+      $scope.mapCenter = trip.startingPoint.formatted_address;
     };
     
+    $scope.showDetails = function (event, trip) {
+      $scope.selectedTrip = trip;
+      $scope.map.showInfoWindow("details", trip.startingPoint.place_id);
+    };
+
+    $scope.hideDetail = function () {
+      $scope.map.hideInfoWindow("details");
+    };
 
   }); 
 });
