@@ -1,18 +1,30 @@
 'use strict';
 
-angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, TripFactory, GMapsFactory, NgMap, GMapsCreds) {
+angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, TripFactory, GMapsFactory, NgMap, GMapsCreds, UserFactory) {
   $scope.title = "Browse Trips";
   let publicTrips = null;
   
-
-  // posts a trip to the user's favorites
-  $scope.addFavorite = (tripId) => {
+  const postFavorite = (tripId) => {
     let faveObj = {
       id: tripId,
       uid: firebase.auth().currentUser.uid
     };
     TripFactory.addFavorite(faveObj);
   };
+
+  // posts a trip to the user's favorites
+  $scope.addFavorite = (tripId) => {
+    if (firebase.auth().currentUser !== null){
+      postFavorite(tripId);
+    } else {
+      UserFactory.login()
+      .then(()=> {
+        postFavorite(tripId);
+      });
+    }
+  };
+
+ 
 
   // grabs first location from each trip's location array
   const getStartingPoints = (trips) => {

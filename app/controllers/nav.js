@@ -1,26 +1,28 @@
 'use strict';
 angular.module("TravelBuddy").controller("NavCtrl", function ($scope, UserFactory) {
 
-  $scope.login = () => {
-    UserFactory.login()
-    .then (() => {
-      console.log("logged in!");
-      // TODO: add username and picture
-    });
-  };
-
-  $scope.logout = () => {
-    UserFactory.logout()
-    .then (() => {
-      console.log("Logged out!");
-    });
+ 
+  $scope.switchUserState = () => {
+    if(firebase.auth().currentUser === null){
+      UserFactory.login()
+      .then(() => {
+        console.log("logged in!");
+      });
+    } else {
+      UserFactory.logout()
+      .then(()=> {
+        console.log("logged out!");
+      });
+    }
   };
 
   // check if user is logged in, hides and shows login/logout buttons accordingly
 
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
-      $scope.userIsLoggedIn = true;
+      $scope.buttonText = "Log Out";
+    } else{
+      $scope.buttonText = "Log in";
     }
   });
  
