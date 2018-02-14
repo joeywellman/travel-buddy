@@ -4,15 +4,15 @@ angular.module("TravelBuddy").controller("NavCtrl", function ($scope, UserFactor
   $scope.login = () => {
     UserFactory.login()
     .then (() => {
+      console.log("logged in!");
       // TODO: add username and picture
-      console.log("User logged in!");
     });
   };
 
   $scope.logout = () => {
     UserFactory.logout()
     .then (() => {
-      console.log("User logged out!");
+      console.log("Logged out!");
     });
   };
 

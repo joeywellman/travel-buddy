@@ -55,7 +55,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
   function getFirebasePlaces(placeArray){
     const promises = [];
     placeArray.forEach(place => {
-      console.log("place", place);
       let promise = $http.get(`${FBUrl}/places/${place}.json`);
       promises.push(promise);
     });
