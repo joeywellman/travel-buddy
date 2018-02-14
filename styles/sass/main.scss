@@ -18,6 +18,9 @@ nav{
     a{
         color: $font-color-dark;
     }
+    a:hover{
+        color: $font-color-light;
+    }
     .logo{
         width: 9.5rem;
         height: 3rem;
