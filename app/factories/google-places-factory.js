@@ -40,7 +40,6 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
   }
 
   function addImageKey(placeObject) {
-    console.log("this is what add image keys is getting", placeObject);
     if (placeObject.hasOwnProperty('photos') && placeObject.photos.length > 0) {
       let imageKey = placeObject.photos[0].photo_reference;
       placeObject.image = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;

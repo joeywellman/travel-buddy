@@ -38,11 +38,9 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   $scope.searchPlaces = () => {
     GMapsFactory.placesSearch($scope.searchString)
       .then(places => {
-        console.log("places from search", places);
         return GMapsFactory.getGooglePlaces(places); // returns an array of promises
       })
       .then(placeDetails => {
-        console.log("place details", placeDetails);
         let searchResults = GMapsFactory.formatPlaces(placeDetails);
         $scope.searchResults = searchResults;
         $scope.currentIndex = 0;
@@ -121,7 +119,9 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   const buildTripObject = (placeIds, status) => {
     $scope.trip.locations = placeIds;
     $scope.trip.uid = firebase.auth().currentUser.uid;
-    $scope.trip.tags = $scope.trip.tags.split(', ');
+    if ($scope.trip.tags !== null){
+      $scope.trip.tags = $scope.trip.tags.split(', ');
+    }
     if (status == "private") {
       $scope.trip.private = true;
     } else if (status == "public") {
@@ -137,7 +137,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
       .then(fbData => {
         let placeIds = getFirebaseIds(fbData);
         const trip = buildTripObject(placeIds, status);
-        return TripFactory.updateTrip(trip);
+        return TripFactory.updateTrip(trip, $routeParams.tripId);
       })
       .then((data) => {
         $location.url("/browse");
