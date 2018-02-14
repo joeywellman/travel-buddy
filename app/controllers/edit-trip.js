@@ -11,7 +11,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
 
 
   // destructures place data from firebase and adds property of place_id
-  const formatPlaceData = (fbPlaceData) => {
+  const formatPlaceData = fbPlaceData => {
     let formattedData = fbPlaceData.map(place => {
       place = place.data;
       place.place_id = place.id;
@@ -48,13 +48,13 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
       });
   };
 
-  $scope.toggleReviews = (result) => {
+  $scope.toggleReviews = result => {
     reviewsLength = result.reviews.length;
     $scope.isCollapsed = !$scope.isCollapsed;
     $scope.reviewButtonText = "Hide Reviews";
   };
 
-  $scope.isCurrent = ($index) => {
+  $scope.isCurrent = $index => {
     if ($index == $scope.currentIndex) {
       return true;
     } else {
@@ -71,7 +71,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
 
 
   // fired when user clicks 'add to trip' button on a place card, pushes place object into global array
-  $scope.addToTrip = (place) => {
+  $scope.addToTrip = place => {
     tripLocations.push(place);
     $scope.tripLocations = tripLocations;
   };
@@ -87,7 +87,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
     tripLocations[index + 1] = tripLocation;
   };
 
-  $scope.removeFromTrip = (index) => {
+  $scope.removeFromTrip = index => {
     tripLocations.splice(index, 1);
   };
 
@@ -104,7 +104,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   };
 
   // takes firebase id from POST, returns array of fb ids
-  const getFirebaseIds = (fbPostData) => {
+  const getFirebaseIds = fbPostData => {
     let ids = fbPostData.map(post => {
       post = post.data.name;
       return post;
@@ -112,9 +112,6 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
     return ids;
   };
 
-  $scope.setCoverPhoto = location => {
-    $scope.trip.coverPhoto = location.image;
-  };
 
   //adds locations, uid, and privacy status to trip objects
   const buildTripObject = (placeIds, status) => {
@@ -132,7 +129,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   };
 
   // posts places, grabs fb ids of places, posts trip
-  const postTrip = (status) => {
+  const postTrip = status => {
     const fbPlaces = buildPlaceObjects();
     TripFactory.postPlaces(fbPlaces)
       .then(fbData => {
