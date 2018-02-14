@@ -27,12 +27,10 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
   const addStartingPoints= (googlePlaces) => {
     let tripsWithStartingPoints = publicTrips.map((trip, index) => {
       trip.startingPoint = googlePlaces[index].data.result;
-      console.log("should be whole trip object", trip.startingPoint);
       let imageKey = trip.startingPoint.photos[0].photo_reference;
       trip.coverPhoto = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
       return trip;
     });
-    console.log("should have object starting points", tripsWithStartingPoints);
     return tripsWithStartingPoints;
   };
 
@@ -69,7 +67,7 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
       let tripsWithStartingPoints = addStartingPoints(googlePlaces); // adds google place data as a property on the trip object
       tripsWithStartingPoints = sliceTags(tripsWithStartingPoints); // converts tags into strings from array
       $scope.trips = tripsWithStartingPoints; // sets variable to scope
-      $scope.mapCenter = tripsWithStartingPoints[0].startingPoint.formatted_address;
+      $scope.mapCenter = tripsWithStartingPoints[0].startingPoint.formatted_address; // center map to first location
     });
 
     $scope.setMapCenter = (trip) => {
@@ -77,7 +75,6 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
     };
     
     $scope.showDetails = function (event, trip) {
-      console.log("starting point", trip.startingPoint);
       $scope.selectedTrip = trip;
       $scope.map.showInfoWindow("details", trip.startingPoint.place_id);
     };
