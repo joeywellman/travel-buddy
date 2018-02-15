@@ -51,9 +51,9 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     });
   }
 
-  function getMultipleTrips(tripArray) {
+  function getFavoriteDetails(faveArray) {
     const promises = [];
-    tripArray.forEach(trip => {
+    faveArray.forEach(trip => {
       let promise = $http.get(`${FBUrl}/trips/${trip.id}.json`);
       promises.push(promise);
     });
@@ -182,6 +182,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
 
 
-  return {getAllPublicTrips, getMultipleTrips, getTripDetails, getFirebasePlaces, postTrip, postPlaces, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave};
+  return {getAllPublicTrips, getFavoriteDetails, getTripDetails, getFirebasePlaces, postTrip, postPlaces, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave};
 
 });

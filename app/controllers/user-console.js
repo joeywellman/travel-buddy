@@ -2,6 +2,7 @@
 angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, TripFactory, GMapsFactory, GMapsCreds) {
   const favoriteTrips = [];
 
+  //REFACTOR - REPEATED FUNCTIONS WITH BROWSE TRIPS
   // grabs first location from each trip's location array
   const getStartingPoints = (trips) => {
     let startingPoints = trips.map(trip => {
@@ -15,7 +16,6 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
   const addImages = (googlePlaces, tripArray) => {
     let tripsWithStartingPoints = tripArray.map((trip, index) => {
       trip.startingPoint = googlePlaces[index].data.result;
-      console.log("name and starting point", trip.name, trip.startingPoint);
       let imageKey = trip.startingPoint.photos[0].photo_reference;
       trip.coverImage = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
       return trip;
@@ -54,10 +54,11 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
 
 
   function convertToArray(dataObject) {
-    const dataArray = [];
-   for (let data in dataObject){
-      dataArray.push(dataObject[data]);
-   }
+    let keys = Object.keys(dataObject);
+    let dataArray = keys.map(key => {
+      dataObject[key].fbId = key;
+      return dataObject[key];
+    });
     return dataArray;
   } 
 
@@ -67,7 +68,8 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
     TripFactory.getMyFavorites(user.uid)
     .then(favorites => {
       favorites = convertToArray(favorites);
-      return TripFactory.getMultipleTrips(favorites);
+      console.log(favorites);
+      return TripFactory.getFavoriteDetails(favorites);
     })
     .then(tripData => {
       tripData = tripData.map(trip => {
@@ -98,19 +100,17 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
     .then(() => {
       TripFactory.getMyTrips(firebase.auth().currentUser.uid)
       .then((trips) => {
-        $scope.trips = trips;
+        addCoverPhotos(trips, "myTrip");
       });
     });
   };
 
-  // delete fave and then re-fetch fave
+  // delete fave and then re-fetch faves
   $scope.deleteFave = (fave) => {
+    console.log("fave", fave);
     TripFactory.deleteFave(fave.fbId)
     .then(() => {
-      TripFactory.getMyFavorites(firebase.auth().currentUser.uid)
-      .then((faves) => {
-        $scope.faves = faves;
-      });
+      getFavorites(firebase.auth().currentUser);
     });
   };
 
