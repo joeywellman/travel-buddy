@@ -27,6 +27,10 @@ angular
         controller: "UserConsoleCtrl",
       })
       .when("/edit/:tripId", {
+        templateUrl: "partials/init-trip.html",
+        controller: "EditInitCtrl",
+      })
+      .when("/edit/:tripId/search", {
         templateUrl: "partials/trip-builder.html",
         controller: "EditTripCtrl",
       })

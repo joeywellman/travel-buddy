@@ -8,18 +8,22 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   $scope.isCollapsed = false;
   $scope.reviewButtonText = "View Reviews";
   let reviewsLength = null;
-  $scope.showModal = true;
+  $scope.tripLoaded = true;
+  $scope.searchResultsLoading = false;
+
 
   $scope.trip = TripBuilderFactory;
 
 // passes user search into google maps api calls, fetches search results and then details for each search result
   $scope.searchPlaces = () => {
+    $scope.searchResultsLoading = true;
     GMapsFactory.placesSearch($scope.searchString)
     .then(places => {
       return GMapsFactory.getGooglePlaces(places); // returns an array of promises
     })
     .then(placeDetails => {
       let searchResults = GMapsFactory.formatPlaces(placeDetails);
+      $scope.searchResultsLoaded = true;
       $scope.searchResults = searchResults;
       $scope.currentIndex = 0;
     });

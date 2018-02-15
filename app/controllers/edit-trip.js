@@ -8,8 +8,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   $scope.isCollapsed = false;
   $scope.reviewButtonText = "View Reviews";
   let reviewsLength = null;
-
-
+  
   // destructures place data from firebase and adds property of place_id
   const formatPlaceData = fbPlaceData => {
     let formattedData = fbPlaceData.map(place => {
@@ -31,9 +30,12 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
       return GMapsFactory.getGooglePlaces(formattedData);
     })
     .then(placeDetails => { // gets place details from google places
+      $scope.tripLoaded = true;
       tripLocations = GMapsFactory.formatPlaces(placeDetails);
       $scope.tripLocations = tripLocations;
     });
+
+
 
   // passes user search into google maps api calls, fetches search results and then details for each search result
   $scope.searchPlaces = () => {
@@ -42,6 +44,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
         return GMapsFactory.getGooglePlaces(places); // returns an array of promises
       })
       .then(placeDetails => {
+        $scope.searchResultsLoaded = true;
         let searchResults = GMapsFactory.formatPlaces(placeDetails);
         $scope.searchResults = searchResults;
         $scope.currentIndex = 0;

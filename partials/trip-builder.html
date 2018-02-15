@@ -11,6 +11,13 @@
         </div>
       </div>
       <div class="search-results-container">
+
+        <div ng-show = "searchResultsLoading" class="spinner-container">
+          <svg mt-3 ng-hide="searchResultsLoaded" class="spinner" width="80px" height="80px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+          </svg>
+        </div>
+        
         <div ng-show = "searchResults.length == 0">
           <h4>{{errorMessage}}</h4>
           <ul>
@@ -43,6 +50,11 @@
     <div class="col-md pr-2 trip-container">
       <div id="my-trip"> 
         <h4>Your Trip</h4>
+        <div class="spinner-container">
+          <svg mt-3 ng-hide="tripLoaded" class="spinner" width="80px" height="80px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+            <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+          </svg>
+        </div>
         <div ng-repeat = "tripLocation in tripLocations track by $index" class="card trip-card" id="tripLocation.id">
           <img class="card-img-top" ng-src="{{tripLocation.image}}" alt="Picture of a place">
           <div class="card-block">
