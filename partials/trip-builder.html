@@ -7,7 +7,7 @@
         <h5>Search for places and add them to your trip</h5>
         <div class = "row">
           <input class="col-sm-8 form-control" ng-model = "searchString" type="text" placeholder="Hot chicken in Nashville">
-          <button class="col-sm-4 btn btn-secondary" ng-click = "searchPlaces()">Search</button>
+          <button class="col-sm-4 btn btn-secondary search-button" ng-click = "searchPlaces()">Search</button>
         </div>
       </div>
       <div class="search-results-container">
@@ -24,7 +24,7 @@
             <span class="card-text address">{{result.formatted_address}}</span>
             <br>
             <span class="card-text rating">Avg Rating: {{result.rating}}</span>
-            <button type="button" class="btn btn-secondary btn-sm btn-block" ng-click="toggleReviews(result)">{{reviewButtonText}}</button>
+            <button type="button" class="btn btn-secondary btn-sm btn-block toggle-reviews" ng-click="toggleReviews(result)">{{reviewButtonText}}</button>
             <div ng-show="isCollapsed">
               <div class = "review-container" ng-repeat = "review in result.reviews track by $index" ng-show = "isCurrent($index)">
                 <span>Rating: {{review.rating}}</span><br>
@@ -34,7 +34,7 @@
               </div>
               <button type = "button" class = "btn btn-secondary btn-sm btn-block" ng-click = "nextReview()">Next Review</button>
             </div>
-            <button ng-click = "addToTrip(result)" class="btn btn-primary btn-block">Add To Trip</button>
+            <button ng-click = "addToTrip(result)" class="btn btn-primary btn-block add-to-trip">Add To Trip</button>
           </div>
         </div>
       </div>
@@ -63,8 +63,8 @@
       </div>
 
       <div class = "row mt-4">
-        <button class="btn btn-primary btn-lg mr-2" ng-click = "saveTrip()">Save</button>
-        <button class="btn btn-primary btn-lg ml-2" ng-click = "publishTrip()">Publish</button>
+        <button class="btn btn-primary btn-lg mr-2 save-button" ng-click = "saveTrip()">Save</button>
+        <button class="btn btn-primary btn-lg ml-2" publish-button ng-click = "publishTrip()">Publish</button>
       </div>
     </div>
   </div>
