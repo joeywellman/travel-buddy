@@ -5,7 +5,7 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
   // grabs first location from each trip's location array
   const getStartingPoints = (trips) => {
     let startingPoints = trips.map(trip => {
-      let startingPoint = trip.data.locations[0];
+      let startingPoint = trip.locations[0];
       return startingPoint;
     });
     return startingPoints;
@@ -15,10 +15,10 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
   const addImages = (googlePlaces, tripArray) => {
     console.log("trip Array should have diff cover photo", tripArray);
     let tripsWithStartingPoints = tripArray.map((trip, index) => {
-      trip.data.startingPoint = googlePlaces[index].data.result;
-      let imageKey = trip.data.startingPoint.photos[0].photo_reference;
-      trip.data.coverImage = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-      return trip.data;
+      trip.startingPoint = googlePlaces[index].data.result;
+      let imageKey = trip.startingPoint.photos[0].photo_reference;
+      trip.coverImage = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+      return trip;
     });
     console.log("trips with starting points", tripsWithStartingPoints);
     return tripsWithStartingPoints;
@@ -34,7 +34,7 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
     return formattedData;
   };
 
-  const addCoverPhotos = (tripArray) => {
+  const addCoverPhotos = (tripArray, typeOfTrip) => {
     let startingPoints = getStartingPoints(tripArray);
     TripFactory.getFirebasePlaces(startingPoints) // gets firebase places for each starting point
       .then(fbPlaces => {
@@ -44,7 +44,12 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
       .then(googlePlaces => {
         $scope.dataLoaded = true;
         let tripsWithCoverPhotos = addImages(googlePlaces, tripArray); // adds google place data as a property on the trip object
-        $scope.faves = tripsWithCoverPhotos;
+        if (typeOfTrip == "fave"){
+          $scope.faves = tripsWithCoverPhotos;
+        } else if (typeOfTrip == "myTrip"){
+          $scope.trips = tripsWithCoverPhotos;
+        }
+        
       });
   };
 
@@ -56,6 +61,7 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
    }
     return dataArray;
   } 
+
         
 
   const getFavorites = (user) => {
@@ -65,7 +71,12 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
       return TripFactory.getMultipleTrips(favorites);
     })
     .then(tripData => {
-      addCoverPhotos(tripData);
+      tripData = tripData.map(trip => {
+        trip = trip.data;
+        return trip;
+      });
+      console.log("this should be destructured", tripData);
+      addCoverPhotos(tripData, "fave");
     });
   };
 
@@ -75,7 +86,8 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
     if (user) {
       TripFactory.getMyTrips(user.uid)
       .then((trips) => {
-        $scope.trips = trips;
+        console.log("trips you get back from get my trips", trips);
+        addCoverPhotos(trips, "myTrip");
         getFavorites(user);
       });
     } else {
