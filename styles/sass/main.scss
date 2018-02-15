@@ -1,5 +1,5 @@
 $primary-color: rgb(108, 206, 168);
-$secondary-color: rgb(62, 53, 114);
+$secondary-color: rgb(41, 103, 136);
 $font-color-medium: rgb(107, 107, 107);
 $font-color-dark: rgb(66, 65, 65);
 $font-color-light: rgb(240, 240, 240);
@@ -36,15 +36,44 @@ h1, h2, h3, h4, h5{
     background-color: rgb(224, 224, 224);
 }
 
+.search-button{
+    background-color: $secondary-color;
+}
+
 .trip-container{
     height: 80vh;
     overflow: scroll;
+}
+
+.browse-trips{
+    height: 75vh;
+    .trip-name{
+        font-size: 1.2rem;
+    }
+    .trip-author, .trip-description{
+        font-size: 1rem;
+    }
+    .trip-tags{
+        color: $secondary-color;
+        font-size: 0.8rem;
+    }
+    button{
+        border: none;
+    }
+
+    .view-trip{
+        background-color: $secondary-color;
+    }
+
+    .add-favorite{
+        background-color: $primary-color;
+    }
 }
 .trip-card{
     img{
         object-fit: cover;
         width: 100%;
-        height: 35%;
+        height: 30%;
     }
     .name{
         font-size: 0.9rem;
@@ -64,18 +93,19 @@ h1, h2, h3, h4, h5{
     margin: 0.5rem;
     border-radius: 0.1rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
-    .trip-author{
-       color: rgb(33, 33, 33);
-    }
-    .trip-description{
-        font-size: 0.6em;
-    }
+   
     .button-group{
         display: flex;
         flex-wrap: wrap;
     }
     button{
         margin: 0.3em;
+    }
+    .toggle-reviews, .next-review{
+        background-color: $secondary-color;
+    }
+    .add-to-trip{
+        background-color: $primary-color;
     }
     a{
         color: white;
@@ -97,8 +127,14 @@ h1, h2, h3, h4, h5{
     overflow: scroll;
 }
 
+.save-button{
+    background-color: $secondary-color;
+}
 
+.publish-button{
+    background-color: $primary-color;
+}
 
 .google-map-container { 
-    height: 70vh;
+    height: 80vh;
  }

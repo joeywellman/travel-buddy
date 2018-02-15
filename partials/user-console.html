@@ -1,6 +1,6 @@
 <div class = "container">
   <div class = "row p-1">
-    <div class = "col-sm-6 p-2">
+    <div class = "col-sm-8 p-1">
       <div class = "row public-trips">
         <h4>Public Trips</h4>
       <!-- public trip card -->
@@ -49,11 +49,11 @@
       </div>
     </div><!-- end of my-trips column -->
     
-    <div class = "col-sm-6 p-2"><!-- begin favorite trip column -->
+    <div class = "col-sm-4"><!-- begin favorite trip column -->
       <h4>Favorite Trips</h4>
       <!-- favorite trip card -->
       <div class = "row">
-        <div class="trip-card col-sm-6" ng-repeat="fave in faves track by $index">
+        <div class="trip-card col-sm-8" ng-repeat="fave in faves track by $index">
           <!-- <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place"> -->
           <div class = "card-body">
             <h4 class="trip-name">{{fave.name}}</h4>
