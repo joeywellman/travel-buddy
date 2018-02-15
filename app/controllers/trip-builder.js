@@ -97,6 +97,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   //adds locations, uid, and privacy status to trip objects
   const buildTripObject = (placeIds, status) => {
     $scope.trip.trip.locations = placeIds;
+    $scope.trip.trip.userName = firebase.auth().currentUser.displayName;
     $scope.trip.trip.uid = firebase.auth().currentUser.uid;
     if ($scope.trip.trip.tags.indexOf(", ") > -1){
       $scope.trip.trip.tags = $scope.trip.trip.tags.split(', ');
