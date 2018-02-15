@@ -2,6 +2,8 @@
 
 angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, TripFactory, GMapsFactory, NgMap, GMapsCreds, UserFactory) {
   let publicTrips = null;
+
+
   const postFavorite = (tripId) => {
     let faveObj = {
       id: tripId,
@@ -72,6 +74,7 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
       return GMapsFactory.getGooglePlaces(userPlaces); // gets google place details from each firebase place
     })
     .then(googlePlaces => {
+      $scope.dataLoaded = true;
       let tripsWithStartingPoints = addStartingPoints(googlePlaces); // adds google place data as a property on the trip object
       tripsWithStartingPoints = sliceTags(tripsWithStartingPoints); // converts tags into strings from array
       $scope.trips = tripsWithStartingPoints; // sets variable to scope

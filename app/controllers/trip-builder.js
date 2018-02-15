@@ -8,18 +8,23 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   $scope.isCollapsed = false;
   $scope.reviewButtonText = "View Reviews";
   let reviewsLength = null;
-  $scope.showModal = true;
+  $scope.tripLoaded = true;
+  $scope.searchResultsLoading = false;
+  $scope.route = "#!/buildtrip/search";
+
 
   $scope.trip = TripBuilderFactory;
 
 // passes user search into google maps api calls, fetches search results and then details for each search result
   $scope.searchPlaces = () => {
+    $scope.searchResultsLoading = true;
     GMapsFactory.placesSearch($scope.searchString)
     .then(places => {
       return GMapsFactory.getGooglePlaces(places); // returns an array of promises
     })
     .then(placeDetails => {
       let searchResults = GMapsFactory.formatPlaces(placeDetails);
+      $scope.searchResultsLoaded = true;
       $scope.searchResults = searchResults;
       $scope.currentIndex = 0;
     });
@@ -92,6 +97,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   //adds locations, uid, and privacy status to trip objects
   const buildTripObject = (placeIds, status) => {
     $scope.trip.trip.locations = placeIds;
+    $scope.trip.trip.userName = firebase.auth().currentUser.displayName;
     $scope.trip.trip.uid = firebase.auth().currentUser.uid;
     if ($scope.trip.trip.tags.indexOf(", ") > -1){
       $scope.trip.trip.tags = $scope.trip.trip.tags.split(', ');

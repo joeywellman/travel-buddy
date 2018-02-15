@@ -1,14 +1,18 @@
 'use strict';
-angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripFactory, $routeParams, GMapsFactory, GMapsCreds, $location) {
+angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripFactory, $routeParams, TripBuilderFactory, GMapsFactory, GMapsCreds, $location) {
   $scope.title = "Edit Your Trip";
-  let tripLocations = [];
+  $scope.trip = TripBuilderFactory;
+  console.log("scope.trip right when page loads", $scope.trip);
   const searchResults = [];
+  let tripLocations = TripBuilderFactory.trip.locations;
+  let reviewsLength = null;
+
   $scope.errorMessage = "Sorry, it looks like we couldn't find anything matching that search! Here are some helpful tips:";
   $scope.hints = ["Make sure you spelled everything correctly.", "Try specifying a type of place and a location, i.e. 'Donut Shops in New York City' or 'Churches in Paris'", "Search for the name of a specific place, i.e. Wicked Weed Brewing"];
   $scope.isCollapsed = false;
   $scope.reviewButtonText = "View Reviews";
-  let reviewsLength = null;
-
+ 
+  
 
   // destructures place data from firebase and adds property of place_id
   const formatPlaceData = fbPlaceData => {
@@ -20,17 +24,13 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
     return formattedData;
   };
 
-  TripFactory.getTripDetails($routeParams.tripId)
-    .then((tripDetails => {
-      tripDetails.tags = tripDetails.tags.join(', ');
-      $scope.trip = tripDetails;
-      return TripFactory.getFirebasePlaces(tripDetails.locations);
-    }))
+  TripFactory.getFirebasePlaces(tripLocations)
     .then(fbPlaceData => { // gets place details from firebase
       let formattedData = formatPlaceData(fbPlaceData);
       return GMapsFactory.getGooglePlaces(formattedData);
     })
     .then(placeDetails => { // gets place details from google places
+      $scope.tripLoaded = true;
       tripLocations = GMapsFactory.formatPlaces(placeDetails);
       $scope.tripLocations = tripLocations;
     });
@@ -42,6 +42,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
         return GMapsFactory.getGooglePlaces(places); // returns an array of promises
       })
       .then(placeDetails => {
+        $scope.searchResultsLoaded = true;
         let searchResults = GMapsFactory.formatPlaces(placeDetails);
         $scope.searchResults = searchResults;
         $scope.currentIndex = 0;
@@ -91,7 +92,6 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
     tripLocations.splice(index, 1);
   };
 
-  // creates place object for each location in the trip (description and google place id), posts each place object to firebase 
   const buildPlaceObjects = () => {
     const placeObjects = tripLocations.map(location => {
       location = {
@@ -104,7 +104,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
   };
 
   // takes firebase id from POST, returns array of fb ids
-  const getFirebaseIds = fbPostData => {
+  const getFirebaseIds = (fbPostData) => {
     let ids = fbPostData.map(post => {
       post = post.data.name;
       return post;
@@ -112,24 +112,23 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
     return ids;
   };
 
-
   //adds locations, uid, and privacy status to trip objects
   const buildTripObject = (placeIds, status) => {
-    $scope.trip.locations = placeIds;
-    $scope.trip.uid = firebase.auth().currentUser.uid;
-    if ($scope.trip.tags !== null){
-      $scope.trip.tags = $scope.trip.tags.split(', ');
+    $scope.trip.trip.locations = placeIds;
+    $scope.trip.trip.uid = firebase.auth().currentUser.uid;
+    if ($scope.trip.trip.tags.indexOf(", ") > -1) {
+      $scope.trip.trip.tags = $scope.trip.trip.tags.split(', ');
     }
     if (status == "private") {
-      $scope.trip.private = true;
+      $scope.trip.trip.private = true;
     } else if (status == "public") {
-      $scope.trip.private = false;
+      $scope.trip.trip.private = false;
     }
-    return $scope.trip;
+    return $scope.trip.trip;
   };
 
   // posts places, grabs fb ids of places, posts trip
-  const postTrip = status => {
+  const postTrip = (status) => {
     const fbPlaces = buildPlaceObjects();
     TripFactory.postPlaces(fbPlaces)
       .then(fbData => {
@@ -141,6 +140,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
         $location.url("/browse");
       });
   };
+
 
   $scope.saveTrip = () => {
     postTrip("private");
