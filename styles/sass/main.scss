@@ -1,5 +1,6 @@
 $primary-color: rgb(108, 206, 168);
 $secondary-color: rgb(41, 103, 136);
+$warning-color:  rgb(233, 116, 136);
 $font-color-medium: rgb(107, 107, 107);
 $font-color-dark: rgb(66, 65, 65);
 $font-color-light: rgb(240, 240, 240);
@@ -11,6 +12,15 @@ $font-color-light: rgb(240, 240, 240);
     padding: 0.5em;
     font-family: 'Roboto', sans-serif;
     color: $font-color-dark;
+}
+
+ button{
+    margin: 0.3em;
+    border-style: none;
+}
+
+button:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
 nav{
@@ -98,9 +108,7 @@ h1, h2, h3, h4, h5{
         display: flex;
         flex-wrap: wrap;
     }
-    button{
-        margin: 0.3em;
-    }
+   
     .toggle-reviews, .next-review{
         background-color: $secondary-color;
     }
@@ -109,6 +117,22 @@ h1, h2, h3, h4, h5{
     }
     a{
         color: white;
+    }
+
+    a:hover{
+        text-decoration: none;
+    }
+
+    .edit-trip{
+        background-color: $secondary-color;
+    }
+
+    .delete-trip{
+        background-color: $warning-color;
+    }
+
+    .view-trip{
+        background-color: $primary-color;
     }
   
 }
