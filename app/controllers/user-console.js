@@ -1,6 +1,5 @@
 'use strict';
 angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, TripFactory, GMapsFactory, GMapsCreds) {
-  console.log("what is happening");
   const favoriteTrips = [];
 
   // grabs first location from each trip's location array
@@ -77,9 +76,10 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
       TripFactory.getMyTrips(user.uid)
       .then((trips) => {
         $scope.trips = trips;
-        console.log("something happened");
         getFavorites(user);
       });
+    } else {
+      $scope.errorMessage = "Please log in to see your trips!";
     }
   });
 
