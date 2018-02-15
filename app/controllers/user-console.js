@@ -1,11 +1,10 @@
 'use strict';
 angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, TripFactory, GMapsFactory, GMapsCreds) {
-
+  console.log("what is happening");
   const favoriteTrips = [];
 
   // grabs first location from each trip's location array
   const getStartingPoints = (trips) => {
-    console.log("this is whaty you're passing into getStartingPoints", trips);
     let startingPoints = trips.map(trip => {
       let startingPoint = trip.data.locations[0];
       return startingPoint;
@@ -15,15 +14,14 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
 
   // adds starting point addresses onto trips
   const addImages = (googlePlaces, tripArray) => {
-    console.log("google places", googlePlaces);
-    console.log("trip array from add images", tripArray);
+    console.log("trip Array should have diff cover photo", tripArray);
     let tripsWithStartingPoints = tripArray.map((trip, index) => {
       trip.data.startingPoint = googlePlaces[index].data.result;
       let imageKey = trip.data.startingPoint.photos[0].photo_reference;
-      trip.data.coverPhoto = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
+      trip.data.coverImage = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
       return trip.data;
     });
-    console.log("trips with starting points from add images function", tripsWithStartingPoints);
+    console.log("trips with starting points", tripsWithStartingPoints);
     return tripsWithStartingPoints;
   };
 
@@ -38,38 +36,19 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
   };
 
   const addCoverPhotos = (tripArray) => {
-    console.log("trip array going into addCoverPhotos", tripArray);
     let startingPoints = getStartingPoints(tripArray);
-    console.log("starting points", startingPoints);
     TripFactory.getFirebasePlaces(startingPoints) // gets firebase places for each starting point
       .then(fbPlaces => {
         let userPlaces = formatPlaceData(fbPlaces); // formats place data
-        console.log("user places", userPlaces);
         return GMapsFactory.getGooglePlaces(userPlaces); // gets google place details from each firebase place
       })
       .then(googlePlaces => {
         $scope.dataLoaded = true;
         let tripsWithCoverPhotos = addImages(googlePlaces, tripArray); // adds google place data as a property on the trip object
-        console.log("trips with cover photos right before return", tripsWithCoverPhotos);
         $scope.faves = tripsWithCoverPhotos;
       });
   };
 
-  // fetches favorites and details for each favorite -> sets them to scope
-  // const getFavorites = (user) => {
-  //   TripFactory.getMyFavorites(user.uid)
-  //     .then((favoriteData) => {
-  //       let fbKeys = Object.keys(favoriteData);
-  //       fbKeys.forEach(key => {
-  //         TripFactory.getTripDetails(favoriteData[key].id)
-  //           .then(tripDetails => {
-  //             tripDetails.fbId = key;
-  //             favoriteTrips.push(tripDetails);
-  //           });
-
-  //       });
-  //     });
-  //   };
 
   function convertToArray(dataObject) {
     const dataArray = [];
@@ -83,12 +62,10 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
   const getFavorites = (user) => {
     TripFactory.getMyFavorites(user.uid)
     .then(favorites => {
-      console.log("this is what returns from the favorite call", favorites);
       favorites = convertToArray(favorites);
       return TripFactory.getMultipleTrips(favorites);
     })
     .then(tripData => {
-      console.log("tripData", tripData);
       addCoverPhotos(tripData);
     });
   };
@@ -100,6 +77,7 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
       TripFactory.getMyTrips(user.uid)
       .then((trips) => {
         $scope.trips = trips;
+        console.log("something happened");
         getFavorites(user);
       });
     }
