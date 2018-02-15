@@ -13,14 +13,13 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
 
   // adds starting point addresses onto trips
   const addImages = (googlePlaces, tripArray) => {
-    console.log("trip Array should have diff cover photo", tripArray);
     let tripsWithStartingPoints = tripArray.map((trip, index) => {
       trip.startingPoint = googlePlaces[index].data.result;
+      console.log("name and starting point", trip.name, trip.startingPoint);
       let imageKey = trip.startingPoint.photos[0].photo_reference;
       trip.coverImage = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
       return trip;
     });
-    console.log("trips with starting points", tripsWithStartingPoints);
     return tripsWithStartingPoints;
   };
 
@@ -75,7 +74,6 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
         trip = trip.data;
         return trip;
       });
-      console.log("this should be destructured", tripData);
       addCoverPhotos(tripData, "fave");
     });
   };
@@ -86,7 +84,6 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
     if (user) {
       TripFactory.getMyTrips(user.uid)
       .then((trips) => {
-        console.log("trips you get back from get my trips", trips);
         addCoverPhotos(trips, "myTrip");
         getFavorites(user);
       });
