@@ -114,8 +114,6 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
 
   //adds locations, uid, and privacy status to trip objects
   const buildTripObject = (placeIds, status) => {
-    console.log("scope.trip", $scope.trip);
-    console.log("scope.trip.trip", $scope.trip.trip);
     $scope.trip.trip.locations = placeIds;
     $scope.trip.trip.uid = firebase.auth().currentUser.uid;
     if ($scope.trip.trip.tags.indexOf(", ") > -1) {
@@ -136,7 +134,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, TripF
       .then(fbData => {
         let placeIds = getFirebaseIds(fbData);
         const trip = buildTripObject(placeIds, status);
-        return TripFactory.postTrip(trip);
+        return TripFactory.updateTrip(trip, $routeParams.tripId);
       })
       .then((data) => {
         $location.url("/browse");
