@@ -14,6 +14,11 @@ $font-color-light: rgb(240, 240, 240);
     color: $font-color-dark;
 }
 
+.clear-header{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
  button{
     margin: 0.3em;
     border-style: none;
@@ -24,6 +29,7 @@ button:hover{
 }
 
 nav{
+    height: 9vh;
     background-color: $primary-color;
     a{
         color: $font-color-dark;
@@ -34,6 +40,33 @@ nav{
     .logo{
         width: 9.5rem;
         height: 3rem;
+    }
+    .menu-group{
+        display: flex;
+        justify-content: flex-start !important;
+    }
+    .user-image{
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+.footer{
+    font-size: 0.8rem;
+    width: 100%;
+    background-color: $primary-color;
+    h5{
+        font-size: 0.8rem;
+    }
+    span{
+        font-size: 0.6rem;
+    }
+    h5, span{
+        color: $font-color-dark;
+        display: block;
+        margin: auto;
     }
 }
 
@@ -157,6 +190,18 @@ h1, h2, h3, h4, h5{
 .publish-button{
     background-color: $primary-color;
 }
+
+.form-container{
+    width: 60vw;
+    .onward-button{
+        $background-color: $primary-color;
+        a{
+            color: $font-color-light;
+        }
+    }
+
+}
+
 
 .google-map-container { 
     height: 80vh;
