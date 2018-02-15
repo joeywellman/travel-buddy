@@ -2,7 +2,7 @@
   <h2>Browse Trips</h2>
   <div class="container">
     <div class="row">
-      <input class="col-sm-8 form-control" ng-model="searchTerm" type="text" placeholder="Search trips">
+      <input class="col-sm-8 form-control" ng-model="searchTerm" type="text" placeholder="Search by a destination or keyword">
     </div>
     <div class="row">
       <div class = "col-sm-6 m-1 trip-container">
@@ -10,9 +10,11 @@
           <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
           <div class = "card-body">
             <h4 class="trip-name">{{trip.name}}</h4>
-            <h5 class="trip-author">Trip Author</h5>
+            <span class="trip-tags">{{trip.tags}}</span>
+            <br>
+            <h5 class = "trip-location">{{trip.location}}</h5>
+            <span class="trip-author">Trip Author</span><br>
             <p class="trip-description">{{trip.description}}</p>
-            <p class="trip-tags">{{trip.tags}}</p>
             <button class="btn btn-secondary view-trip"><a ng-href = "#!/view/{{trip.id}}">View Trip</a></button>
             <button class="btn btn-secondary add-favorite" ng-click="addFavorite(trip.id)">Add To Favorites</button>
           </div>
@@ -25,6 +27,8 @@
           <info-window id="details">
             <div ng-non-bindable>
               <h5>{{selectedTrip.name}}</h5>
+              <span>General Location:</span><br>
+              <span>{{selectedTrip.location}}</span>
               <span>Starting point:</span><br>
               <span>{{selectedTrip.startingPoint.name}}</span>
             </div>
