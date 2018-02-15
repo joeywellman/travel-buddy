@@ -67,10 +67,7 @@ h1, h2, h3, h4, h5{
         color: $secondary-color;
         font-size: 0.8rem;
     }
-    button{
-        border: none;
-    }
-
+ 
     .view-trip{
         background-color: $secondary-color;
     }
@@ -79,6 +76,8 @@ h1, h2, h3, h4, h5{
         background-color: $primary-color;
     }
 }
+
+
 .trip-card{
     img{
         object-fit: cover;
