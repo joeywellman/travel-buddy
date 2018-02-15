@@ -30,7 +30,7 @@ angular
         templateUrl: "partials/init-trip.html",
         controller: "EditInitCtrl",
       })
-      .when("/edit/:tripId/search", {
+      .when("/edit/search/:tripId", {
         templateUrl: "partials/trip-builder.html",
         controller: "EditTripCtrl",
       })

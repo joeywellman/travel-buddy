@@ -10,6 +10,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   let reviewsLength = null;
   $scope.tripLoaded = true;
   $scope.searchResultsLoading = false;
+  $scope.route = "#!/buildtrip/search";
 
 
   $scope.trip = TripBuilderFactory;
