@@ -10,6 +10,10 @@ angular
         controller: "BrowseTripsCtrl"
       })
       .when("/buildtrip", {
+        templateUrl: "partials/init-trip.html",
+        controller: "InitTripCtrl"
+      })
+      .when("/buildtrip/search", {
         templateUrl: "partials/trip-builder.html",
         controller: "TripBuilderCtrl"
       })
