@@ -1,5 +1,5 @@
 'use strict';
-angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds, UserFactory) {
+angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds, UserFactory, TripBuilderFactory){
   $scope.title = "Build A Trip";
   const tripLocations = [];
   const searchResults = [];
@@ -10,8 +10,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   let reviewsLength = null;
   $scope.showModal = true;
 
-  
-
+  $scope.trip = TripBuilderFactory;
 
 // passes user search into google maps api calls, fetches search results and then details for each search result
   $scope.searchPlaces = () => {
@@ -92,15 +91,17 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
 
   //adds locations, uid, and privacy status to trip objects
   const buildTripObject = (placeIds, status) => {
-    $scope.trip.locations = placeIds;
-    $scope.trip.uid = firebase.auth().currentUser.uid;
-    $scope.trip.tags = $scope.trip.tags.split(', ');
-    if (status == "private") {
-      $scope.trip.private = true;
-    } else if (status == "public") {
-      $scope.trip.private = false;
+    $scope.trip.trip.locations = placeIds;
+    $scope.trip.trip.uid = firebase.auth().currentUser.uid;
+    if ($scope.trip.trip.tags.indexOf(", ") > -1){
+      $scope.trip.trip.tags = $scope.trip.trip.tags.split(', ');
     }
-    return $scope.trip;
+    if (status == "private") {
+      $scope.trip.trip.private = true;
+    } else if (status == "public") {
+      $scope.trip.trip.private = false;
+    }
+    return $scope.trip.trip;
   };
 
   // posts places, grabs fb ids of places, posts trip
