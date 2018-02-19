@@ -1,6 +1,6 @@
-$primary-color: rgb(108, 206, 168);
-$secondary-color: rgb(41, 103, 136);
-$warning-color:  rgb(233, 116, 136);
+$primary-color: #7FD1B9;
+$secondary-color: rgb(140, 150, 235);
+$warning-color: rgb(228, 118, 118);
 $font-color-medium: rgb(107, 107, 107);
 $font-color-dark: rgb(66, 65, 65);
 $font-color-light: rgb(240, 240, 240);
@@ -22,11 +22,14 @@ $font-color-light: rgb(240, 240, 240);
  button{
     margin: 0.3em;
     border-style: none;
+    background-color: $primary-color;
 }
 
 button:hover{
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
+
+button.add-favorite{background-color: $secondary-color;}
 
 nav{
     height: 9vh;
@@ -108,9 +111,7 @@ h1, h2, h3, h4, h5{
         background-color: $secondary-color;
     }
 
-    .add-favorite{
-        background-color: $primary-color;
-    }
+   
 }
 
 

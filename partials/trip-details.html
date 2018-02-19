@@ -1,7 +1,9 @@
 <div class="container">
-  <h3>{{trip.name}}</h3>
-  <button type = "button" class = "btn btn-primary btn-lg" ng-click = "addFavorite()">Add To Favorites</button>
-  <h4>Author</h4>
+  <div class = "row">
+    <h3 div class = "col-sm-8">{{trip.name}}</h3>
+    <button type = "button" class = "btn btn-primary col-sm-3 add-favorite" ng-click = "addFavorite()">Favorite</button>
+  </div>
+  <h4>Curated by {{trip.userName}}</h4>
   <p class="trip-description">{{trip.description}}</p>
   <div class = "row">
     <div class = "col-sm-6 p-2">
