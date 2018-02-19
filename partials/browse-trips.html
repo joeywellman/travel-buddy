@@ -21,10 +21,10 @@
             <span class="trip-tags">{{trip.tags}}</span>
             <br>
             <h5 class = "trip-location">{{trip.location}}</h5>
-            <span class="trip-author">Trip curated by {{trip.userName}}</span><br>
+            <span class="trip-author">Curated by {{trip.userName}}</span><br>
             <p class="trip-description">{{trip.description}}</p>
-            <button class="btn btn-secondary view-trip"><a ng-href = "#!/view/{{trip.id}}">View Trip</a></button>
-            <button class="btn btn-secondary add-favorite" ng-click="addFavorite(trip.id)">Add To Favorites</button>
+            <button class="btn btn-secondary view-trip"><a ng-href = "#!/view/{{trip.id}}">View</a></button>
+            <button class="btn btn-secondary add-favorite" ng-click="addFavorite(trip.id)">Favorite</button>
           </div>
         </div>
       </div>

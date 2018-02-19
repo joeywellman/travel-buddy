@@ -120,6 +120,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
         return TripFactory.postTrip(trip);
       })
       .then((data)=> {
+        $scope.trip.trip = null;
         $location.url("/browse");
       });
   };
