@@ -47,9 +47,6 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
   }
 
 
-  
-
-
   return {placesSearch, getPlaceInfo, getGooglePlaces, formatPlaces};
 
 });

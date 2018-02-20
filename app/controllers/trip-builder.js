@@ -1,7 +1,7 @@
 'use strict';
 angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds, UserFactory, TripBuilderFactory){
   $scope.title = "Build A Trip";
-  const tripLocations = [];
+  $scope.tripLocations = [];
   const searchResults = [];
   $scope.errorMessage = "Sorry, it looks like we couldn't find anything matching that search! Here are some helpful tips:";
   $scope.hints = ["Make sure you spelled everything correctly.", "Try specifying a type of place and a location, i.e. 'Donut Shops in New York City' or 'Churches in Paris'", "Search for the name of a specific place, i.e. Wicked Weed Brewing"];
@@ -54,28 +54,27 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   
   // fired when user clicks 'add to trip' button on a place card, pushes place object into global array
   $scope.addToTrip = (place) => {
-    tripLocations.push(place);
-    $scope.tripLocations = tripLocations;
+    $scope.tripLocations.push(place);
   };
 
 
   $scope.moveUp = (tripLocation, index) => {
-    tripLocations[index] = tripLocations[index-1];
-    tripLocations[index-1] = tripLocation;
+    $scope.tripLocations[index] = $scope.tripLocations[index-1];
+    $scope.tripLocations[index-1] = tripLocation;
   };
 
   $scope.moveDown = (tripLocation, index) => {
-    tripLocations[index] = tripLocations[index+1];
-    tripLocations[index+1] = tripLocation;
+    $scope.tripLocations[index] = $scope.tripLocations[index+1];
+    $scope.tripLocations[index+1] = tripLocation;
   };
 
   $scope.removeFromTrip = (index) => {
-    tripLocations.splice(index, 1);
+    $scope.tripLocations.splice(index, 1);
   };
 
   // creates place object for each location in the trip (description and google place id), posts each place object to firebase 
-  const buildPlaceObjects = () => {
-    const placeObjects = tripLocations.map(location => {
+  $scope.buildPlaceObjects = () => {
+    const placeObjects = $scope.tripLocations.map(location => {
       location = {
         description: location.description,
         id: location.place_id
@@ -86,7 +85,8 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   };
 
   // takes firebase id from POST, returns array of fb ids
-  const getFirebaseIds = (fbPostData) => {
+  $scope.getFirebaseIds = (fbPostData) => {
+    console.log("fb post data", fbPostData);
     let ids = fbPostData.map(post => {
       post = post.data.name;
       return post;
@@ -95,8 +95,9 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   };
 
   //adds locations, uid, and privacy status to trip objects
-  const buildTripObject = (placeIds, status) => {
+  $scope.buildTripObject = (placeIds, status) => {
     $scope.trip.trip.locations = placeIds;
+    console.log("this should be the place ids location array", $scope.trip.trip.locations);
     $scope.trip.trip.userName = firebase.auth().currentUser.displayName;
     $scope.trip.trip.uid = firebase.auth().currentUser.uid;
     if ($scope.trip.trip.tags.indexOf(", ") > -1){
@@ -112,11 +113,11 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
 
   // posts places, grabs fb ids of places, posts trip
   const postTrip = (status) => {
-    const fbPlaces = buildPlaceObjects();
+    const fbPlaces = $scope.buildPlaceObjects();
     TripFactory.postPlaces(fbPlaces)
       .then(fbData => {
-        let placeIds = getFirebaseIds(fbData);
-        const trip = buildTripObject(placeIds, status);
+        let placeIds = $scope.getFirebaseIds(fbData);
+        const trip = $scope.buildTripObject(placeIds, status);
         return TripFactory.postTrip(trip);
       })
       .then((data)=> {
