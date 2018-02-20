@@ -20,6 +20,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, $cont
     return formattedData;
   };
 
+  // fetches place info for the trip you're editing
   TripFactory.getFirebasePlaces(TripBuilderFactory.trip.locations)
     .then(fbPlaceData => { // gets place details from firebase
       let formattedData = formatPlaceData(fbPlaceData);
@@ -32,7 +33,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, $cont
 
 
 
-  // posts places, grabs fb ids of places, posts trip
+  // posts places, updates trip
   const saveChanges = (status) => {
     const fbPlaces = $scope.buildPlaceObjects();
     TripFactory.postPlaces(fbPlaces)

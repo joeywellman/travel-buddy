@@ -5,6 +5,10 @@ angular
   .constant("FBUrl", "https://nss-capstone-75d59.firebaseio.com/")
   .config($routeProvider => {
     $routeProvider
+      .when("/home", {
+        templateUrl: "partials/home.html",
+        controller: "HomepageCtrl"
+      })
       .when("/browse", {
         templateUrl: "partials/browse-trips.html",
         controller: "BrowseTripsCtrl"
@@ -34,7 +38,7 @@ angular
         templateUrl: "partials/trip-builder.html",
         controller: "EditTripCtrl",
       })
-      .otherwise("/browse");
+      .otherwise("/home");
     })
   .run(FBCreds => {
     let authConfig = {
