@@ -10,11 +10,32 @@
     </div>
     <div class = "create col-md-5 p-1 m-1">
       <h4>Create</h4>
-      <p>Plan your dream trip or compile insider secrets about your home town. You can store your trips privately or post them publicly!</p>
+      <p>Plan your dream trip or compile insider secrets about your home town.</p>
     </div>
   </div>
 
-  <div class = "map-container">
-    <!-- map here with pins for each trip, info window gives info for each trip -->
+  <div class="row map">
+    <ng-map class="homepage-map" zoom="2" center="{{mapCenter}}" pan-control="true" zoom-control="true" scale-control="true">
+      <marker ng-repeat="trip in trips track by $index" position={{trip.startingPoint.formatted_address}} title={{trip.startingPoint.name}}
+        id={{trip.startingPoint.place_id}} on-click="showDetails(trip)"></marker>
+      <info-window id="details">
+        <div ng-non-bindable>
+          <img ng-src = "{{trip.coverPhoto}}">
+          <h5>{{selectedTrip.name}}</h5>
+          <span>General Location:</span>
+          <br>
+          <span>{{selectedTrip.location}}</span>
+          <br>
+          <span>Description:</span>
+          <br>
+          <span>{{selectedTrip.description}}</span>
+          <br>
+          <span>Starting point:</span>
+          <br>
+          <span>{{selectedTrip.startingPoint.name}}</span>
+          <span>{{selectedTrip.tags}}</span>
+        </div>
+      </info-window>
+    </ng-map>
   </div>
 </div>
