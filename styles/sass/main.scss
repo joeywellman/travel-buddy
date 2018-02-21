@@ -1,5 +1,5 @@
-$primary-color: #7FD1B9;
-$secondary-color: rgb(140, 150, 235);
+$primary-color: #D6F9FD;
+$secondary-color: #4582D5;
 $warning-color: rgb(228, 118, 118);
 $font-color-medium: rgb(107, 107, 107);
 $font-color-dark: rgb(66, 65, 65);
@@ -118,7 +118,7 @@ h1, h2, h3, h4, h5{
 }
 
 .browse-trips{
-    height: 75vh;
+    
     .trip-name{
         font-size: 1.2rem;
     }
@@ -158,8 +158,8 @@ h1, h2, h3, h4, h5{
             font-size: 0.7rem;
         }
     }
-    padding: 0.5rem;
-    margin: 0.5rem;
+    padding: 1rem;
+    margin: 1.5rem;
     border-radius: 0.1rem;
     box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
    

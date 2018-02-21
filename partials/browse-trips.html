@@ -5,8 +5,6 @@
       <input class="col-sm-8 form-control" ng-model="searchTerm" type="text" placeholder="Search by a destination or keyword">
     </div>
     <div class="row">
-      <div class = "col-sm-6 m-1 trip-container">
-        
         <div class = "spinner-container">
           <svg mt-3 ng-hide = "dataLoaded" class="spinner" width="80px" height="80px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
             <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
@@ -14,7 +12,7 @@
         </div>
 
         
-        <div class="trip-card browse-trips card" ng-repeat ="trip in trips | filter: searchTerm" ng-mouseover = "setMapCenter(trip)">
+        <div class="col-sm-3 trip-card browse-trips card" ng-repeat ="trip in trips | filter: searchTerm">
           <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
           <div class = "card-body">
             <h4 class="trip-name">{{trip.name}}</h4>
