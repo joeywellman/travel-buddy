@@ -1,8 +1,8 @@
 'use strict';
 angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, $controller, $routeParams, TripFactory, TripBuilderFactory, GMapsFactory, GMapsCreds, $location) {
-  $controller("TripBuilderCtrl", { $scope: $scope });
   // inherits places search and functions that let users toggle through search result reviews
   // inherits add to trip, remove from trip, and rearrange order
+  $controller("TripBuilderCtrl", { $scope: $scope });
   
   $scope.title = "Edit Your Trip";
   const searchResults = [];

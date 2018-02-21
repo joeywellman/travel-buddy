@@ -42,37 +42,40 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
     return tripsWithTags;
   };
 
-  // gets all public trips to display on map
-  TripFactory.getAllPublicTrips()
-    .then(trips => {
-      publicTrips = trips;
-      let startingPoints = getStartingPoints(publicTrips); // grabs first firebase place id from each trip
-      TripFactory.getFirebasePlaces(startingPoints) // gets firebase places for each starting point
-        .then(fbPlaces => {
-          let userPlaces = formatPlaceData(fbPlaces); // formats place data
-          return GMapsFactory.getGooglePlaces(userPlaces); // gets google place details from each firebase place
-        })
-        .then(googlePlaces => {
-          $scope.dataLoaded = true;
-          let tripsWithStartingPoints = addStartingPoints(googlePlaces); // adds google place data as a property on the trip object
-          tripsWithStartingPoints = sliceTags(tripsWithStartingPoints); // converts tags into strings from array
-          $scope.trips = tripsWithStartingPoints; // sets variable to scope
-          $scope.mapCenter = tripsWithStartingPoints[0].startingPoint.formatted_address; // center map to first location
-        });
-    });
+  // defines a function that gets all public trips and formats them with starting points and cover photos
+  $scope.getTrips = () => {
+    TripFactory.getAllPublicTrips()
+      .then(trips => {
+        publicTrips = trips;
+        let startingPoints = getStartingPoints(publicTrips); // grabs first firebase place id from each trip
+        TripFactory.getFirebasePlaces(startingPoints) // gets firebase places for each starting point
+          .then(fbPlaces => {
+            let userPlaces = formatPlaceData(fbPlaces); // formats place data
+            return GMapsFactory.getGooglePlaces(userPlaces); // gets google place details from each firebase place
+          })
+          .then(googlePlaces => {
+            $scope.dataLoaded = true;
+            let tripsWithStartingPoints = addStartingPoints(googlePlaces); // adds google place data as a property on the trip object
+            tripsWithStartingPoints = sliceTags(tripsWithStartingPoints); // converts tags into strings from array
+            $scope.trips = tripsWithStartingPoints; // sets variable to scope
+            $scope.mapCenter = tripsWithStartingPoints[0].startingPoint.formatted_address; // center map to first location
+          });
+      });
+  };
 
-  // $scope.setMapCenter = (trip) => {
-  //   $scope.mapCenter = trip.startingPoint.formatted_address;
-  // };
-
+  // show infowindow, fired on marker click
   $scope.showDetails = function (event, trip) {
     $scope.selectedTrip = trip;
     $scope.map.showInfoWindow("details", trip.startingPoint.place_id);
   };
 
+  // hide infowindow
   $scope.hideDetail = function () {
     $scope.map.hideInfoWindow("details");
   };
+
+  
+  $scope.getTrips();
 
 
 });

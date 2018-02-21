@@ -1,7 +1,10 @@
 'use strict';
 
-angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, TripFactory, GMapsFactory, NgMap, GMapsCreds, UserFactory) {
+angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $controller, TripFactory, GMapsFactory, NgMap, GMapsCreds, UserFactory) {
   
+  // inherits functions to get starting points and photos for trips
+  $controller("HomepageCtrl", { $scope: $scope });
+
   // assembles favorite object and posts to firebase
   const postFavorite = (tripId) => {
     let faveObj = {
@@ -23,11 +26,10 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, Tr
     }
   };
 
-  // gets all public trips from firebase and sets to scp
-  TripFactory.getAllPublicTrips()
-    .then(trips => {
-      $scope.trips = trips;
-    });
+  // defined in homepage.js, gets all public trips and formats with starting points and cover photos
+  $scope.getTrips();
+
+  console.log("$scope.trips", $scope.trips);
   
   
 });
