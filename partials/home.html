@@ -1,0 +1,50 @@
+<div class="container">
+
+  <div class = "header-image">
+    <div class="header-text">
+      <h1>A crowd-sourced travle guide</h1>
+    </div>
+  </div>
+  
+  <hr>
+  <div class = "row instructions">
+    <div class = "discover col-md-5 p-1 m-1">
+      <h4>Discover</h4>
+      <p>Browse or search through trips other people have built. You might just find inspiration for your next adventure!</p>
+    </div>
+    <div class = "create col-md-5 p-1 m-1">
+      <h4>Create</h4>
+      <p>Plan your dream trip or compile insider secrets about your home town.</p>
+    </div>
+  </div>
+  <hr>
+
+  <div class="row map">
+    <h3>Explore pre-planned trips all over the world.</h3>
+    <p>Click on a marker to see details about each trip.</p>
+    
+    <ng-map class="homepage-map" zoom="2" center="{{mapCenter}}" pan-control="true" zoom-control="true" scale-control="true">
+      <marker ng-repeat="trip in trips track by $index" position={{trip.startingPoint.formatted_address}} title={{trip.startingPoint.name}}
+        id={{trip.startingPoint.place_id}} on-click="showDetails(trip)"></marker>
+      <info-window id="details">
+        <div ng-non-bindable>
+          <img ng-src = "{{trip.coverPhoto}}">
+          <h5>{{selectedTrip.name}}</h5>
+          <span>General Location:</span>
+          <br>
+          <span>{{selectedTrip.location}}</span>
+          <br>
+          <span>Description:</span>
+          <br>
+          <span>{{selectedTrip.description}}</span>
+          <br>
+          <span>Starting point:</span>
+          <br>
+          <span>{{selectedTrip.startingPoint.name}}</span>
+          <span>{{selectedTrip.tags}}</span>
+        </div>
+      </info-window>
+    </ng-map>
+  </div>
+
+</div>

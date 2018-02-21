@@ -3,9 +3,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
 
   const tripLocations = [];
   let userPlaces = null;
-
   
-
   const setMapCenter = (placeDetails) => {
     let firstLat = placeDetails[0].geometry.location.lat;
     let firstLong = placeDetails[0].geometry.location.lng;

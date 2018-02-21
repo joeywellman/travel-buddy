@@ -68,7 +68,6 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, Tr
     TripFactory.getMyFavorites(user.uid)
     .then(favorites => {
       favorites = convertToArray(favorites);
-      console.log(favorites);
       return TripFactory.getFavoriteDetails(favorites);
     })
     .then(tripData => {
