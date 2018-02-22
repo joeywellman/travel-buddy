@@ -57,6 +57,10 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     $scope.tripLocations.push(place);
   };
 
+  // NEED TO TEST
+  $scope.setCoverPhoto = (tripLocation) => {
+    $scope.trip.trip.coverPhoto = tripLocation.image;
+  };
 
   $scope.moveUp = (tripLocation, index) => {
     $scope.tripLocations[index] = $scope.tripLocations[index-1];
@@ -86,7 +90,6 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
 
   // takes firebase id from POST, returns array of fb ids
   $scope.getFirebaseIds = (fbPostData) => {
-    console.log("fb post data", fbPostData);
     let ids = fbPostData.map(post => {
       post = post.data.name;
       return post;
@@ -97,7 +100,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   //adds locations, uid, and privacy status to trip objects
   $scope.buildTripObject = (placeIds, status) => {
     $scope.trip.trip.locations = placeIds;
-    console.log("this should be the place ids location array", $scope.trip.trip.locations);
+    $scope.trip.trip.startingPoint = $scope.tripLocations[0].formatted_address; // also need to test!!
     $scope.trip.trip.userName = firebase.auth().currentUser.displayName;
     $scope.trip.trip.uid = firebase.auth().currentUser.uid;
     if ($scope.trip.trip.tags.indexOf(", ") > -1){
@@ -108,6 +111,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     } else if (status == "public") {
       $scope.trip.trip.private = false;
     }
+    console.log("should have starting point and cover photo", $scope.trip.trip);
     return $scope.trip.trip;
   };
 
