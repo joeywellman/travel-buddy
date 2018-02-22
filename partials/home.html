@@ -24,8 +24,8 @@
     <p>Click on a marker to see details about each trip.</p>
     
     <ng-map class="homepage-map" zoom="2" center="{{mapCenter}}" pan-control="true" zoom-control="true" scale-control="true">
-      <marker ng-repeat="trip in trips track by $index" position={{trip.startingPoint.formatted_address}} title={{trip.startingPoint.name}}
-        id={{trip.startingPoint.place_id}} on-click="showDetails(trip)"></marker>
+      <marker ng-repeat="trip in trips track by $index" position={{trip.startingPoint}} title={{trip.name}}
+        id={{trip.startingPoint}} on-click="showDetails(trip)"></marker>
       <info-window id="details">
         <div ng-non-bindable>
           <img ng-src = "{{trip.coverPhoto}}">

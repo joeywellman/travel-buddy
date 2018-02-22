@@ -3,19 +3,30 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
 
   $scope.mapCenter = "35, 82";
 
+  // converts tags from array to strings
+  const sliceTags = (trips) => {
+    let tripsWithTags = trips.map(trip => {
+      trip.tags = trip.tags.join(', ');
+      return trip;
+    });
+    return tripsWithTags;
+  };
+
+
     // defines a function that gets all public trips and formats them with starting points and cover photos
   $scope.getTrips = () => {
     TripFactory.getAllPublicTrips()
       .then(trips => {
+        $scope.trips = sliceTags(trips);
+        // $scope.trips = trips;
         $scope.dataLoaded = true;
-        $scope.trips = trips;
       });
   };
 
   // show infowindow, fired on marker click
   $scope.showDetails = function (event, trip) {
     $scope.selectedTrip = trip;
-    $scope.map.showInfoWindow("details", trip.startingPoint.place_id);
+    $scope.map.showInfoWindow("details", trip.startingPoint);
   };
 
   // hide infowindow
