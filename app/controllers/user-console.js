@@ -2,57 +2,6 @@
 angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, TripFactory, GMapsFactory, GMapsCreds) {
   const favoriteTrips = [];
 
-  //REFACTOR - REPEATED FUNCTIONS WITH BROWSE TRIPS
-  // grabs first location from each trip's location array
-  // const getStartingPoints = (trips) => {
-  //   let startingPoints = trips.map(trip => {
-  //     let startingPoint = trip.locations[0];
-  //     return startingPoint;
-  //   });
-  //   return startingPoints;
-  // };
-
-  // adds starting point addresses onto trips
-  // const addImages = (googlePlaces, tripArray) => {
-  //   let tripsWithStartingPoints = tripArray.map((trip, index) => {
-  //     trip.startingPoint = googlePlaces[index].data.result;
-  //     let imageKey = trip.startingPoint.photos[0].photo_reference;
-  //     trip.coverImage = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${imageKey}&key=${GMapsCreds.apiKey}`;
-  //     return trip;
-  //   });
-  //   return tripsWithStartingPoints;
-  // };
-
-  // this is wonky function that solves a bug with place.id vs place.place_id, need to refactor
-  // const formatPlaceData = (fbPlaceData) => {
-  //   let formattedData = fbPlaceData.map(place => {
-  //     place = place.data;
-  //     place.place_id = place.id;
-  //     return place;
-  //   });
-  //   return formattedData;
-  // };
-
-  // const addCoverPhotos = (tripArray, typeOfTrip) => {
-  //   let startingPoints = getStartingPoints(tripArray);
-  //   TripFactory.getFirebasePlaces(startingPoints) // gets firebase places for each starting point
-  //     .then(fbPlaces => {
-  //       let userPlaces = formatPlaceData(fbPlaces); // formats place data
-  //       return GMapsFactory.getGooglePlaces(userPlaces); // gets google place details from each firebase place
-  //     })
-  //     .then(googlePlaces => {
-  //       $scope.dataLoaded = true;
-  //       let tripsWithCoverPhotos = addImages(googlePlaces, tripArray); // adds google place data as a property on the trip object
-  //       if (typeOfTrip == "fave"){
-  //         $scope.faves = tripsWithCoverPhotos;
-  //       } else if (typeOfTrip == "myTrip"){
-  //         $scope.trips = tripsWithCoverPhotos;
-  //       }
-        
-  //     });
-  // };
-
-
   // converts firebase data to array and adds firebase key 
   function convertToArray(dataObject) {
     let keys = Object.keys(dataObject);
