@@ -1,5 +1,6 @@
 'use strict';
 angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds, UserFactory, TripBuilderFactory){
+
   $scope.title = "Build A Trip";
   $scope.tripLocations = [];
   const searchResults = [];
