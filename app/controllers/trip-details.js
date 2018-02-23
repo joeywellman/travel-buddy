@@ -28,6 +28,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
     });
     return placesWithDescriptions;
   };
+  
   // gets trip info from firebase
   TripFactory.getTripDetails($routeParams.tripId)
   .then((tripDetails => {

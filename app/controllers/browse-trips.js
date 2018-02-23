@@ -28,8 +28,5 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
 
   // defined in homepage.js, gets all public trips and formats with starting points and cover photos
   $scope.getTrips();
-
-  console.log("$scope.trips", $scope.trips);
-  
-  
+ 
 });

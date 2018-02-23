@@ -18,7 +18,6 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
     TripFactory.getAllPublicTrips()
       .then(trips => {
         $scope.trips = sliceTags(trips);
-        // $scope.trips = trips;
         $scope.dataLoaded = true;
       });
   };
