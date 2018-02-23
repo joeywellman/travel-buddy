@@ -19,7 +19,7 @@ $font-color-light: rgb(240, 240, 240);
     margin-bottom: 1rem;
 }
 
- button{
+button{
     margin: 0.3em;
     border-style: none;
     background-color: $primary-color;
@@ -43,6 +43,9 @@ nav{
     .logo{
         width: 9.5rem;
         height: 3rem;
+    }
+    .nav-link{
+        margin-top: 0.5rem;
     }
     .menu-group{
         display: flex;
