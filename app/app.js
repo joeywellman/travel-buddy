@@ -1,7 +1,7 @@
 'use strict';
 
 angular
-  .module("TravelBuddy", ['ngRoute', 'ngMap'])
+  .module("TravelBuddy", ['ngRoute', 'ngMap', 'ngTagsInput'])
   .constant("FBUrl", "https://nss-capstone-75d59.firebaseio.com/")
   .config($routeProvider => {
     $routeProvider

@@ -6,8 +6,17 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   // converts tags from array to strings
   const sliceTags = (trips) => {
     let tripsWithTags = trips.map(trip => {
-      trip.tags = trip.tags.join(', ');
-      return trip;
+      if (trip.tags[0] !== null && typeof trip.tags[0] === 'object'){ // if tags were created with ng-tag
+        trip.tags = trip.tags.map(tag => {
+          tag = tag.text;
+          return tag;
+        });
+        trip.tags = trip.tags.join(', ');
+        return trip;
+      } else{
+        trip.tags = trip.tags.join(', ');
+        return trip;
+      }
     });
     return tripsWithTags;
   };

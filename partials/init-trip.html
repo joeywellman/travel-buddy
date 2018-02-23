@@ -15,7 +15,7 @@
     </div>
     <div class = "form-group">
       <label for="trip-tags">Tags</label>
-      <input type="text" class="form-control" ng-model="trip.trip.tags" id="trip-tags" placeholder="#outdoors, #hiking, #nashville, #nature">
+      <tags-input placeholder = "#add, #some, #tags" ng-model="trip.trip.tags" id = "trip-tags"></tags-input>
     </div>
     <p>This trip is a:</p>
     <select class="form-control" ng-model="trip.trip.type" id="trip-type">
@@ -23,5 +23,5 @@
       <option value="collection">Collection</option>
     </select>
   </form>
-  <button class = "btn btn-success btn-lg onward-button"><a href="{{route}}">Onward!</a></button>
+  <button class = "btn btn-lg onward-button"><a href="{{route}}">Onward!</a></button>
 </div>

@@ -1,4 +1,4 @@
-$primary-color: #b5e0a3;
+$primary-color: #a5cec9;
 $secondary-color: rgb(79, 107, 167);
 $warning-color: rgb(228, 118, 118);
 $font-color-medium: rgb(107, 107, 107);
@@ -215,10 +215,40 @@ h1, h2, h3, h4, h5{
 
 .form-container{
     width: 60vw;
+
+    .host{
+        box-shadow: none !important;
+        width: 100% !important;
+        display: block;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+        .tags{
+            border: none;
+            box-shadow: none;
+        }
+    
+        .tag-item{
+            background: $font-color-light;
+            box-shadow: none;
+            border-radius: 1rem;;
+        }
+
+        .tag-item.selected{
+            background: $warning-color;
+        }
+    }
     .onward-button{
         $background-color: $primary-color;
         a{
-            color: $font-color-light;
+            color: $font-color-medium;
         }
     }
 
