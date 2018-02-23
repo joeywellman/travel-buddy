@@ -1,5 +1,5 @@
-$primary-color: #D6F9FD;
-$secondary-color: #4582D5;
+$primary-color: #b5e0a3;
+$secondary-color: rgb(79, 107, 167);
 $warning-color: rgb(228, 118, 118);
 $font-color-medium: rgb(107, 107, 107);
 $font-color-dark: rgb(66, 65, 65);
@@ -129,11 +129,6 @@ h1, h2, h3, h4, h5{
         color: $secondary-color;
         font-size: 0.8rem;
     }
- 
-    .view-trip{
-        background-color: $secondary-color;
-    }
-
    
 }
 
