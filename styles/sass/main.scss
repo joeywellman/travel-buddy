@@ -111,13 +111,15 @@ nav{
     opacity: 0.7;
     background-position: center;
     background-size: cover;
-    .header-text{
+    p{
+        color: $font-color-light;
+        font-family: 'Montserrat', sans-serif; 
         font-size: 2rem;
         font-weight: bold;
         background-color: rgba(92, 95, 99, 0.85);
-        color: $font-color-light;
         text-align: center;
-        width: 60%;
+        width: 70%;
+        margin: auto;
     }
 }
 
