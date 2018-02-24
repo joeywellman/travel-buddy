@@ -26,6 +26,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   $scope.getTrips = () => {
     TripFactory.getAllPublicTrips()
       .then(trips => {
+        console.log("should have trip ids", trips);
         $scope.trips = sliceTags(trips);
         $scope.dataLoaded = true;
       });
