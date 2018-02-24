@@ -20,8 +20,8 @@
   <hr>
 
   <div class="row map">
-    <h3>Explore pre-planned trips all over the world.</h3>
-    <p>Click on a marker to see details about each trip.</p>
+    <h3 class = "map-header">Explore pre-planned trips all over the world.</h3>
+    <p class = "map-header">Click on a marker to see details about each trip.</p>
     
     <ng-map class="homepage-map" zoom="2" center="{{mapCenter}}" pan-control="true" zoom-control="true" scale-control="true">
       <marker ng-repeat="trip in trips track by $index" position={{trip.startingPoint}} title={{trip.name}}
