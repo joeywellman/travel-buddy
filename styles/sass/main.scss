@@ -240,6 +240,8 @@ nav{
 
 // general trip card styling
 .trip-card{
+    position: relative;
+
     .card-img-top{
         object-fit: cover;
         width: 100%;
