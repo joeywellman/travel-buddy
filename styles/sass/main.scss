@@ -6,6 +6,22 @@ $font-color-medium: rgb(107, 107, 107);
 $font-color-dark: rgb(66, 65, 65);
 $font-color-light: rgb(240, 240, 240);
 
+//Mixins
+@mixin hover-grow-parent($time) {
+    -webkit-transition:all $time ease-out;
+    -moz-transition:all $time ease-out;
+    -ms-transition:all $time ease-out;
+    -o-transition:all $time ease-out;
+    transition:all $time ease-out;
+}
+
+@mixin hover-grow-event($scale){
+    -webkit-transform:scale($scale);
+    -moz-transform:scale($scale);
+    -ms-transform:scale($scale);
+    -o-transform:scale($scale);
+    transform:scale($scale);
+}
 
 
 // general styles
@@ -26,12 +42,13 @@ h1, h2, h3, h4, h5{
 }
 
 a{
-    color: $secondary-color;
+    color: $font-color-medium;
 }
 
 a:hover{
     color: $font-color-medium;
 }
+
 
 //helper styles
 .inline{
@@ -56,13 +73,10 @@ a:hover{
 
 // icon styles
 .icon{
-    opacity: 0.5;  
-    -webkit-transition:all 0.5s ease-out;
-    -moz-transition:all 0.5s ease-out;
-    -ms-transition:all 0.5s ease-out;
-    -o-transition:all 0.5s ease-out;
-    transition:all 0.5s ease-out;
+    opacity: 0.5; 
+    @include hover-grow-parent(0.5s);
 }
+
 .icon-xs{
     height: 2rem;
     width: 2rem;
@@ -88,11 +102,7 @@ a:hover{
 }
 
 .icon:hover {
-  -webkit-transform:scale(1.12);
-  -moz-transform:scale(1.12);
-  -ms-transform:scale(1.12);
-  -o-transform:scale(1.12);
-  transform:scale(1.12);
+    @include hover-grow-event(1.12);
 }
 
 
@@ -119,9 +129,10 @@ nav{
     background-color: $primary-color;
     a{
         color: $font-color-dark;
+        @include hover-grow-parent(0.2s);
     }
     a:hover{
-        color: $font-color-light;
+        @include hover-grow-event(1.1);
     }
     .logo{
         width: 9.5rem;
@@ -185,6 +196,10 @@ nav{
         text-align: center;
         width: 70%;
         margin: auto;
+        @include hover-grow-parent(0.5s);
+    }
+    p:hover{
+        @include hover-grow-event(1.12);
     }
 }
 
@@ -236,14 +251,16 @@ nav{
 .searchbar{
     height: 1.5em;
     background-color: rgb(224, 224, 224);
+    @include hover-grow-parent(0.5s);
+}
+
+.searchbar:hover{
+    @include hover-grow-event(1.12);
 }
 
 
 
 .browse-trips{
-    .trip-name{
-        font-size: 1.2rem;
-    }
     .trip-author, .trip-description{
         font-size: 1rem;
     }
@@ -263,12 +280,14 @@ nav{
         width: 100%;
         height: 30%;
     }
-    .name{
-        font-size: 0.9rem;
+    .trip-name{
+        font-size: 1.1rem;
     }
-    .address, .rating{
-        font-size: 0.8rem;
+    h4:hover{
         color: $font-color-medium;
+    }
+    .trip-location{
+        font-size: 1rem;
     }
     .review-container{
         font-size: 0.8rem;

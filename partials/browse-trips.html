@@ -16,14 +16,13 @@
         <div class="col-sm-3 trip-card browse-trips card" ng-repeat ="trip in trips | filter: searchTerm">
           <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
           <div class = "card-body">
-            <h4 class="trip-name">{{trip.name}}</h4>
+            <a class ng-href="#!/view/{{trip.id}}"><h4 class = "name">{{trip.name}}</h4></a>
             <span class="trip-tags">{{trip.tags}}</span>
             <br>
             <h5 class = "trip-location">{{trip.location}}</h5>
             <span class="trip-author">Curated by {{trip.userName}}</span><br>
             <p class="trip-description">{{trip.description}}</p>
             <img class="icon icon-sm favorite-icon pointer" ng-click="addFavorite(trip.id)" ng-src="images/icons/star.svg" alt="Add trip to favorites">
-            <button class="btn btn-secondary view-trip"><a ng-href = "#!/view/{{trip.id}}">View</a></button>
           </div>
         </div>
       </div>

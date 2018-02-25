@@ -10,15 +10,12 @@
             <img class="icon icon-sm top-right pointer" ng-click="deleteTrip(trip.id)" ng-src="images/icons/delete.png" alt="Delete">
             <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
             <div class="card-body">
-              <h4 class="trip-name">{{trip.name}}</h4>
+              <a ng-href="#!/view/{{trip.id}}"><h4 class="trip-name">{{trip.name}}</h4></a>
               <p class="trip-description">{{trip.description}}</p>
               <div class="button-group">
                 <a ng-href="#!/edit/{{trip.id}}">
                   <img class="icon icon-sm" ng-src="images/icons/edit.png" alt="Edit Trip">
                 </a>
-                <button class="btn view-trip">
-                  <a ng-href="#!/view/{{trip.id}}">View</a>
-                </button>
               </div>
             </div>
           </div>
@@ -31,15 +28,14 @@
             <img class="icon icon-sm top-right pointer" ng-click="deleteTrip(trip.id)" ng-src="images/icons/delete.png" alt="Delete">
             <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
             <div class = "card-body">
-              <h4 class="trip-name">{{trip.name}}</h4>
+              <a ng-href="#!/view/{{trip.id}}">
+                <h4 class="trip-name">{{trip.name}}</h4>
+              </a>
               <p class="trip-description">{{trip.description}}</p>
               <div class = "button-group">
                 <a ng-href="#!/edit/{{trip.id}}">
                   <img class="icon icon-sm" ng-src="images/icons/edit.png" alt="Edit Trip">
                 </a>
-                <button class="btn view-trip">
-                  <a ng-href="#!/view/{{trip.id}}">View</a>
-                </button>
               </div>
             </div>
           </div>
@@ -53,13 +49,11 @@
         <div class="trip-card col-sm-8" ng-repeat="fave in faves track by $index">
           <img class="card-img-top" ng-src="{{fave.coverPhoto}}" alt="Picture of a place">
           <div class = "card-body">
-            <h4 class="trip-name">{{fave.name}}</h4>
+            <a ng-href="#!/view/{{fave.id}}">
+              <h4 class="trip-name">{{fave.name}}</h4>
+            </a>
             <p>{{fave.userName}}</p>
             <p class="trip-description">{{fave.description}}</p>
-            <button class="btn btn-secondary view-trip">
-              <a ng-href="#!/view/{{fave.id}}">View</a>
-            </button>
-            <!-- <button class="btn btn-secondary remove-trip" ng-click = "deleteFave(fave)">Remove From Favorites</button> -->
           </div>
         </div>
       </div>
