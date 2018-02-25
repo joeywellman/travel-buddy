@@ -6,12 +6,12 @@
       <div id="search-bar-container">
         <h5>Search for places and add them to your trip</h5>
         <div class = "row">
-          <input class="col-sm-7 form-control" ng-model = "searchString" type="text" placeholder="Hot chicken in Nashville">
-          <button class="col-sm-4 btn btn-secondary search-button" ng-click = "searchPlaces()">Search</button>
+          <img class="icon icon-sm" ng-src="images/icons/search.png" alt="search">
+          <input class="col-sm-7 form-control" ng-model = "searchString" ng-keydown="searchPlaces($event)" type="text" placeholder="Hot chicken in Nashville">
+          
         </div>
       </div>
       <div class="search-results-container">
-
         <div ng-show = "searchResultsLoading" class="spinner-container">
           <svg mt-3 ng-hide="searchResultsLoaded" class="spinner" width="80px" height="80px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
             <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
@@ -25,6 +25,7 @@
           </ul>
         </div>
         <div ng-repeat = "result in searchResults" class="card trip-card search-result" id = "place.id" style="width: 20rem;">
+          <img class="icon icon-sm top-right" ng-click="addToTrip(result)" ng-src="images/icons/add.png" alt="Add to trip">
           <img class="card-img-top image" ng-src="{{result.image}}" alt="Picture of a place">
           <div class="card-block">
             <h4 class="card-title name">{{result.name}}</h4>
@@ -39,48 +40,45 @@
                 <span>About {{review.relative_time_description}}</span><br>
                 <span class = "review-text">Review: {{review.text}}</span><br>
               </div>
-              <button type = "button" class = "btn btn-secondary btn-sm btn-block" ng-click = "nextReview()">Next Review</button>
+              <button type = "button" class = "btn btn-secondary btn-sm btn-block" ng-click = "nextReview()">Next</button>
             </div>
-            <button ng-click = "addToTrip(result)" class="btn btn-primary btn-block add-to-trip">Add To Trip</button>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="col-md pr-2">
-      <div id="my-trip"> 
-        <h4>Your Trip</h4>
-        <div class="spinner-container">
-          <svg mt-3 ng-hide="tripLoaded" class="spinner" width="80px" height="80px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
-            <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
-          </svg>
-        </div>
-        <div class = "trip-container">
-          <div ng-repeat = "tripLocation in tripLocations track by $index" class="card trip-card" id="tripLocation.id">
-            <img class="card-img-top" ng-src="{{tripLocation.image}}" alt="Picture of a place">
-            <div class="card-block">
-              <h4 class="card-title">{{tripLocation.name}}</h4>
-              <div class="form-group">
-                <label for="description">Insider tips, funny stories, or detailed descriptions of this place </label>
-                <textarea id = "description" class="form-control" ng-model = "tripLocation.description" rows="3"></textarea>
-                <div class="form-check">
-                  <input type="checkbox" ng-click = "setCoverPhoto(tripLocation)" class="form-check-input" id="coverPhoto">
-                  <label class="form-check-label" for="coverPhoto">Make this my trip's cover photo</label>
+    <div class="col-md pr-2"> 
+      <h4>Your Trip</h4>
+
+      <div class="spinner-container">
+        <svg mt-3 ng-hide="tripLoaded" class="spinner" width="80px" height="80px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
+          <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
+        </svg>
+      </div>
+      <div class = "trip-container">
+        <div ng-repeat = "tripLocation in tripLocations track by $index" class="card trip-card" id="tripLocation.id">
+          <img class="icon icon-sm top-right pointer" ng-click="removeFromTrip($index)" ng-src="images/icons/delete.png" alt="Delete">
+          <img class="card-img-top" ng-src="{{tripLocation.image}}" alt="Picture of a place">
+          <div class="card-block">
+            <h4 class="card-title">{{tripLocation.name}}</h4>
+            <div class="form-group">
+              <label for="description">Insider tips, funny stories, or detailed descriptions of this place </label>
+              <textarea id = "description" class="form-control" ng-model = "tripLocation.description" rows="3"></textarea>
+              <div class="form-check">
+                <input type="checkbox" ng-click = "setCoverPhoto(tripLocation)" class="form-check-input" id="coverPhoto">
+                <label class="form-check-label" for="coverPhoto">Make this my trip's cover photo</label>
+              </div>
+                <div class = "flex-container center-children">
+                  <img class="icon icon-sm pointer mr-1" ng-click = "moveUp(tripLocation, $index)" ng-src="images/icons/up-arrow.png" alt="Move up">
+                  <img class="icon icon-sm pointer ml-1" ng-click = "moveDown(tripLocation, $index)" ng-src="images/icons/down-arrow.png" alt="Move down">
                 </div>
-                  <div class = "row">
-                    <button class = "btn btn-secondary btn-sm" ng-click = "moveUp(tripLocation, $index)">Move Up</button>
-                    <button class = "btn btn-secondary btn-sm" ng-click = "moveDown(tripLocation, $index)">Move Down</button>
-                  </div>
-                  <button class = "btn btn-danger btn-block" ng-click = "removeFromTrip($index)">Remove From Trip</button>
-                </div>
-            </div>
+              </div>
           </div>
         </div>
-
-      <div class = "row mt-4">
-        <button class="btn btn-primary btn-lg mr-2 save-button" ng-click = "saveTrip()">Save</button>
-        <button class="btn btn-primary btn-lg ml-2" publish-button ng-click = "publishTrip()">Publish</button>
       </div>
-    </div>
+      <div class="row mt-1">
+        <button class="btn btn-primary btn-lg mr-2 save-button" ng-click="saveTrip()">Save</button>
+        <button class="btn btn-lg ml-2" publish-button ng-click="publishTrip()">Publish</button>
+      </div>
   </div>
 </div>

@@ -6,6 +6,22 @@ $font-color-medium: rgb(107, 107, 107);
 $font-color-dark: rgb(66, 65, 65);
 $font-color-light: rgb(240, 240, 240);
 
+//Mixins
+@mixin hover-grow-parent($time) {
+    -webkit-transition:all $time ease-out;
+    -moz-transition:all $time ease-out;
+    -ms-transition:all $time ease-out;
+    -o-transition:all $time ease-out;
+    transition:all $time ease-out;
+}
+
+@mixin hover-grow-event($scale){
+    -webkit-transform:scale($scale);
+    -moz-transform:scale($scale);
+    -ms-transform:scale($scale);
+    -o-transform:scale($scale);
+    transform:scale($scale);
+}
 
 
 // general styles
@@ -26,7 +42,7 @@ h1, h2, h3, h4, h5{
 }
 
 a{
-    color: $secondary-color;
+    color: $font-color-medium;
 }
 
 a:hover{
@@ -34,11 +50,70 @@ a:hover{
 }
 
 
+//helper styles
+.inline{
+    display: inline;
+}
+
+.block{
+    display: block;
+}
+
+.flex-container{
+    width: 100%;
+    display: flex;
+}
+
+.center-children{
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+// icon styles
+.icon{
+    opacity: 0.5; 
+    @include hover-grow-parent(0.5s);
+}
+
+.icon-xs{
+    height: 2rem;
+    width: 2rem;
+}
+.icon-sm{
+    height: 3.2rem;
+    width: 3.2rem;
+}
+.icon-med{
+    height: 5rem;
+    width: 5rem;
+}
+
+.top-right{
+    opacity: 1;
+    position: absolute;
+    top: -0.6rem;
+    right: -0.6rem;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.icon:hover {
+    @include hover-grow-event(1.12);
+}
+
+
+
+
+
 
 // button styling
 button{
     margin: 0.3em;
-    border-style: none;
+    border-style: none !important;
     background-color: $primary-color;
 }
 
@@ -46,7 +121,7 @@ button:hover{
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
-button.add-favorite{background-color: $secondary-color;}
+
 
 // nav menu
 nav{
@@ -54,9 +129,10 @@ nav{
     background-color: $primary-color;
     a{
         color: $font-color-dark;
+        @include hover-grow-parent(0.2s);
     }
     a:hover{
-        color: $font-color-light;
+        @include hover-grow-event(1.1);
     }
     .logo{
         width: 9.5rem;
@@ -111,14 +187,25 @@ nav{
     opacity: 0.7;
     background-position: center;
     background-size: cover;
-    .header-text{
+    p{
+        color: $font-color-light;
+        font-family: 'Montserrat', sans-serif; 
         font-size: 2rem;
         font-weight: bold;
         background-color: rgba(92, 95, 99, 0.85);
-        color: $font-color-light;
         text-align: center;
-        width: 60%;
+        width: 70%;
+        margin: auto;
+        @include hover-grow-parent(0.5s);
     }
+    p:hover{
+        @include hover-grow-event(1.12);
+    }
+}
+
+.map-header{
+    display: block;
+    width: 100%;
 }
 
 .homepage-map{
@@ -164,21 +251,16 @@ nav{
 .searchbar{
     height: 1.5em;
     background-color: rgb(224, 224, 224);
+    @include hover-grow-parent(0.5s);
 }
 
-.search-button{
-    background-color: $secondary-color;
+.searchbar:hover{
+    @include hover-grow-event(1.12);
 }
 
-.trip-container{
-    height: 80vh;
-    overflow: scroll;
-}
+
 
 .browse-trips{
-    .trip-name{
-        font-size: 1.2rem;
-    }
     .trip-author, .trip-description{
         font-size: 1rem;
     }
@@ -191,17 +273,21 @@ nav{
 
 // general trip card styling
 .trip-card{
-    img{
+    position: relative;
+
+    .card-img-top{
         object-fit: cover;
         width: 100%;
         height: 30%;
     }
-    .name{
-        font-size: 0.9rem;
+    .trip-name{
+        font-size: 1.1rem;
     }
-    .address, .rating{
-        font-size: 0.8rem;
+    h4:hover{
         color: $font-color-medium;
+    }
+    .trip-location{
+        font-size: 1rem;
     }
     .review-container{
         font-size: 0.8rem;
@@ -223,27 +309,16 @@ nav{
     .toggle-reviews, .next-review{
         background-color: $secondary-color;
     }
-    .add-to-trip{
+
+    .view-trip{
         background-color: $primary-color;
     }
     a{
-        color: white;
+        color: $font-color-medium;
     }
 
     a:hover{
         text-decoration: none;
-    }
-
-    .edit-trip{
-        background-color: $secondary-color;
-    }
-
-    .delete-trip{
-        background-color: $warning-color;
-    }
-
-    .view-trip{
-        background-color: $primary-color;
     }
   
 }
@@ -259,6 +334,12 @@ nav{
 }
 
 .search-results-container{
+    height: 80vh;
+    overflow: scroll;
+}
+
+
+.trip-container{
     height: 80vh;
     overflow: scroll;
 }
@@ -294,7 +375,8 @@ nav{
         }
     
         .tag-item{
-            background: $font-color-light;
+            background: $primary-color;
+            color: $font-color-dark;
             box-shadow: none;
             border-radius: 1rem;;
         }

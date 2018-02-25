@@ -2,6 +2,7 @@
   <h2>Browse Trips</h2>
   <div class="container">
     <div class="row">
+      <img class="icon icon-sm" ng-src="images/icons/search.png" alt="search">
       <input class="col-sm-8 form-control" ng-model="searchTerm" type="text" placeholder="Search by a destination or keyword">
     </div>
     <div class="row">
@@ -15,14 +16,13 @@
         <div class="col-sm-3 trip-card browse-trips card" ng-repeat ="trip in trips | filter: searchTerm">
           <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
           <div class = "card-body">
-            <h4 class="trip-name">{{trip.name}}</h4>
+            <a class ng-href="#!/view/{{trip.id}}"><h4 class = "name">{{trip.name}}</h4></a>
             <span class="trip-tags">{{trip.tags}}</span>
             <br>
             <h5 class = "trip-location">{{trip.location}}</h5>
             <span class="trip-author">Curated by {{trip.userName}}</span><br>
             <p class="trip-description">{{trip.description}}</p>
-            <button class="btn btn-secondary view-trip"><a ng-href = "#!/view/{{trip.id}}">View</a></button>
-            <button class="btn btn-secondary add-favorite" ng-click="addFavorite(trip.id)">Favorite</button>
+            <img class="icon icon-sm favorite-icon pointer" ng-click="addFavorite(trip.id)" ng-src="images/icons/star.svg" alt="Add trip to favorites">
           </div>
         </div>
       </div>

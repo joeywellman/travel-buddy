@@ -9,19 +9,25 @@
   <hr>
   <div class = "row instructions">
     <div class = "discover col-md-5 p-1 m-1 border-right">
-      <h4>Discover</h4>
+      <div class="flex-container center-children">
+        <img class="icon icon-sm" src="images/icons/explore-icon.png" alt="Explore Trips">
+        <h4 class="inline">Explore</h4>
+      </div>
       <p>Browse or search through trips other people have built. You might just find inspiration for your next adventure!</p>
     </div>
     <div class = "create col-md-5 p-1 m-1">
-      <h4>Create</h4>
+      <div class = "flex-container center-children">
+        <img class = "icon icon-sm" src="images/icons/plan-icon.png" alt="Plan a Trip">
+        <h4 class = "inline">Create</h4>
+      </div>
       <p>Plan your dream trip or compile insider secrets about your home town.</p>
     </div>
   </div>
   <hr>
 
   <div class="row map">
-    <h3>Explore pre-planned trips all over the world.</h3>
-    <p>Click on a marker to see details about each trip.</p>
+    <h3 class = "map-header">Explore pre-planned trips all over the world.</h3>
+    <p class = "map-header">Click on a marker to see details about each trip.</p>
     
     <ng-map class="homepage-map" zoom="2" center="{{mapCenter}}" pan-control="true" zoom-control="true" scale-control="true">
       <marker ng-repeat="trip in trips track by $index" position={{trip.startingPoint}} title={{trip.name}}
