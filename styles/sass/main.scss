@@ -33,6 +33,45 @@ a:hover{
     color: $font-color-medium;
 }
 
+//helper styles
+.inline{
+    display: inline;
+}
+
+.block{
+    display: block;
+}
+
+.flex-container{
+    width: 100%;
+    display: flex;
+}
+
+.center-children{
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+// icon styles
+.icon{
+    opacity: 0.5;  
+}
+.icon-xs{
+    height: 2rem;
+    width: 3.2rem;
+}
+.icon-sm{
+    height: 3.2rem;
+    width: 3.2rem;
+}
+.icon-med{
+    height: 5rem;
+    width: 5rem;
+}
+
+
 
 
 // button styling
