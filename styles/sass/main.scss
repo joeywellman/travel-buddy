@@ -57,6 +57,11 @@ a:hover{
 // icon styles
 .icon{
     opacity: 0.5;  
+    -webkit-transition:all 0.5s ease-out;
+    -moz-transition:all 0.5s ease-out;
+    -ms-transition:all 0.5s ease-out;
+    -o-transition:all 0.5s ease-out;
+    transition:all 0.5s ease-out;
 }
 .icon-xs{
     height: 2rem;
@@ -78,6 +83,17 @@ a:hover{
     right: -0.6rem;
 }
 
+.pointer{
+    cursor: pointer;
+}
+
+.icon:hover {
+  -webkit-transform:scale(1.12);
+  -moz-transform:scale(1.12);
+  -ms-transform:scale(1.12);
+  -o-transform:scale(1.12);
+  transform:scale(1.12);
+}
 
 
 
@@ -87,7 +103,7 @@ a:hover{
 // button styling
 button{
     margin: 0.3em;
-    border-style: none;
+    border-style: none !important;
     background-color: $primary-color;
 }
 
@@ -95,7 +111,7 @@ button:hover{
     box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
 }
 
-button.add-favorite{background-color: $secondary-color;}
+
 
 // nav menu
 nav{
@@ -222,10 +238,6 @@ nav{
     background-color: rgb(224, 224, 224);
 }
 
-.search-button{
-    background-color: $secondary-color;
-}
-
 
 
 .browse-trips{
@@ -278,27 +290,16 @@ nav{
     .toggle-reviews, .next-review{
         background-color: $secondary-color;
     }
-    .add-to-trip{
+
+    .view-trip{
         background-color: $primary-color;
     }
     a{
-        color: white;
+        color: $font-color-medium;
     }
 
     a:hover{
         text-decoration: none;
-    }
-
-    .edit-trip{
-        background-color: $secondary-color;
-    }
-
-    .delete-trip{
-        background-color: $warning-color;
-    }
-
-    .view-trip{
-        background-color: $primary-color;
     }
   
 }
@@ -355,7 +356,8 @@ nav{
         }
     
         .tag-item{
-            background: $font-color-light;
+            background: $primary-color;
+            color: $font-color-dark;
             box-shadow: none;
             border-radius: 1rem;;
         }

@@ -57,7 +57,7 @@
       </div>
       <div class = "trip-container">
         <div ng-repeat = "tripLocation in tripLocations track by $index" class="card trip-card" id="tripLocation.id">
-          <img class="icon icon-sm top-right" ng-click="removeFromTrip($index)" ng-src="images/icons/delete.png" alt="Delete">
+          <img class="icon icon-sm top-right pointer" ng-click="removeFromTrip($index)" ng-src="images/icons/delete.png" alt="Delete">
           <img class="card-img-top" ng-src="{{tripLocation.image}}" alt="Picture of a place">
           <div class="card-block">
             <h4 class="card-title">{{tripLocation.name}}</h4>
@@ -69,8 +69,8 @@
                 <label class="form-check-label" for="coverPhoto">Make this my trip's cover photo</label>
               </div>
                 <div class = "flex-container center-children">
-                  <img class="icon icon-sm mr-1" ng-click = "moveUp(tripLocation, $index)" ng-src="images/icons/up-arrow.png" alt="Move up">
-                  <img class="icon icon-sm ml-1" ng-click = "moveDown(tripLocation, $index)" ng-src="images/icons/down-arrow.png" alt="Move down">
+                  <img class="icon icon-sm pointer mr-1" ng-click = "moveUp(tripLocation, $index)" ng-src="images/icons/up-arrow.png" alt="Move up">
+                  <img class="icon icon-sm pointer ml-1" ng-click = "moveDown(tripLocation, $index)" ng-src="images/icons/down-arrow.png" alt="Move down">
                 </div>
               </div>
           </div>
