@@ -60,7 +60,7 @@ a:hover{
 }
 .icon-xs{
     height: 2rem;
-    width: 3.2rem;
+    width: 2rem;
 }
 .icon-sm{
     height: 3.2rem;
@@ -70,6 +70,9 @@ a:hover{
     height: 5rem;
     width: 5rem;
 }
+
+
+
 
 
 
@@ -237,7 +240,7 @@ nav{
 
 // general trip card styling
 .trip-card{
-    img{
+    .card-img-top{
         object-fit: cover;
         width: 100%;
         height: 30%;
