@@ -41,7 +41,7 @@
               </div>
               <button type = "button" class = "btn btn-secondary btn-sm btn-block" ng-click = "nextReview()">Next Review</button>
             </div>
-            <button ng-click = "addToTrip(result)" class="btn btn-primary btn-block add-to-trip">Add To Trip</button>
+            <button ng-click = "addToTrip(result)" class="btn btn-block add-to-trip">Add To Trip</button>
           </div>
         </div>
       </div>
@@ -68,8 +68,11 @@
                   <label class="form-check-label" for="coverPhoto">Make this my trip's cover photo</label>
                 </div>
                   <div class = "row">
-                    <button class = "btn btn-secondary btn-sm" ng-click = "moveUp(tripLocation, $index)">Move Up</button>
-                    <button class = "btn btn-secondary btn-sm" ng-click = "moveDown(tripLocation, $index)">Move Down</button>
+                    <!-- <button class = "btn btn-secondary btn-sm" ng-click = "moveUp(tripLocation, $index)">Move Up</button> -->
+                    <img class="icon icon-sm" ng-click = "moveUp(tripLocation, $index)" ng-src="images/icons/up-arrow.png" alt="Move up">
+                    <img class="icon icon-sm" ng-click = "moveDown(tripLocation, $index)" ng-src="images/icons/down-arrow.png" alt="Move down">
+
+                    <!-- <button class = "btn btn-secondary btn-sm" ng-click = "moveDown(tripLocation, $index)">Move Down</button> -->
                   </div>
                   <button class = "btn btn-danger btn-block" ng-click = "removeFromTrip($index)">Remove From Trip</button>
                 </div>
@@ -79,7 +82,7 @@
 
       <div class = "row mt-4">
         <button class="btn btn-primary btn-lg mr-2 save-button" ng-click = "saveTrip()">Save</button>
-        <button class="btn btn-primary btn-lg ml-2" publish-button ng-click = "publishTrip()">Publish</button>
+        <button class="btn btn-lg ml-2" publish-button ng-click = "publishTrip()">Publish</button>
       </div>
     </div>
   </div>
