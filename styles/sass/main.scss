@@ -226,10 +226,7 @@ nav{
     background-color: $secondary-color;
 }
 
-.trip-container{
-    height: 80vh;
-    overflow: scroll;
-}
+
 
 .browse-trips{
     .trip-name{
@@ -317,6 +314,12 @@ nav{
 }
 
 .search-results-container{
+    height: 80vh;
+    overflow: scroll;
+}
+
+
+.trip-container{
     height: 80vh;
     overflow: scroll;
 }
