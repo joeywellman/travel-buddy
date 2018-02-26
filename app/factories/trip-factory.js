@@ -152,7 +152,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
             data[key].fbId = key;
             faveArray.push(data[key]);
           });
-          console.log(faveArray);
           resolve(faveArray);
         });
     });
@@ -178,8 +177,8 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     return $q((resolve, reject) => {
       $http
         .delete(`${FBUrl}/favorites/${faveId}.json`)
-        .then(() => {
-          resolve();
+        .then((data) => {
+          resolve(data);
         })
         .catch(err => {
           reject(err);

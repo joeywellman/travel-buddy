@@ -28,10 +28,11 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
     });
   };
 
-  const deleteFavorite = (faveId) => {
+ $scope.deleteFavorite = (faveId) => {
     TripFactory.deleteFave(faveId)
     .then(data => {
-      $scope.getFavorites(firebase.auth().currentUser.uid);
+      console.log("fave deleted!", data);
+      $scope.getTrips();
     });
   };
 

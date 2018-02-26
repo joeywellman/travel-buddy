@@ -23,6 +23,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
       favoriteTrips.forEach(fave => {
         if (trip.id === fave.id) {
           trip.favorite = true;
+          trip.faveId = fave.fbId;
         }
       });
       return trip;
@@ -38,7 +39,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   };
 
 
-  // converts tags from array to strings
+  // converts tags from array to strings, accounts for ng-tag-input (array of objects) and array of strings (from before I implemented ng-tags-input)
   const sliceTags = (trips) => {
     let tripsWithTags = trips.map(trip => {
       if (trip.tags[0] !== null && typeof trip.tags[0] === 'object'){ // if tags were created with ng-tag
@@ -57,7 +58,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   };
 
 
-    // defines a function that gets all public trips and formats them with starting points and cover photos
+    // defines a function that gets all public trips
   $scope.getTrips = () => {
     TripFactory.getAllPublicTrips()
       .then(trips => {
