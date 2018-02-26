@@ -4,6 +4,9 @@
     <img class="icon icon-med favorite-icon pointer" ng-show="!trip.favorite" ng-click="addFavorite(trip.id)" ng-src="images/icons/star.png"
       alt="Add trip to favorites">
     <img class="icon icon-med favorite-icon pointer" ng-show="trip.favorite" ng-src="images/icons/star-filled.png" alt="Favorited trip">
+    <a ng-href="#!/edit/{{trip.id}}">
+      <img ng-show = "trip.myTrip" class="icon icon-sm" ng-src="images/icons/edit.png" alt="Edit Trip">
+    </a>
   </div>
   <h4>Curated by {{trip.userName}}</h4>
   <p class="trip-description">{{trip.description}}</p>

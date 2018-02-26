@@ -8,6 +8,13 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   // inherits add favorite funtion
   $controller("BrowseTripsCtrl", { $scope: $scope });
 
+  const checkUser = (uid) => {
+    if($scope.trip.uid === uid){
+      $scope.trip.id = $routeParams.tripId;
+      $scope.trip.myTrip = true;
+    }
+  };
+
   const checkFavorite = (uid) => {
     TripFactory.getMyFavorites(uid)
     .then(favoriteObj => {
@@ -51,7 +58,9 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   .then((tripDetails => {
     $scope.trip = tripDetails;
     if (firebase.auth().currentUser !== null) {
-      checkFavorite(firebase.auth().currentUser.uid); // if a user has favorited this trip, an edit button appears
+      let uid = firebase.auth().currentUser.uid;
+      checkFavorite(uid); // if a user has favorited this trip, an edit button appears
+      checkUser(uid);
     }
     return TripFactory.getFirebasePlaces(tripDetails.locations);
   }))
@@ -87,6 +96,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   firebase.auth().onAuthStateChanged(function (user) {
     if (user) {
       checkFavorite(user.uid);
+      checkUser(user.uid);
     }
   });
 
