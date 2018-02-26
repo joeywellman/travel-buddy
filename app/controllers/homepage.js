@@ -3,6 +3,41 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
 
   $scope.mapCenter = "35, 82";
 
+
+  // don't let user's favorite their own trips
+ $scope.checkUser = (uid) => {
+   let allTrips = $scope.trips;
+    allTrips.forEach(trip => {
+       if (trip.uid === uid) {
+         trip.myTrip = true;
+       }
+     });
+  };
+
+
+  // loops through $scope.trips and checks if each trip is in the current user's favorites
+  // if the user has favorited a given trip, give that trip a property of 'favorite' with a value of 'true'
+  $scope.markAsFaves = (favoriteTrips) => {
+    let allTrips = $scope.trips;
+    allTrips.forEach(trip => {
+      for (let fave in favoriteTrips) {
+        if (trip.id === favoriteTrips[fave].id) {
+          trip.favorite = true;
+        }
+      }
+      return trip;
+    });
+  };
+
+  // gets current user's favorite trips from Firebase
+  $scope.getFavorites = (uid) => {
+    TripFactory.getMyFavorites(uid)
+      .then(faves => {
+        $scope.markAsFaves(faves);
+      });
+  };
+
+
   // converts tags from array to strings
   const sliceTags = (trips) => {
     let tripsWithTags = trips.map(trip => {
@@ -28,6 +63,12 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
       .then(trips => {
         $scope.trips = sliceTags(trips);
         $scope.dataLoaded = true;
+        if (firebase.auth().currentUser !== null) {
+          let uid = firebase.auth().currentUser.uid;
+          $scope.getFavorites(uid);
+          $scope.checkUser(uid);
+          console.log($scope.trips);
+        }
       });
   };
 

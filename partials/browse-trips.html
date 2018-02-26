@@ -22,8 +22,11 @@
             <h5 class = "trip-location">{{trip.location}}</h5>
             <span class="trip-author">Curated by {{trip.userName}}</span><br>
             <p class="trip-description">{{trip.description}}</p>
-            <img class="icon icon-med favorite-icon pointer" ng-show = "!trip.favorite" ng-click="addFavorite(trip.id)" ng-src="images/icons/star.png" alt="Add trip to favorites">
-            <img class="icon icon-med favorite-icon pointer" ng-show = "trip.favorite" ng-src="images/icons/star-filled.png" alt="Favorited trip">
+            <img class="icon icon-med favorite-icon pointer"  ng-show = "!trip.favorite && !trip.myTrip" ng-click="addFavorite(trip.id)" ng-src="images/icons/star.png" alt="Add trip to favorites">
+            <img class="icon icon-med favorite-icon pointer" ng-show = "trip.favorite && !trip.myTrip" ng-src="images/icons/star-filled.png" alt="Favorited trip">
+            <a ng-href="#!/edit/{{trip.id}}">
+              <img ng-show="trip.myTrip" class="icon icon-sm" ng-src="images/icons/edit.png" alt="Edit Trip">
+            </a>
           </div>
         </div>
       </div>
