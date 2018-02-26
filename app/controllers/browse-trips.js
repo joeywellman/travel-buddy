@@ -30,7 +30,6 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
 
   // delete from favorites
  $scope.deleteFavorite = (faveId) => {
-   console.log("fave id", faveId);
     TripFactory.deleteFave(faveId)
     .then(data => {
       $scope.getTrips();

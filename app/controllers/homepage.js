@@ -66,7 +66,6 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
     TripFactory.getAllTrips()
       .then(trips => {
         $scope.trips = sliceTags(trips);
-        console.log("scope.trips", $scope.trips);
         $scope.dataLoaded = true;
         if (firebase.auth().currentUser !== null) {
           let uid = firebase.auth().currentUser.uid;
