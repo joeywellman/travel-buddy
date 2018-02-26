@@ -8,6 +8,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   // inherits add favorite funtion
   $controller("BrowseTripsCtrl", { $scope: $scope });
 
+// if this is the current user's trip, edit button appears
   const checkUser = (uid) => {
     if($scope.trip.uid === uid){
       $scope.trip.id = $routeParams.tripId;
@@ -15,6 +16,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     }
   };
 
+  // checks if this trip is in the user's favorite trips
   const checkFavorite = (uid) => {
     TripFactory.getMyFavorites(uid)
     .then(favoriteObj => {
@@ -45,6 +47,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     return formattedData;
   };
 
+  // adds creator's descriptions to trip locations
   const addDescriptions = (googlePlaces) => {
     let placesWithDescriptions = googlePlaces.map((place, index) => {
       place.description = userPlaces[index].description;
@@ -59,14 +62,14 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     $scope.trip = tripDetails;
     if (firebase.auth().currentUser !== null) {
       let uid = firebase.auth().currentUser.uid;
-      checkFavorite(uid); // if a user has favorited this trip, an edit button appears
-      checkUser(uid);
+      checkFavorite(uid); // if a user has favorited this trip, the star fills in
+      checkUser(uid); // if the user created this trip, they'll see an edit button
     }
-    return TripFactory.getFirebasePlaces(tripDetails.locations);
+    return TripFactory.getFirebasePlaces(tripDetails.locations); // get firebase places
   }))
   .then(fbPlaceData => { // gets place details from firebase
     userPlaces = formatPlaceData(fbPlaceData);
-    return GMapsFactory.getGooglePlaces(userPlaces);
+    return GMapsFactory.getGooglePlaces(userPlaces); // get google palce details
   })
   .then(placeDetails => { // gets place details from google places
     let tripLocations = GMapsFactory.formatPlaces(placeDetails);
@@ -101,9 +104,4 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   });
 
  
-
-  // if this is the current user's trip, edit button appears
-
-  
-
 });
