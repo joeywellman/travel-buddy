@@ -23,10 +23,10 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
   // adds keys
   // converts to array
   // resolves array with keys
-  function getAllPublicTrips() {
+  function getAllTrips() {
     return $q((resolve, reject) => {
       $http
-        .get(`${FBUrl}/trips.json?orderBy="private"&equalTo=false`)
+        .get(`${FBUrl}/trips.json`)
         .then(({ data }) => {
           let tripArray = formatData(data);
           resolve(tripArray);
@@ -188,6 +188,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
 
 
-  return {getAllPublicTrips, getFavoriteDetails, getTripDetails, getFirebasePlaces, postTrip, postPlaces, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave};
+  return {getAllTrips, getFavoriteDetails, getTripDetails, getFirebasePlaces, postTrip, postPlaces, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave};
 
 });

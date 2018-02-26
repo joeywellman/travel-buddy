@@ -6,7 +6,7 @@
         <h4>Public Trips</h4>
       <!-- public trip card -->
         <div class = "row">
-          <div class="trip-card col-sm-4" ng-repeat="trip in trips" ng-show="!trip.private">
+          <div class="trip-card col-sm-4" ng-repeat="trip in trips" ng-show="!trip.private && trip.myTrip">
             <img class="icon icon-sm top-right pointer" ng-click="deleteTrip(trip.id)" ng-src="images/icons/delete.png" alt="Delete">
             <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
             <div class="card-body">
@@ -24,7 +24,7 @@
       <!-- private trip card -->
       <h4>Private Trips</h4>
       <div class = "row private-trips">
-          <div class="trip-card col-sm-4" ng-repeat="trip in trips" ng-show = "trip.private">
+          <div class="trip-card col-sm-4" ng-repeat="trip in trips" ng-show = "trip.private && trip.myTrip">
             <img class="icon icon-sm top-right pointer" ng-click="deleteTrip(trip.id)" ng-src="images/icons/delete.png" alt="Delete">
             <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
             <div class = "card-body">
@@ -46,7 +46,8 @@
       <h4>Favorite Trips</h4>
       <!-- favorite trip card -->
       <div class = "row">
-        <div class="trip-card col-sm-8" ng-repeat="fave in faves track by $index">
+        <div class="trip-card col-sm-8" ng-repeat="fave in faves">
+          <img class="icon icon-sm top-right pointer" ng-click="deleteFave(trip.faveId)" ng-src="images/icons/delete.png" alt="Delete">
           <img class="card-img-top" ng-src="{{fave.coverPhoto}}" alt="Picture of a place">
           <div class = "card-body">
             <a ng-href="#!/view/{{fave.id}}">

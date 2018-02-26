@@ -13,7 +13,7 @@
         </div>
 
         
-        <div class="col-sm-3 trip-card browse-trips card" ng-repeat ="trip in trips | filter: searchTerm">
+        <div class="col-sm-3 trip-card browse-trips card" ng-repeat ="trip in trips | filter: searchTerm" ng-show = "!trip.private">
           <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
           <div class = "card-body">
             <a class ng-href="#!/view/{{trip.id}}"><h4 class = "name">{{trip.name}}</h4></a>

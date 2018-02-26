@@ -28,10 +28,10 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
     });
   };
 
+  // delete from favorites
  $scope.deleteFavorite = (faveId) => {
     TripFactory.deleteFave(faveId)
     .then(data => {
-      console.log("fave deleted!", data);
       $scope.getTrips();
     });
   };
@@ -48,7 +48,8 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
     }
   };
 
-  // defined in homepage.js, gets all public trips and formats with starting points and cover photos
+  // defined in homepage.js
+  // gets all public trips, checks if they belong to the current user, and check if the current user has favorited them
   $scope.getTrips();
 
 
