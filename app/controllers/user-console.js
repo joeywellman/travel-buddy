@@ -2,31 +2,31 @@
 angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, TripFactory, GMapsFactory, GMapsCreds) {
   const favoriteTrips = [];
 
+
   // converts firebase data to array and adds firebase key 
-  function convertToArray(dataObject) {
+ const convertToArray = (dataObject) => {
     let keys = Object.keys(dataObject);
     let dataArray = keys.map(key => {
       dataObject[key].fbId = key;
       return dataObject[key];
     });
     return dataArray;
-  } 
+  };
 
-        
-
+  // defines a function that gets the user's favorite trips
   const getFavorites = (user) => {
     TripFactory.getMyFavorites(user.uid)
-    .then(favorites => {
-      favorites = convertToArray(favorites);
-      return TripFactory.getFavoriteDetails(favorites);
-    })
-    .then(faveDetails => {
-      faveDetails = faveDetails.map(fave => {
-        fave = fave.data;
-        return fave;
+      .then(favorites => {
+        favorites = convertToArray(favorites);
+        return TripFactory.getFavoriteDetails(favorites);
+      })
+      .then(faveDetails => {
+        faveDetails = faveDetails.map(fave => {
+          fave = fave.data;
+          return fave;
+        });
+        $scope.faves = faveDetails;
       });
-      $scope.faves = faveDetails;
-    });
   };
 
 
