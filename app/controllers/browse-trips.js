@@ -28,6 +28,13 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
     });
   };
 
+  const deleteFavorite = (faveId) => {
+    TripFactory.deleteFave(faveId)
+    .then(data => {
+      $scope.getFavorites(firebase.auth().currentUser.uid);
+    });
+  };
+
   // checks whether a user is logged in and then calls postFavorite function
   $scope.addFavorite = (tripId) => {
     if (firebase.auth().currentUser !== null){

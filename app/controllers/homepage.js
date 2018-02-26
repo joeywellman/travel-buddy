@@ -20,11 +20,11 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   $scope.markAsFaves = (favoriteTrips) => {
     let allTrips = $scope.trips;
     allTrips.forEach(trip => {
-      for (let fave in favoriteTrips) {
-        if (trip.id === favoriteTrips[fave].id) {
+      favoriteTrips.forEach(fave => {
+        if (trip.id === fave.id) {
           trip.favorite = true;
         }
-      }
+      });
       return trip;
     });
   };
@@ -67,7 +67,6 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
           let uid = firebase.auth().currentUser.uid;
           $scope.getFavorites(uid);
           $scope.checkUser(uid);
-          console.log($scope.trips);
         }
       });
   };
