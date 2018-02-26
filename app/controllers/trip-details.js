@@ -1,17 +1,13 @@
 'use strict';
-angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $controller, TripFactory, $routeParams, GMapsCreds, GMapsFactory, NgMap) {
+angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $controller, TripFactory, $routeParams, GMapsCreds, GMapsFactory, NgMap, UserFactory) {
 
   const tripLocations = [];
   let userPlaces = null;
   $scope.tripLoading = true;
   
-  // inherits add favorite funtion
-  $controller("BrowseTripsCtrl", { $scope: $scope });
-
 // if this is the current user's trip, edit button appears
   const checkUser = (uid) => {
     if($scope.trip.uid === uid){
-      $scope.trip.id = $routeParams.tripId;
       $scope.trip.myTrip = true;
     }
   };
@@ -28,6 +24,29 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     });
   };
 
+  // assembles favorite object and posts to firebase
+  const postFavorite = (tripId) => {
+    let faveObj = {
+      id: tripId,
+      uid: firebase.auth().currentUser.uid
+    };
+    TripFactory.addFavorite(faveObj)
+      .then(data => {
+        checkFavorite(firebase.auth().currentUser.uid);
+      });
+  };
+
+  // checks whether a user is logged in and then calls postFavorite function
+  $scope.addFavorite = (tripId) => {
+    if (firebase.auth().currentUser !== null) {
+      postFavorite(tripId);
+    } else {
+      UserFactory.login()
+        .then(() => {
+          postFavorite(tripId);
+        });
+    }
+  };
   
 
 // helper function to construct lat long object for map center
@@ -60,6 +79,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   TripFactory.getTripDetails($routeParams.tripId)
   .then((tripDetails => {
     $scope.trip = tripDetails;
+    $scope.trip.id = $routeParams.tripId;
     if (firebase.auth().currentUser !== null) {
       let uid = firebase.auth().currentUser.uid;
       checkFavorite(uid); // if a user has favorited this trip, the star fills in

@@ -43,7 +43,7 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
     };
     TripFactory.addFavorite(faveObj)
     .then(data => {
-      $scope.getFavorites(firebase.auth().currentUser.uid);
+      getFavorites(firebase.auth().currentUser.uid);
     });
   };
 
