@@ -1,9 +1,27 @@
 'use strict';
-angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, TripFactory, $routeParams, GMapsCreds, GMapsFactory, NgMap) {
+angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $controller, TripFactory, $routeParams, GMapsCreds, GMapsFactory, NgMap) {
 
   const tripLocations = [];
   let userPlaces = null;
+  $scope.tripLoading = true;
   
+  // inherits add favorite funtion
+  $controller("BrowseTripsCtrl", { $scope: $scope });
+
+  const checkFavorite = (uid) => {
+    TripFactory.getMyFavorites(uid)
+    .then(favoriteObj => {
+      for (let fave in favoriteObj){
+        if (favoriteObj[fave].id == $routeParams.tripId){
+          $scope.trip.favorite = true;
+        }
+      }
+    });
+  };
+
+  
+
+// helper function to construct lat long object for map center
   const setMapCenter = (placeDetails) => {
     let firstLat = placeDetails[0].geometry.location.lat;
     let firstLong = placeDetails[0].geometry.location.lng;
@@ -11,7 +29,6 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
   };
 
   // destructures place data from firebase and adds property of place_id
-  // should this go in factory?
   const formatPlaceData = (fbPlaceData) => {
     let formattedData = fbPlaceData.map(place => {
       place = place.data;
@@ -33,6 +50,9 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
   TripFactory.getTripDetails($routeParams.tripId)
   .then((tripDetails => {
     $scope.trip = tripDetails;
+    if (firebase.auth().currentUser !== null) {
+      checkFavorite(firebase.auth().currentUser.uid); // if a user has favorited this trip, an edit button appears
+    }
     return TripFactory.getFirebasePlaces(tripDetails.locations);
   }))
   .then(fbPlaceData => { // gets place details from firebase
@@ -43,29 +63,34 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, Tr
     let tripLocations = GMapsFactory.formatPlaces(placeDetails);
     tripLocations = addDescriptions(tripLocations);
     $scope.tripLocations = tripLocations;
+    $scope.tripLoaded = true;
     setMapCenter(tripLocations);
   });
 
-  $scope.addFavorite = () => {
-    let faveObj = {
-      id: $routeParams.tripId,
-      uid: firebase.auth().currentUser.uid
-    };
-    TripFactory.addFavorite(faveObj);
-  };
-
+  // center the map when, called when a user mouses over a place card
   $scope.setMapCenter = (location) => {
     $scope.mapCenter = location.formatted_address;
   };
 
+  // show the infowindow
   $scope.showDetails = function (event, location) {
     $scope.selectedLocation= location;
     $scope.map.showInfoWindow("details", location.id);
   };
 
+  // hide the infowindow
   $scope.hideDetail = function () {
     $scope.map.hideInfoWindow("details");
   };
+
+  // on authentication state change, get the user's favorites
+  firebase.auth().onAuthStateChanged(function (user) {
+    if (user) {
+      checkFavorite(user.uid);
+    }
+  });
+
+ 
 
   // if this is the current user's trip, edit button appears
 

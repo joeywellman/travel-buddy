@@ -20,7 +20,7 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
   };
 
   // gets current user's favorite trips from Firebase
-  const getFavorites = (uid) => {
+ const getFavorites = (uid) => {
     TripFactory.getMyFavorites(uid)
       .then(faves => {
         markAsFaves(faves);
@@ -43,7 +43,7 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
     };
     TripFactory.addFavorite(faveObj)
     .then(data => {
-      getFavorites(firebase.auth().currentUser.uid);
+      $scope.getFavorites(firebase.auth().currentUser.uid);
     });
   };
 
@@ -61,5 +61,10 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
 
   // defined in homepage.js, gets all public trips and formats with starting points and cover photos
   $scope.getTrips();
- 
+
+  if(firebase.auth().currentUser !== null){
+    getFavorites(firebase.auth().currentUser.uid);
+  }
+  
+
 });
