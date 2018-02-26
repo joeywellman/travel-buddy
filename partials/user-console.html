@@ -47,7 +47,7 @@
       <!-- favorite trip card -->
       <div class = "row">
         <div class="trip-card col-sm-8" ng-repeat="fave in faves">
-          <img class="icon icon-sm top-right pointer" ng-click="deleteFave(trip.faveId)" ng-src="images/icons/delete.png" alt="Delete">
+          <img class="icon icon-sm top-right pointer" ng-click="deleteFavorite(fave.faveId)" ng-src="images/icons/delete.png" alt="Delete">
           <img class="card-img-top" ng-src="{{fave.coverPhoto}}" alt="Picture of a place">
           <div class = "card-body">
             <a ng-href="#!/view/{{fave.id}}">

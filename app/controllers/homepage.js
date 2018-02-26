@@ -30,7 +30,6 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
       });
       return trip;
     });
-    console.log("scope.faves", faves);
     $scope.faves = faves;
   };
 
