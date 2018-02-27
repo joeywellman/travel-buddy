@@ -20,4 +20,11 @@ angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, $c
     }
   });
 
+  $scope.deleteTrip = (tripId) => {
+    TripFactory.deleteTrip(tripId)
+    .then(data => {
+      $scope.getTrips();
+    });
+  };
+
 });
