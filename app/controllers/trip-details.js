@@ -48,6 +48,13 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     }
   };
   
+  // delete from favorites
+  $scope.deleteFavorite = (faveId) => {
+    TripFactory.deleteFave(faveId)
+      .then(data => {
+        $scope.getTrips();
+      });
+  };
 
 // helper function to construct lat long object for map center
   const setMapCenter = (placeDetails) => {
