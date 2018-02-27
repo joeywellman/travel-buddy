@@ -18,15 +18,19 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   // loops through $scope.trips and checks if each trip is in the current user's favorites
   // if the user has favorited a given trip, give that trip a property of 'favorite' with a value of 'true'
   $scope.markAsFaves = (favoriteTrips) => {
+    let faves = [];
     let allTrips = $scope.trips;
     allTrips.forEach(trip => {
-      for (let fave in favoriteTrips) {
-        if (trip.id === favoriteTrips[fave].id) {
+      favoriteTrips.forEach(fave => {
+        if (trip.id === fave.id) {
           trip.favorite = true;
+          trip.faveId = fave.fbId;
+          faves.push(trip);
         }
-      }
+      });
       return trip;
     });
+    $scope.faves = faves;
   };
 
   // gets current user's favorite trips from Firebase
@@ -38,7 +42,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   };
 
 
-  // converts tags from array to strings
+  // converts tags from array to strings, accounts for ng-tag-input (array of objects) and array of strings (from before I implemented ng-tags-input)
   const sliceTags = (trips) => {
     let tripsWithTags = trips.map(trip => {
       if (trip.tags[0] !== null && typeof trip.tags[0] === 'object'){ // if tags were created with ng-tag
@@ -57,9 +61,9 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   };
 
 
-    // defines a function that gets all public trips and formats them with starting points and cover photos
+    // defines a function that gets all public trips
   $scope.getTrips = () => {
-    TripFactory.getAllPublicTrips()
+    TripFactory.getAllTrips()
       .then(trips => {
         $scope.trips = sliceTags(trips);
         $scope.dataLoaded = true;
@@ -67,7 +71,6 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
           let uid = firebase.auth().currentUser.uid;
           $scope.getFavorites(uid);
           $scope.checkUser(uid);
-          console.log($scope.trips);
         }
       });
   };

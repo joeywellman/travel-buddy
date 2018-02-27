@@ -30,7 +30,7 @@
     <p class = "map-header">Click on a marker to see details about each trip.</p>
     
     <ng-map class="homepage-map" zoom="2" center="{{mapCenter}}" pan-control="true" zoom-control="true" scale-control="true">
-      <marker ng-repeat="trip in trips track by $index" position={{trip.startingPoint}} title={{trip.name}}
+      <marker ng-repeat="trip in trips track by $index" ng-show = "!trip.private" position={{trip.startingPoint}} title={{trip.name}}
         id={{trip.startingPoint}} on-click="showDetails(trip)"></marker>
       <info-window id="details" class = "info-window">
         <div ng-non-bindable>

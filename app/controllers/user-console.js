@@ -1,65 +1,23 @@
 'use strict';
-angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, TripFactory, GMapsFactory, GMapsCreds) {
+angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, $controller, TripFactory, GMapsFactory, GMapsCreds) {
   const favoriteTrips = [];
 
+  // inherits delete favorite function from browse trips controller
+  $controller("BrowseTripsCtrl", { $scope: $scope });
 
-  // converts firebase data to array and adds firebase key 
- const convertToArray = (dataObject) => {
-    let keys = Object.keys(dataObject);
-    let dataArray = keys.map(key => {
-      dataObject[key].fbId = key;
-      return dataObject[key];
-    });
-    return dataArray;
-  };
+  // defined in homepage controller (grandparent)
+  // inherited from browse trips controller (parent)
+  // fetches all trips- template controls what the user sees
+  $scope.getTrips();
 
-  // defines a function that gets the user's favorite trips
-  const getFavorites = (user) => {
-    TripFactory.getMyFavorites(user.uid)
-      .then(favorites => {
-        favorites = convertToArray(favorites);
-        return TripFactory.getFavoriteDetails(favorites);
-      })
-      .then(faveDetails => {
-        faveDetails = faveDetails.map(fave => {
-          fave = fave.data;
-          return fave;
-        });
-        $scope.faves = faveDetails;
-      });
-  };
-
-
-  // fetches trips and favorites when user is logged in
+  // on authentication state change, get the user's favorites
   firebase.auth().onAuthStateChanged(function (user) {
-    if (user) {
-      TripFactory.getMyTrips(user.uid)
-      .then(trips => {
-        $scope.trips = trips;
-        getFavorites(user);
-      });
+    if (user && $scope.trips !== null) {
+      $scope.getFavorites(user.uid);
+      $scope.checkUser(user.uid);
     } else {
-      $scope.errorMessage = "Please log in to see your trips!";
+      $scope.getTrips();
     }
   });
-
-  // delete trip and then re-fetch trips
-  $scope.deleteTrip = (tripId) => {
-    TripFactory.deleteTrip(tripId)
-    .then(() => {
-      TripFactory.getMyTrips(firebase.auth().currentUser.uid)
-      .then(trips => {
-        $scope.trips = trips;
-      });
-    });
-  };
-
-  // delete fave and then re-fetch faves
-  $scope.deleteFave = (fave) => {
-    TripFactory.deleteFave(fave.fbId)
-    .then(() => {
-      getFavorites(firebase.auth().currentUser);
-    });
-  };
 
 });
