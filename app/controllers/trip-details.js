@@ -20,7 +20,6 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
         if (favoriteObj[fave].id == $routeParams.tripId){
           $scope.trip.favorite = true;
           $scope.trip.faveId = favoriteObj[fave].id;
-          console.log("scope.trip with favorite stuff", $scope.trip);
         }
       }
     });
@@ -55,7 +54,6 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     console.log("what is delete fave getting?", faveId);
     TripFactory.deleteFave(faveId)
       .then(data => {
-        console.log("data from delete", data);
         $scope.trip.favorite = false;
       });
   };
