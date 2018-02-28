@@ -6,8 +6,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
 
   // don't let user's favorite their own trips
  $scope.checkUser = (uid) => {
-   let allTrips = $scope.trips;
-    allTrips.forEach(trip => {
+    $scope.trips.forEach(trip => {
        if (trip.uid === uid) {
          trip.myTrip = true;
        }
