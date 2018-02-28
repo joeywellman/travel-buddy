@@ -51,7 +51,6 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   
   // delete from favorites
   $scope.deleteFavorite = (faveId) => {
-    console.log("what is delete fave getting?", faveId);
     TripFactory.deleteFave(faveId)
       .then(data => {
         $scope.trip.favorite = false;
@@ -65,15 +64,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     $scope.mapCenter = `${firstLat}, ${firstLong}`;
   };
 
-  // destructures place data from firebase and adds property of place_id
-  const formatPlaceData = (fbPlaceData) => {
-    let formattedData = fbPlaceData.map(place => {
-      place = place.data;
-      place.place_id = place.id;
-      return place;
-    });
-    return formattedData;
-  };
+  
 
   // adds creator's descriptions to trip locations
   const addDescriptions = (googlePlaces) => {
@@ -97,7 +88,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     return TripFactory.getFirebasePlaces(tripDetails.locations); // get firebase places
   }))
   .then(fbPlaceData => { // gets place details from firebase
-    userPlaces = formatPlaceData(fbPlaceData);
+    userPlaces = TripFactory.formatPlaceIds(fbPlaceData);
     return GMapsFactory.getGooglePlaces(userPlaces); // get google palce details
   })
   .then(placeDetails => { // gets place details from google places

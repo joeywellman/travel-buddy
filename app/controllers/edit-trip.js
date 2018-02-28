@@ -21,20 +21,12 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, $cont
     return placesWithDescriptions;
   };
   
-  // destructures place data from firebase and adds property of place_id
-  const formatPlaceData = fbPlaceData => {
-    let formattedData = fbPlaceData.map(place => {
-      place = place.data;
-      place.place_id = place.id;
-      return place;
-    });
-    return formattedData;
-  };
+
 
   // fetches place info for the trip you're editing
   TripFactory.getFirebasePlaces(TripBuilderFactory.trip.locations)
     .then(fbPlaceData => { // gets place details from firebase
-      userPlaces= formatPlaceData(fbPlaceData);
+      userPlaces= TripFactory.formatPlaceIds(fbPlaceData);
       return GMapsFactory.getGooglePlaces(userPlaces);
     })
     .then(placeDetails => { // gets place details from google places

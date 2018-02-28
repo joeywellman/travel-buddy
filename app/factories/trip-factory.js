@@ -4,7 +4,7 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
   // // HELPER FUNCTION
   // converts to array and attaches firebase keys
-  function formatData(dataObject){
+  function convertToArray(dataObject){
     const dataArray = [];
     let fbKeys = Object.keys(dataObject);
     fbKeys.forEach(key => {
@@ -14,21 +14,27 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     return dataArray;
   } 
 
+  // destructures place data from firebase and adds property of place_id
+  const formatPlaceIds = fbPlaceData => {
+    let formattedData = fbPlaceData.map(place => {
+      place = place.data;
+      place.place_id = place.id;
+      return place;
+    });
+    return formattedData;
+  };
 
 
 
   //EXPORTED FUNCTIONS
 
-   // promises all PUBLIC trips
-  // adds keys
-  // converts to array
-  // resolves array with keys
+   // promises all PUBLIC trips, adds keys, converts to array
   function getAllTrips() {
     return $q((resolve, reject) => {
       $http
         .get(`${FBUrl}/trips.json`)
         .then(({ data }) => {
-          let tripArray = formatData(data);
+          let tripArray = convertToArray(data);
           resolve(tripArray);
         });
       });
@@ -119,7 +125,7 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
     return $q((resolve, reject) => {
       $http.get(`${FBUrl}/trips.json?orderBy="uid"&equalTo="${uid}"`)
         .then(({ data }) => {
-          let tripArray = formatData(data);
+          let tripArray = convertToArray(data);
           resolve(tripArray);
         });
       });
@@ -188,6 +194,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
 
 
-  return {getAllTrips, getFavoriteDetails, getTripDetails, getFirebasePlaces, postTrip, postPlaces, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave};
+  return {getAllTrips, getFavoriteDetails, getTripDetails, getFirebasePlaces, postTrip, postPlaces, updateTrip, getMyTrips, addFavorite, getMyFavorites, deleteTrip, deleteFave, formatPlaceIds};
 
 });
