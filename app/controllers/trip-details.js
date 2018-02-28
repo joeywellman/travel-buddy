@@ -5,25 +5,28 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   let userPlaces = null;
   $scope.tripLoading = true;
   
-// if this is the current user's trip, edit button appears
-  const checkUser = (uid) => {
-    if($scope.trip.uid === uid){
-      $scope.trip.myTrip = true;
-    }
-  };
-
-  // checks if this trip is in the user's favorite trips
-  const checkFavorite = (uid) => {
-    TripFactory.getMyFavorites(uid)
-    .then(favoriteObj => {
-      for (let fave in favoriteObj){
-        if (favoriteObj[fave].id == $routeParams.tripId){
-          $scope.trip.favorite = true;
-          $scope.trip.faveId = favoriteObj[fave].id;
-        }
+  
+  // FAVORITING AND UNFAVORITING //
+  
+  // if this is the current user's trip, edit button appears
+    const checkUser = (uid) => {
+      if($scope.trip.uid === uid){
+        $scope.trip.myTrip = true;
       }
-    });
-  };
+    };
+  
+    // checks if this trip is in the user's favorite trips
+    const checkFavorite = (uid) => {
+      TripFactory.getMyFavorites(uid)
+      .then(favoriteObj => {
+        for (let fave in favoriteObj){
+          if (favoriteObj[fave].id == $routeParams.tripId){
+            $scope.trip.favorite = true;
+            $scope.trip.faveId = favoriteObj[fave].id;
+          }
+        }
+      });
+    };
 
   // assembles favorite object and posts to firebase
   const postFavorite = (tripId) => {
@@ -57,14 +60,14 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
       });
   };
 
+  // LOADING TRIP DETAILS //
+
 // helper function to construct lat long object for map center
   const setMapCenter = (placeDetails) => {
     let firstLat = placeDetails[0].geometry.location.lat;
     let firstLong = placeDetails[0].geometry.location.lng;
     $scope.mapCenter = `${firstLat}, ${firstLong}`;
   };
-
-  
 
   // adds creator's descriptions to trip locations
   const addDescriptions = (googlePlaces) => {
@@ -98,6 +101,8 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     $scope.tripLoaded = true;
     setMapCenter(tripLocations);
   });
+
+  // MAP // 
 
   // center the map when, called when a user mouses over a place card
   $scope.setMapCenter = (location) => {

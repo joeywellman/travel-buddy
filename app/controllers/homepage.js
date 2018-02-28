@@ -4,6 +4,8 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   $scope.mapCenter = "35, 82";
 
 
+  // PLAYIN' FAVORITES //
+
   // don't let user's favorite their own trips
  $scope.checkUser = (uid) => {
     $scope.trips.forEach(trip => {
@@ -12,7 +14,6 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
        }
      });
   };
-
 
   // loops through $scope.trips and checks if each trip is in the current user's favorites
   // if the user has favorited a given trip, give that trip a property of 'favorite' with a value of 'true'
@@ -40,6 +41,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
       });
   };
 
+  // LOAD TRIP DETAILS //
 
   // converts tags from array to strings, accounts for ng-tag-input (array of objects) and array of strings (from before I implemented ng-tags-input)
   const sliceTags = (trips) => {
@@ -59,8 +61,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
     return tripsWithTags;
   };
 
-
-    // defines a function that gets all public trips
+  // defines a function that gets all public trips
   $scope.getTrips = () => {
     TripFactory.getAllTrips()
       .then(trips => {
@@ -74,6 +75,8 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
       });
   };
 
+  // MAP//
+
   // show infowindow, fired on marker click
   $scope.showDetails = function (event, trip) {
     $scope.selectedTrip = trip;
@@ -85,7 +88,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
     $scope.map.hideInfoWindow("details");
   };
 
-  
+
   $scope.getTrips();
 
 
