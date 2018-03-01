@@ -8,7 +8,6 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
 
   // don't let user's favorite their own trips
  $scope.checkUser = (uid) => {
-   console.log("scope.trips", $scope.trips);
     $scope.trips.forEach(trip => {
        if (trip.uid === uid) {
          trip.myTrip = true;
@@ -57,7 +56,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
       } else if (trip.tags.length === 0 && typeof trip.tags[0] === 'object') { // if there's only one tag
         trip.tags = trip.tags.text;
         return trip;
-      } else if (trip.tags.length > 0 && typeof trip.tags[0] === 'string'){
+      } else if (trip.tags.length > 0 && typeof trip.tags[0] === 'string'){ // if tags were created BEFORE ng-tags-input
         trip.tags = trip.tags.join(', ');
         return trip;
       }

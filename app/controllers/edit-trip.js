@@ -48,6 +48,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, $cont
       })
       .then((data) => {
         $location.url("/browse");
+        $scope.trip.trip = null;
       });
   };
 
