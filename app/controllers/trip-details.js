@@ -5,28 +5,31 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   let userPlaces = null;
   $scope.tripLoading = true;
   
-// if this is the current user's trip, edit button appears
-  const checkUser = (uid) => {
-    if($scope.trip.uid === uid){
-      $scope.trip.myTrip = true;
-    }
-  };
-
-  // checks if this trip is in the user's favorite trips
-  const checkFavorite = (uid) => {
-    TripFactory.getMyFavorites(uid)
-    .then(favoriteObj => {
-      for (let fave in favoriteObj){
-        if (favoriteObj[fave].id == $routeParams.tripId){
-          $scope.trip.favorite = true;
-          $scope.trip.faveId = favoriteObj[fave].id;
-        }
+  
+  // FAVORITING AND UNFAVORITING //
+  
+  // if this is the current user's trip, edit button appears
+    const checkUser = uid => {
+      if($scope.trip.uid === uid){
+        $scope.trip.myTrip = true;
       }
-    });
-  };
+    };
+  
+    // checks if this trip is in the user's favorite trips
+    const checkFavorite = uid => {
+      TripFactory.getMyFavorites(uid)
+      .then(favoriteObj => {
+        for (let fave in favoriteObj){
+          if (favoriteObj[fave].id == $routeParams.tripId){
+            $scope.trip.favorite = true;
+            $scope.trip.faveId = favoriteObj[fave].id;
+          }
+        }
+      });
+    };
 
   // assembles favorite object and posts to firebase
-  const postFavorite = (tripId) => {
+  const postFavorite = tripId => {
     let faveObj = {
       id: tripId,
       uid: firebase.auth().currentUser.uid
@@ -38,7 +41,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   };
 
   // checks whether a user is logged in and then calls postFavorite function
-  $scope.addFavorite = (tripId) => {
+  $scope.addFavorite = tripId => {
     if (firebase.auth().currentUser !== null) {
       postFavorite(tripId);
     } else {
@@ -50,33 +53,24 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   };
   
   // delete from favorites
-  $scope.deleteFavorite = (faveId) => {
-    console.log("what is delete fave getting?", faveId);
+  $scope.deleteFavorite = faveId => {
     TripFactory.deleteFave(faveId)
       .then(data => {
         $scope.trip.favorite = false;
       });
   };
 
+  // LOADING TRIP DETAILS //
+
 // helper function to construct lat long object for map center
-  const setMapCenter = (placeDetails) => {
+  const setMapCenter = placeDetails => {
     let firstLat = placeDetails[0].geometry.location.lat;
     let firstLong = placeDetails[0].geometry.location.lng;
     $scope.mapCenter = `${firstLat}, ${firstLong}`;
   };
 
-  // destructures place data from firebase and adds property of place_id
-  const formatPlaceData = (fbPlaceData) => {
-    let formattedData = fbPlaceData.map(place => {
-      place = place.data;
-      place.place_id = place.id;
-      return place;
-    });
-    return formattedData;
-  };
-
   // adds creator's descriptions to trip locations
-  const addDescriptions = (googlePlaces) => {
+  const addDescriptions = googlePlaces => {
     let placesWithDescriptions = googlePlaces.map((place, index) => {
       place.description = userPlaces[index].description;
       return place;
@@ -97,7 +91,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     return TripFactory.getFirebasePlaces(tripDetails.locations); // get firebase places
   }))
   .then(fbPlaceData => { // gets place details from firebase
-    userPlaces = formatPlaceData(fbPlaceData);
+    userPlaces = TripFactory.formatPlaceIds(fbPlaceData);
     return GMapsFactory.getGooglePlaces(userPlaces); // get google palce details
   })
   .then(placeDetails => { // gets place details from google places
@@ -108,8 +102,10 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     setMapCenter(tripLocations);
   });
 
+  // MAP // 
+
   // center the map when, called when a user mouses over a place card
-  $scope.setMapCenter = (location) => {
+  $scope.setMapCenter = location => {
     $scope.mapCenter = location.formatted_address;
   };
 
@@ -120,7 +116,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   };
 
   // hide the infowindow
-  $scope.hideDetail = function () {
+  $scope.hideDetail = () => {
     $scope.map.hideInfoWindow("details");
   };
 

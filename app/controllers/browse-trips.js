@@ -17,7 +17,7 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
 
 
   // assembles favorite object and posts to firebase
-  const postFavorite = (tripId) => {
+  const postFavorite = tripId => {
     let faveObj = {
       id: tripId,
       uid: firebase.auth().currentUser.uid
@@ -29,7 +29,7 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
   };
 
   // delete from favorites
- $scope.deleteFavorite = (faveId) => {
+ $scope.deleteFavorite = faveId => {
     TripFactory.deleteFave(faveId)
     .then(data => {
       $scope.getTrips();
@@ -37,7 +37,7 @@ angular.module("TravelBuddy").controller("BrowseTripsCtrl", function ($scope, $c
   };
 
   // checks whether a user is logged in and then calls postFavorite function
-  $scope.addFavorite = (tripId) => {
+  $scope.addFavorite = tripId => {
     if (firebase.auth().currentUser !== null){
       postFavorite(tripId);
     } else {

@@ -6,7 +6,7 @@ angular.module("TravelBuddy").controller("NavCtrl", function ($scope, UserFactor
     if(firebase.auth().currentUser === null){
       UserFactory.login()
       .then(({additionalUserInfo}) => {
-        console.log("on login", additionalUserInfo);
+        console.log("logged in!");
       });
     } else {
       UserFactory.logout()
@@ -22,7 +22,6 @@ angular.module("TravelBuddy").controller("NavCtrl", function ($scope, UserFactor
     if (user) {
       $scope.buttonText = "Log Out";
       $scope.user = user.providerData[0];
-      console.log($scope.user);
     } else{
       $scope.buttonText = "Log In";
     }

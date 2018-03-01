@@ -2,22 +2,31 @@
 angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $location, TripFactory, GMapsFactory, GMapsCreds, UserFactory, TripBuilderFactory){
 
   $scope.title = "Build A Trip";
-  $scope.tripLocations = [];
+  $scope.route = "#!/buildtrip/search";
+
+  // empty arrays! We'll push things into these later.
+  $scope.tripLocations = []; 
   const searchResults = [];
+
+  // If nothing comes up on the search, print an error message
   $scope.errorMessage = "Sorry, it looks like we couldn't find anything matching that search! Here are some helpful tips:";
   $scope.hints = ["Make sure you spelled everything correctly.", "Try specifying a type of place and a location, i.e. 'Donut Shops in New York City' or 'Churches in Paris'", "Search for the name of a specific place, i.e. Wicked Weed Brewing"];
+  
+  // helper variables that control what's visible in the template
   $scope.isCollapsed = false;
   $scope.reviewButtonText = "View Reviews";
   let reviewsLength = null;
   $scope.tripLoaded = true;
   $scope.searchResultsLoading = false;
-  $scope.route = "#!/buildtrip/search";
-
-
+  
+  // TripBuilderFactory stores the trip name, description, etc from trip-init view
   $scope.trip = TripBuilderFactory;
 
+
+// PLACES SEARCH //
+
 // passes user search into google maps api calls, fetches search results and then details for each search result
-  $scope.searchPlaces = (event) => {
+  $scope.searchPlaces = event => {
     if (event.keyCode == 13) {   
       $scope.searchResultsLoading = true;
       GMapsFactory.placesSearch($scope.searchString)
@@ -33,13 +42,15 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     }
   };
 
-  $scope.toggleReviews = (result) => {
+  // hides or shows reviews
+  $scope.toggleReviews = result => {
     reviewsLength = result.reviews.length;
     $scope.isCollapsed = !$scope.isCollapsed;
     $scope.reviewButtonText = "Hide Reviews";
   };
 
-  $scope.isCurrent = ($index) => {
+  // hides all the reviews except the one you're looking at
+  $scope.isCurrent = $index => {
     if ($index == $scope.currentIndex){
       return true;
     } else{
@@ -47,6 +58,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     }
   };
 
+  // shows the next review
   $scope.nextReview = () => {
     $scope.currentIndex += 1;
     if ($scope.currentIndex === reviewsLength){
@@ -54,32 +66,34 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     }
   };
   
-  
   // fired when user clicks 'add to trip' button on a place card, pushes place object into global array
-  $scope.addToTrip = (place) => {
+  $scope.addToTrip = place => {
     $scope.tripLocations.push(place);
   };
 
-  // NEED TO TEST
-  $scope.setCoverPhoto = (tripLocation) => {
+  // sets photo url as cover photo property on trip object
+  $scope.setCoverPhoto = tripLocation => {
     $scope.trip.trip.coverPhoto = tripLocation.image;
   };
 
+  // move tripLocation up
   $scope.moveUp = (tripLocation, index) => {
     $scope.tripLocations[index] = $scope.tripLocations[index-1];
     $scope.tripLocations[index-1] = tripLocation;
   };
 
+  // move tripLocation down
   $scope.moveDown = (tripLocation, index) => {
     $scope.tripLocations[index] = $scope.tripLocations[index+1];
     $scope.tripLocations[index+1] = tripLocation;
   };
 
-  $scope.removeFromTrip = (index) => {
+  // delete tripLocation
+  $scope.removeFromTrip = index => {
     $scope.tripLocations.splice(index, 1);
   };
 
-  // creates place object for each location in the trip (description and google place id), posts each place object to firebase 
+  // creates place object for each trip location and posts to firebase
   $scope.buildPlaceObjects = () => {
     const placeObjects = $scope.tripLocations.map(location => {
       location = {
@@ -92,7 +106,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   };
 
   // takes firebase id from POST, returns array of fb ids
-  $scope.getFirebaseIds = (fbPostData) => {
+  $scope.getFirebaseIds = fbPostData => {
     let ids = fbPostData.map(post => {
       post = post.data.name;
       return post;
@@ -114,7 +128,6 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
     } else if (status == "public") {
       $scope.trip.trip.private = false;
     }
-    console.log("should have starting point and cover photo", $scope.trip.trip);
     return $scope.trip.trip;
   };
 
@@ -133,27 +146,24 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
       });
   };
 
-  // dry these up
-  $scope.saveTrip = () => {
+  // if the user isn't logged in, log them in before posting trip
+  const loginAndPost = (status) => {
     if (firebase.auth().currentUser !== null) {
-      postTrip("private");
-    }else{
-      UserFactory.login()
-      .then(()=> {
-        postTrip("private");
-      });
-    }
-  };
-
-  $scope.publishTrip = () => {
-    if (firebase.auth().currentUser !== null) {
-      postTrip("public");
+      postTrip(status);
     } else {
       UserFactory.login()
         .then(() => {
-          postTrip("public");
+          postTrip(status);
         });
     }
+  };
+
+  $scope.saveTrip = () => {
+    loginAndPost("private");
+  };
+
+  $scope.publishTrip = () => {
+    loginAndPost("public");
   };
 
 });

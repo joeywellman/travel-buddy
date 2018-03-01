@@ -13,7 +13,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, $cont
   $controller("TripBuilderCtrl", { $scope: $scope });
 
   // adds creator's descriptions to trip locations
-  const addDescriptions = (googlePlaces) => {
+  const addDescriptions = googlePlaces => {
     let placesWithDescriptions = googlePlaces.map((place, index) => {
       place.description = userPlaces[index].description;
       return place;
@@ -21,20 +21,12 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, $cont
     return placesWithDescriptions;
   };
   
-  // destructures place data from firebase and adds property of place_id
-  const formatPlaceData = fbPlaceData => {
-    let formattedData = fbPlaceData.map(place => {
-      place = place.data;
-      place.place_id = place.id;
-      return place;
-    });
-    return formattedData;
-  };
+
 
   // fetches place info for the trip you're editing
   TripFactory.getFirebasePlaces(TripBuilderFactory.trip.locations)
     .then(fbPlaceData => { // gets place details from firebase
-      userPlaces= formatPlaceData(fbPlaceData);
+      userPlaces= TripFactory.formatPlaceIds(fbPlaceData);
       return GMapsFactory.getGooglePlaces(userPlaces);
     })
     .then(placeDetails => { // gets place details from google places
@@ -46,7 +38,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, $cont
 
 
   // posts places, updates trip
-  const saveChanges = (status) => {
+  const saveChanges = status => {
     const fbPlaces = $scope.buildPlaceObjects();
     TripFactory.postPlaces(fbPlaces)
       .then(fbData => {
@@ -56,6 +48,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, $cont
       })
       .then((data) => {
         $location.url("/browse");
+        $scope.trip.trip = null;
       });
   };
 
