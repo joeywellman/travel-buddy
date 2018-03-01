@@ -8,6 +8,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
 
   // don't let user's favorite their own trips
  $scope.checkUser = (uid) => {
+   console.log("scope.trips", $scope.trips);
     $scope.trips.forEach(trip => {
        if (trip.uid === uid) {
          trip.myTrip = true;
@@ -46,20 +47,25 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   // converts tags from array to strings, accounts for ng-tag-input (array of objects) and array of strings (from before I implemented ng-tags-input)
   const sliceTags = (trips) => {
     let tripsWithTags = trips.map(trip => {
-      if (trip.tags[0] !== null && typeof trip.tags[0] === 'object'){ // if tags were created with ng-tag
+      if (trip.tags.length > 0 && trip.tags[0] !== null && typeof trip.tags[0] === 'object'){ // if tags were created with ng-tag
         trip.tags = trip.tags.map(tag => {
           tag = tag.text;
           return tag;
         });
         trip.tags = trip.tags.join(', ');
         return trip;
-      } else{
+      } else if (trip.tags.length === 0 && typeof trip.tags[0] === 'object') { // if there's only one tag
+        trip.tags = trip.tags.text;
+        return trip;
+      } else if (trip.tags.length > 0 && typeof trip.tags[0] === 'string'){
         trip.tags = trip.tags.join(', ');
         return trip;
       }
     });
     return tripsWithTags;
   };
+
+
 
   // defines a function that gets all public trips
   $scope.getTrips = () => {

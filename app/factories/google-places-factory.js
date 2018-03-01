@@ -20,7 +20,6 @@ angular.module("TravelBuddy").factory("GMapsFactory", (GMapsCreds, $http, $q) =>
     });
   }
   
-  // THE ISSUE IS PLACE.ID VS. PLACE.PLACE_ID
   function getGooglePlaces(placeData){
     const promises = [];
     placeData.forEach(place => {

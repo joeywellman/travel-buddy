@@ -146,6 +146,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
       });
   };
 
+  // if the user isn't logged in, log them in before posting trip
   const loginAndPost = (status) => {
     if (firebase.auth().currentUser !== null) {
       postTrip(status);
