@@ -1,6 +1,6 @@
 <div class = "container">
-  <h4>{{errorMessage}}</h4>
-  <div class = "row p-1">
+  <h4 ng-show = "!user">{{errorMessage}}</h4>
+  <div ng-show = "user" class = "row p-1">
     <div class = "col-sm-8 p-1">
       <div class = "row public-trips">
         <h4>Public Trips</h4>
