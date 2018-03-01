@@ -8,15 +8,11 @@ angular.module("TravelBuddy").controller("EditInitCtrl", function ($scope, $rout
   // converts array of strings into array of objects for ng-tags to print
   const convertTags = (trip) => {
     if (trip.tags.length > 0 && trip.tags[0] !== null && typeof trip.tags[0] === 'string'){
-      console.log("this is a trip with string tags!", trip);
       let formattedTags = trip.tags.map(tag => {
-        console.log("this is a single tag before you format it", tag);
         tag = {text: tag};
-        console.log("and now it should be an object", tag);
         return tag;
       });
       trip.tags = formattedTags;
-      console.log("trip.tags, should be objects", trip.tags);
     }
     return trip;
   };
@@ -25,7 +21,6 @@ angular.module("TravelBuddy").controller("EditInitCtrl", function ($scope, $rout
   TripFactory.getTripDetails($routeParams.tripId)
     .then(tripDetails => {
       tripDetails = convertTags(tripDetails);
-      console.log('tripdetails', tripDetails);
       TripBuilderFactory.trip = tripDetails;
       $scope.trip = TripBuilderFactory;
     });
