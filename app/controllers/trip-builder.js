@@ -26,7 +26,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
 // PLACES SEARCH //
 
 // passes user search into google maps api calls, fetches search results and then details for each search result
-  $scope.searchPlaces = (event) => {
+  $scope.searchPlaces = event => {
     if (event.keyCode == 13) {   
       $scope.searchResultsLoading = true;
       GMapsFactory.placesSearch($scope.searchString)
@@ -43,14 +43,14 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   };
 
   // hides or shows reviews
-  $scope.toggleReviews = (result) => {
+  $scope.toggleReviews = result => {
     reviewsLength = result.reviews.length;
     $scope.isCollapsed = !$scope.isCollapsed;
     $scope.reviewButtonText = "Hide Reviews";
   };
 
   // hides all the reviews except the one you're looking at
-  $scope.isCurrent = ($index) => {
+  $scope.isCurrent = $index => {
     if ($index == $scope.currentIndex){
       return true;
     } else{
@@ -67,12 +67,12 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   };
   
   // fired when user clicks 'add to trip' button on a place card, pushes place object into global array
-  $scope.addToTrip = (place) => {
+  $scope.addToTrip = place => {
     $scope.tripLocations.push(place);
   };
 
   // sets photo url as cover photo property on trip object
-  $scope.setCoverPhoto = (tripLocation) => {
+  $scope.setCoverPhoto = tripLocation => {
     $scope.trip.trip.coverPhoto = tripLocation.image;
   };
 
@@ -89,7 +89,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   };
 
   // delete tripLocation
-  $scope.removeFromTrip = (index) => {
+  $scope.removeFromTrip = index => {
     $scope.tripLocations.splice(index, 1);
   };
 
@@ -106,7 +106,7 @@ angular.module("TravelBuddy").controller("TripBuilderCtrl", function ($scope, $l
   };
 
   // takes firebase id from POST, returns array of fb ids
-  $scope.getFirebaseIds = (fbPostData) => {
+  $scope.getFirebaseIds = fbPostData => {
     let ids = fbPostData.map(post => {
       post = post.data.name;
       return post;

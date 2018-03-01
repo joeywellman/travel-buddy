@@ -13,7 +13,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, $cont
   $controller("TripBuilderCtrl", { $scope: $scope });
 
   // adds creator's descriptions to trip locations
-  const addDescriptions = (googlePlaces) => {
+  const addDescriptions = googlePlaces => {
     let placesWithDescriptions = googlePlaces.map((place, index) => {
       place.description = userPlaces[index].description;
       return place;
@@ -38,7 +38,7 @@ angular.module("TravelBuddy").controller("EditTripCtrl", function ($scope, $cont
 
 
   // posts places, updates trip
-  const saveChanges = (status) => {
+  const saveChanges = status => {
     const fbPlaces = $scope.buildPlaceObjects();
     TripFactory.postPlaces(fbPlaces)
       .then(fbData => {

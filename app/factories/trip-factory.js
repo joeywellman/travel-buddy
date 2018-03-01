@@ -28,23 +28,20 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
   //EXPORTED FUNCTIONS
 
-   // promises all PUBLIC trips, adds keys, converts to array
+  // promises all PUBLIC trips, adds keys, converts to array
   const getAllTrips = () => {
     return $q((resolve, reject) => {
       $http
         .get(`${FBUrl}/trips.json`)
         .then(({ data }) => {
           let tripArray = convertToArray(data);
-          console.log("tripArray", tripArray);
           resolve(tripArray);
         });
-      });
-    };
+    });
+  };
 
-  
 
-  //promises details of specified trip
-  // resolves an object
+  //promises details of specified trip, resolves an object
   const getTripDetails = tripId => {
     return $q((resolve, reject) => {
       $http
@@ -78,7 +75,7 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
           resolve(data);
         })
         .catch(error => {
-          console.log(error); 
+          console.log(error);
           reject(error);
         });
     });
@@ -95,11 +92,12 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
   };
 
 
+  // edits trip
   const updateTrip = (tripObj, tripId) => {
     return $q((resolve, reject) => {
       $http
         .put(`${FBUrl}/trips/${tripId}.json`,
-        JSON.stringify(tripObj)
+          JSON.stringify(tripObj)
         )
         .then((data) => {
           resolve(data);
@@ -127,7 +125,7 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
   };
 
   // promises user's favorites
-    // resolves an array of favorite objects
+  // resolves an array of favorite objects
   const getMyFavorites = uid => {
     return $q((resolve, reject) => {
       $http.get(`${FBUrl}/favorites.json?orderBy="uid"&equalTo="${uid}"`)
@@ -175,6 +173,6 @@ angular.module("TravelBuddy").factory("TripFactory", (FBUrl, $http, $q) => {
 
 
 
-  return {getAllTrips, getTripDetails, getMyFavorites, getFirebasePlaces, postTrip, postPlaces, updateTrip, addFavorite, deleteTrip, deleteFave, formatPlaceIds};
+  return { getAllTrips, getTripDetails, getMyFavorites, getFirebasePlaces, postTrip, postPlaces, updateTrip, addFavorite, deleteTrip, deleteFave, formatPlaceIds };
 
 });

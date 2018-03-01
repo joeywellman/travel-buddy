@@ -7,7 +7,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   // PLAYIN' FAVORITES //
 
   // don't let user's favorite their own trips
- $scope.checkUser = (uid) => {
+ $scope.checkUser = uid => {
     $scope.trips.forEach(trip => {
        if (trip.uid === uid) {
          trip.myTrip = true;
@@ -17,7 +17,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
 
   // loops through $scope.trips and checks if each trip is in the current user's favorites
   // if the user has favorited a given trip, give that trip a property of 'favorite' with a value of 'true'
-  $scope.markAsFaves = (favoriteTrips) => {
+  $scope.markAsFaves = favoriteTrips => {
     let faves = [];
     let allTrips = $scope.trips;
     allTrips.forEach(trip => {
@@ -34,7 +34,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   };
 
   // gets current user's favorite trips from Firebase
-  $scope.getFavorites = (uid) => {
+  $scope.getFavorites = uid => {
     TripFactory.getMyFavorites(uid)
       .then(faves => {
         $scope.markAsFaves(faves);
@@ -44,7 +44,7 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   // LOAD TRIP DETAILS //
 
   // converts tags from array to strings, accounts for ng-tag-input (array of objects) and array of strings (from before I implemented ng-tags-input)
-  const sliceTags = (trips) => {
+  const sliceTags = trips => {
     let tripsWithTags = trips.map(trip => {
       if (trip.tags.length > 0 && trip.tags[0] !== null && typeof trip.tags[0] === 'object'){ // if tags were created with ng-tag
         trip.tags = trip.tags.map(tag => {
@@ -83,13 +83,13 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
   // MAP//
 
   // show infowindow, fired on marker click
-  $scope.showDetails = function (event, trip) {
+  $scope.showDetails = (event, trip) => {
     $scope.selectedTrip = trip;
     $scope.map.showInfoWindow("details", trip.startingPoint);
   };
 
   // hide infowindow
-  $scope.hideDetail = function () {
+  $scope.hideDetail = () => {
     $scope.map.hideInfoWindow("details");
   };
 

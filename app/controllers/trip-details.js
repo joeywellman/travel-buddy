@@ -9,14 +9,14 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   // FAVORITING AND UNFAVORITING //
   
   // if this is the current user's trip, edit button appears
-    const checkUser = (uid) => {
+    const checkUser = uid => {
       if($scope.trip.uid === uid){
         $scope.trip.myTrip = true;
       }
     };
   
     // checks if this trip is in the user's favorite trips
-    const checkFavorite = (uid) => {
+    const checkFavorite = uid => {
       TripFactory.getMyFavorites(uid)
       .then(favoriteObj => {
         for (let fave in favoriteObj){
@@ -29,7 +29,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
     };
 
   // assembles favorite object and posts to firebase
-  const postFavorite = (tripId) => {
+  const postFavorite = tripId => {
     let faveObj = {
       id: tripId,
       uid: firebase.auth().currentUser.uid
@@ -41,7 +41,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   };
 
   // checks whether a user is logged in and then calls postFavorite function
-  $scope.addFavorite = (tripId) => {
+  $scope.addFavorite = tripId => {
     if (firebase.auth().currentUser !== null) {
       postFavorite(tripId);
     } else {
@@ -53,7 +53,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   };
   
   // delete from favorites
-  $scope.deleteFavorite = (faveId) => {
+  $scope.deleteFavorite = faveId => {
     TripFactory.deleteFave(faveId)
       .then(data => {
         $scope.trip.favorite = false;
@@ -63,14 +63,14 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   // LOADING TRIP DETAILS //
 
 // helper function to construct lat long object for map center
-  const setMapCenter = (placeDetails) => {
+  const setMapCenter = placeDetails => {
     let firstLat = placeDetails[0].geometry.location.lat;
     let firstLong = placeDetails[0].geometry.location.lng;
     $scope.mapCenter = `${firstLat}, ${firstLong}`;
   };
 
   // adds creator's descriptions to trip locations
-  const addDescriptions = (googlePlaces) => {
+  const addDescriptions = googlePlaces => {
     let placesWithDescriptions = googlePlaces.map((place, index) => {
       place.description = userPlaces[index].description;
       return place;
@@ -105,7 +105,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   // MAP // 
 
   // center the map when, called when a user mouses over a place card
-  $scope.setMapCenter = (location) => {
+  $scope.setMapCenter = location => {
     $scope.mapCenter = location.formatted_address;
   };
 
@@ -116,7 +116,7 @@ angular.module("TravelBuddy").controller("TripDetailsCtrl", function ($scope, $c
   };
 
   // hide the infowindow
-  $scope.hideDetail = function () {
+  $scope.hideDetail = () => {
     $scope.map.hideInfoWindow("details");
   };
 
