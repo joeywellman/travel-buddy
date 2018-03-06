@@ -64,8 +64,6 @@ angular.module("TravelBuddy").controller("HomepageCtrl", function ($scope, GMaps
     return tripsWithTags;
   };
 
-
-
   // defines a function that gets all public trips
   $scope.getTrips = () => {
     TripFactory.getAllTrips()
