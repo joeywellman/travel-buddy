@@ -5,3 +5,4 @@ app/values/google-creds.js
 lib/package-lock.json
 lib/.sass-cache
 styles/css/main.css
+travel-buddy/package-lock.json
