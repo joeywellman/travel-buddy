@@ -1,0 +1,7 @@
+node_modules
+app/values/fb-creds.js
+app/values/google-creds.js
+.DS_Store
+lib/package-lock.json
+lib/.sass-cache
+styles/css/main.css
