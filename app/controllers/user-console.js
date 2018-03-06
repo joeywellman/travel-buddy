@@ -2,7 +2,7 @@
 angular.module("TravelBuddy").controller("UserConsoleCtrl", function ($scope, $controller, TripFactory, GMapsFactory, GMapsCreds, UserFactory) {
   const favoriteTrips = [];
   const currentUser = firebase.auth().currentUser;
-  $scope.errorMessage = "Please log in to see information about your trips!"
+  $scope.errorMessage = "Please log in to see information about your trips!";
 
   // inherits from Browse Trips Controller (direct parent) and Homepage Controller (grandparent)
   $controller("BrowseTripsCtrl", { $scope: $scope });
