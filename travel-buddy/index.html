@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Styles -->
+  <link rel='stylesheet' type='text/css' href='node_modules/bootstrap/dist/css/bootstrap.min.css'>
+  <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto" rel="stylesheet">
+  <link rel='stylesheet' type='text/css' href='styles/css/main.css'>
+  <link rel='stylesheet' type='text/css' href='node_modules/ng-tags-input/build/ng-tags-input.min.css'>
+  <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+  <title>Travel Buddy</title>
+</head>
+
+
+<body ng-app = "TravelBuddy">
+
+  <div ng-include=" '../partials/nav.html' "></div>
+  <div class = "clear-header">
+    <div ng-view></div>
+  </div>
+  <div ng-include=" '../partials/footer.html' "></div>
+  
+
+  <!-- DEPENDENCIES -->
+  <!-- AngularJS -->
+  <script type="text/javascript" src="node_modules/angular/angular.min.js"></script>
+  <script type="text/javascript" src="node_modules/angular-route/angular-route.min.js"></script>
+  <!-- Firebase Authentication -->
+  <script type="text/javascript" src='node_modules/firebase/firebase.js'></script>
+  <!-- Google Maps (including ng-map angular directive) -->
+  <script type="text/javascript" src='node_modules/ngmap/build/scripts/ng-map.min.js'></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA4SdaZmpxZG8xO3C0SpJdJTM09lxJTOkA&libraries=places"></script>
+  <!-- Tags -->
+  <script type="text/javascript" src='node_modules/ng-tags-input/build/ng-tags-input.min.js'></script>
+
+  <!-- APP -->
+  <!-- App Setup -->
+  <script type="text/javascript" src= 'app/app.js'></script>
+  <script type="text/javascript" src='app/values/fb-creds.js'></script>
+  <script type="text/javascript" src='app/values/google-creds.js'></script>
+  <!-- Factories -->
+  <script type="text/javascript" src='app/factories/trip-factory.js'></script>
+  <script type="text/javascript" src='app/factories/user-factory.js'></script>
+  <script type="text/javascript" src='app/factories/google-places-factory.js'></script>
+  <script type="text/javascript" src='app/factories/trip-builder-factory.js'></script>
+  <!-- Controllers -->
+  <script type="text/javascript" src='app/controllers/browse-trips.js'></script>
+  <script type="text/javascript" src='app/controllers/edit-trip.js'></script>
+  <script type="text/javascript" src='app/controllers/footer.js'></script>
+  <script type="text/javascript" src='app/controllers/nav.js'></script>
+  <script type="text/javascript" src='app/controllers/trip-builder.js'></script>
+  <script type="text/javascript" src='app/controllers/trip-details.js'></script>
+  <script type="text/javascript" src='app/controllers/user-console.js'></script>
+  <script type="text/javascript" src='app/controllers/init-trip.js'></script>
+  <script type="text/javascript" src='app/controllers/edit-init.js'></script>
+  <script type="text/javascript" src='app/controllers/homepage.js'></script>
+  
+</body>
+</html>

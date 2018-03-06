@@ -1,0 +1,451 @@
+//variables
+$primary-color: #a5cec9;
+$secondary-color: rgb(79, 107, 167);
+$warning-color: rgb(228, 118, 118);
+$font-color-medium: rgb(107, 107, 107);
+$font-color-dark: rgb(66, 65, 65);
+$font-color-light: rgb(240, 240, 240);
+
+//Mixins
+@mixin hover-grow-parent($time) {
+    -webkit-transition:all $time ease-out;
+    -moz-transition:all $time ease-out;
+    -ms-transition:all $time ease-out;
+    -o-transition:all $time ease-out;
+    transition:all $time ease-out;
+}
+
+@mixin hover-grow-event($scale){
+    -webkit-transform:scale($scale);
+    -moz-transform:scale($scale);
+    -ms-transform:scale($scale);
+    -o-transform:scale($scale);
+    transform:scale($scale);
+}
+
+
+// general styles
+*{
+    padding: 0.5em;
+    font-family: 'Roboto', sans-serif;
+    color: $font-color-dark;
+}
+
+h1, h2, h3, h4, h5{
+    font-family: 'Montserrat', sans-serif; 
+    color: $secondary-color;
+}
+
+.clear-header{
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+a{
+    color: $font-color-medium;
+}
+
+a:hover{
+    color: $font-color-medium;
+}
+
+
+//helper styles
+.inline{
+    display: inline;
+}
+
+.block{
+    display: block;
+}
+
+.flex-container{
+    width: 100%;
+    display: flex;
+}
+
+.center-children{
+    justify-content: center;
+    align-items: center;
+}
+
+
+
+// icon styles
+.icon{
+    opacity: 0.5; 
+    @include hover-grow-parent(0.5s);
+}
+
+.icon-xs{
+    height: 2rem;
+    width: 2rem;
+}
+.icon-sm{
+    height: 3.2rem;
+    width: 3.2rem;
+}
+.icon-med{
+    height: 3.9rem;
+    width: 3.9rem;
+}
+
+.top-right{
+    opacity: 1;
+    position: absolute;
+    top: -0.6rem;
+    right: -0.6rem;
+}
+
+.pointer{
+    cursor: pointer;
+}
+
+.icon:hover {
+    @include hover-grow-event(1.12);
+}
+
+
+
+
+
+
+// button styling
+button{
+    margin: 0.3em;
+    border-style: none !important;
+    background-color: $primary-color;
+}
+
+button:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+
+
+// nav menu
+nav{
+    height: 9vh;
+    background-color: $primary-color;
+    a{
+        color: $font-color-dark;
+        @include hover-grow-parent(0.2s);
+    }
+    a:hover{
+        @include hover-grow-event(1.1);
+    }
+    .logo{
+        width: 9.5rem;
+        height: 3rem;
+    }
+    .nav-link{
+        margin-top: 0.5rem;
+    }
+    .menu-group{
+        display: flex;
+        justify-content: flex-start !important;
+    }
+    .welcome-text{
+        font-size: 0.8rem;
+    }
+    .user-image{
+        width: 3rem;
+        height: 3rem;
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
+// footer menu
+.footer{
+    font-size: 0.8rem;
+    width: 100%;
+    background-color: $primary-color;
+    h5{
+        font-size: 0.8rem;
+    }
+    span{
+        font-size: 0.6rem;
+    }
+    h5, span{
+        color: $font-color-dark;
+        display: block;
+        margin: auto;
+    }
+}
+
+
+// HOMEPAGE
+
+.header-image{
+    width: 100%;
+    height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-image: url('../../images/header.jpg');
+    opacity: 0.7;
+    background-position: center;
+    background-size: cover;
+    p{
+        color: $font-color-light;
+        font-family: 'Montserrat', sans-serif; 
+        font-size: 2rem;
+        font-weight: bold;
+        background-color: rgba(92, 95, 99, 0.85);
+        text-align: center;
+        width: 70%;
+        margin: auto;
+        @include hover-grow-parent(0.5s);
+    }
+    p:hover{
+        @include hover-grow-event(1.12);
+    }
+}
+
+.map-header{
+    display: block;
+    width: 100%;
+}
+
+.homepage-map{
+    width: 100%;
+    height: 70vh;
+}
+
+.ng-map-info-window{
+    border-radius: 2rem;
+    background: $font-color-light;
+    padding: 0.5rem;
+    .image{
+        width: 100%;
+        height: 5rem;
+        object-fit: cover;
+        border-radius: 0.5rem;
+    }
+    .heading{
+        font-family: 'Montserrat', sans-serif;
+        color: $secondary-color;
+        font-weight: bold;
+        text-align: center;
+        margin-bottom: 0.5rem;
+        font-size: 1rem;
+    }
+    .details{
+        color: $font-color-medium;
+        font-size: 0.8rem;
+    }
+    .tags{
+        color: $primary-color;
+    }
+}
+
+.ng-map-info-window:hover{
+    box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+
+
+
+// BROWSE TRIPS
+.searchbar{
+    height: 1.5em;
+    background-color: rgb(224, 224, 224);
+    @include hover-grow-parent(0.5s);
+}
+
+.searchbar:hover{
+    @include hover-grow-event(1.12);
+}
+
+
+
+.browse-trips{
+    .trip-author, .trip-description{
+        font-size: 1rem;
+    }
+    .trip-tags{
+        color: $secondary-color;
+        font-size: 0.8rem;
+    }
+   
+}
+
+// general trip card styling
+.trip-card{
+    position: relative;
+
+    .card-img-top{
+        object-fit: cover;
+        width: 100%;
+        height: 30%;
+    }
+    .trip-name{
+        font-size: 1.1rem;
+    }
+    h4:hover{
+        color: $font-color-medium;
+    }
+    .trip-location{
+        font-size: 1rem;
+    }
+    .review-container{
+        font-size: 0.8rem;
+        color: $font-color-medium;
+        .review-text{
+            font-size: 0.7rem;
+        }
+    }
+    padding: 1rem;
+    margin: 1.5rem;
+    border-radius: 0.1rem;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+   
+    .button-group{
+        display: flex;
+        flex-wrap: wrap;
+    }
+   
+    .toggle-reviews, .next-review{
+        background-color: $secondary-color;
+    }
+
+    .view-trip{
+        background-color: $primary-color;
+    }
+    a{
+        color: $font-color-medium;
+    }
+
+    a:hover{
+        text-decoration: none;
+    }
+  
+}
+
+.trip-card:hover {
+  box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+
+
+// TRIP BUILDER
+.search-container{
+    margin: 1em;
+}
+
+.search-results-container{
+    height: 80vh;
+    overflow: scroll;
+}
+
+
+.trip-container{
+    height: 80vh;
+    overflow: scroll;
+}
+
+.save-button{
+    background-color: $secondary-color;
+}
+
+.publish-button{
+    background-color: $primary-color;
+}
+
+.form-container{
+    width: 60vw;
+
+    .host{
+        box-shadow: none !important;
+        width: 100% !important;
+        display: block;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        color: #495057;
+        background-color: #fff;
+        background-clip: padding-box;
+        border: 1px solid #ced4da;
+        border-radius: 0.25rem;
+        transition: border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+
+        .tags{
+            border: none;
+            box-shadow: none;
+        }
+    
+        .tag-item{
+            background: $primary-color;
+            color: $font-color-dark;
+            box-shadow: none;
+            border-radius: 1rem;;
+        }
+
+        .tag-item.selected{
+            background: $warning-color;
+        }
+    }
+    .onward-button{
+        $background-color: $primary-color;
+        a{
+            color: $font-color-medium;
+        }
+    }
+
+}
+
+//TRIP DETAILS
+.google-map-container { 
+    height: 80vh;
+ }
+
+
+// loading spinner
+$offset: 187;
+$duration: 1.4s;
+
+
+.spinner-container{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.spinner {
+  animation: rotator $duration linear infinite;
+}
+
+@keyframes rotator {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+
+.path {
+  stroke-dasharray: $offset;
+  stroke-dashoffset: 0;
+  transform-origin: center;
+  animation:
+    dash $duration ease-in-out infinite, 
+    colors ($duration*4) ease-in-out infinite;
+}
+
+@keyframes colors {
+	0% { stroke: #4285F4; }
+	25% { stroke: #DE3E35; }
+	50% { stroke: #F7C223; }
+	75% { stroke: #1B9A59; }
+  100% { stroke: #4285F4; }
+}
+
+@keyframes dash {
+ 0% { stroke-dashoffset: $offset; }
+ 50% {
+   stroke-dashoffset: $offset/4;
+   transform:rotate(135deg);
+ }
+ 100% {
+   stroke-dashoffset: $offset;
+   transform:rotate(450deg);
+ }
+}
+
+
