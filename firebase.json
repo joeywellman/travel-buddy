@@ -1,0 +1,8 @@
+{
+  "hosting": {
+    "public": "travel-buddy",
+    "ignore": [
+      "firebase.json"
+    ]
+  }
+}
