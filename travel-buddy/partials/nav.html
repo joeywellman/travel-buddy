@@ -1,16 +1,29 @@
 <div ng-controller="NavCtrl">
-<nav class="row navbar navbar-light bg-faded fixed-top">
-  <div class = "col-lg-8 p-1 menu-group">
-    <a class = "navbar-brand" href="#!/home"><img class = "logo" ng-src = "../images/logo.png"></a>
-    <a class="nav-item nav-link" href="#!/browse">Browse Trips</a>
-    <a class="nav-item nav-link" href="#!/buildtrip">Build Trips</a>
-    <a class="nav-item nav-link" href="#!/mytrips">My Trips</a>
-  </div>
-  <div class = "col-lg-4">
-    <span class = "welcome-text">Welcome, {{user.displayName}}</span>
-    <img class = "user-image" ng-src = "{{user.photoURL}}">
-    <button ng-click = "switchUserState()" type = "button" class = "btn btn-secondary">{{buttonText}}</button>
-  </div>
-</nav>
-
+  <nav class="navbar navbar-expand-md navbar-light bg-light">
+    <a class="navbar-brand" href="#!/home">
+      <img class="logo" ng-src="../images/logo.png">
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup"
+      aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+      <ul class="navbar-nav">
+        <li class="nav-item active">
+          <a class="nav-link" href="#!/browse">Browse Trips</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#!/buildtrip">Build Trip</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#!/mytrips">My Trips</a>
+        </li>
+        <div class="nav-item">
+          <span class="welcome-text">Welcome, {{user.displayName}}</span>
+          <img class="user-image" ng-src="{{user.photoURL}}">
+          <button ng-click="switchUserState()" type="button" class="btn btn-secondary">{{buttonText}}</button>
+        </div>
+      </ul>
+    </div>
+  </nav>
 </div>
