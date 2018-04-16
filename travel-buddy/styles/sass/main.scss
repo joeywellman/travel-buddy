@@ -28,12 +28,13 @@ $font-color-light: rgb(240, 240, 240);
 *{
     font-family: 'Roboto', sans-serif;
     color: $font-color-dark;
+    // Desktops and laptops
+    @media only screen  and (min-width : 1224px) {
+    padding: 0.5em;
+    }
 }
 
-// Desktops and laptops
-@media only screen  and (min-width : 1224px) {
-    padding: 0.5em;
-}
+
 
 h1, h2, h3, h4, h5{
     font-family: 'Montserrat', sans-serif; 
