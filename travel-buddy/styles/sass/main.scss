@@ -28,10 +28,7 @@ $font-color-light: rgb(240, 240, 240);
 *{
     font-family: 'Roboto', sans-serif;
     color: $font-color-dark;
-    // Desktops and laptops
-    @media only screen  and (min-width : 1224px) {
-    padding: 0.5em;
-    }
+    
 }
 
 
@@ -42,6 +39,9 @@ h1, h2, h3, h4, h5{
 }
 
 .clear-header{
+    @media only screen  and (min-width : 1000px) {
+    padding: 0.5em;
+    }
     margin-top: 1rem;
     margin-bottom: 1rem;
 }
@@ -130,35 +130,27 @@ button:hover{
 
 // nav menu
 nav{
+    position: relative;
     height: 9vh;
     background-color: $primary-color;
-    a{
-        color: $font-color-dark;
-        @include hover-grow-parent(0.2s);
+    li{
+        padding-right: 0.2rem;
+        a{
+            color: $font-color-dark;
+            @include hover-grow-parent(0.2s);
+        }
+
     }
-    a:hover{
+   
+    @media only screen  and (min-width : 1224px) {
+     a:hover{
         @include hover-grow-event(1.1);
     }
+    }
     .logo{
-        width: 9.5rem;
-        height: 3rem;
+        height: 2rem;
     }
-    .nav-link{
-        margin-top: 0.5rem;
-    }
-    .menu-group{
-        display: flex;
-        justify-content: flex-start !important;
-    }
-    .welcome-text{
-        font-size: 0.8rem;
-    }
-    .user-image{
-        width: 3rem;
-        height: 3rem;
-        border-radius: 50%;
-        object-fit: cover;
-    }
+
 }
 
 // footer menu

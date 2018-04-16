@@ -1,5 +1,5 @@
 <div ng-controller="NavCtrl">
-  <nav class="navbar navbar-expand-md navbar-light bg-light">
+  <nav class="navbar navbar-expand-md navbar-light">
     <a class="navbar-brand" href="#!/home">
       <img class="logo" ng-src="../images/logo.png">
     </a>
@@ -19,9 +19,7 @@
           <a class="nav-link" href="#!/mytrips">My Trips</a>
         </li>
         <div class="nav-item">
-          <span class="welcome-text">Welcome, {{user.displayName}}</span>
-          <img class="user-image" ng-src="{{user.photoURL}}">
-          <button ng-click="switchUserState()" type="button" class="btn btn-secondary">{{buttonText}}</button>
+          <button ng-click="switchUserState()" type="button" class="btn btn-secondary nav-link">{{buttonText}}</button>
         </div>
       </ul>
     </div>
