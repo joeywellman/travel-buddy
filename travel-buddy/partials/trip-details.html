@@ -1,6 +1,6 @@
 <div class="container">
   <div class = "row">
-    <h3 div class = "col-sm-8">{{trip.name}}</h3>
+    <h3 div class = "col-lg-8">{{trip.name}}</h3>
     <img class="icon icon-med favorite-icon pointer" ng-show="!trip.favorite && !trip.myTrip" ng-click="addFavorite(trip.id)" ng-src="images/icons/star.png"
       alt="Add trip to favorites">
     <img class="icon icon-med favorite-icon pointer" ng-show="trip.favorite && !trip.myTrip" ng-click = "deleteFavorite(trip.faveId)" ng-src="images/icons/star-filled.png" alt="Favorited trip">
@@ -11,7 +11,7 @@
   <h4>Curated by {{trip.userName}}</h4>
   <p class="trip-description">{{trip.description}}</p>
   <div class = "row">
-    <div class = "col-sm-6 p-2">
+    <div class = "col-lg-6 p-2">
         <div ng-show="tripLoading" class="spinner-container">
           <svg mt-3 ng-hide="tripLoaded" class="spinner" width="80px" height="80px" viewBox="0 0 66 66" xmlns="http://www.w3.org/2000/svg">
             <circle class="path" fill="none" stroke-width="6" stroke-linecap="round" cx="33" cy="33" r="30"></circle>
@@ -29,7 +29,7 @@
         </div>
       </div>
     </div>
-    <div class = "col-sm-6 p-2">
+    <div class = "col-lg-6 p-2">
       <ng-map class="google-map-container" center="{{mapCenter}}" zoom="13" pan-control="true" zoom-control="true" scale-control="true">
         <marker ng-repeat = "location in tripLocations track by $index" position={{location.formatted_address}} title={{location.name}} id={{location.id}} on-click = "showDetails(location)"></marker>
         <info-window id="details">

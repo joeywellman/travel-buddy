@@ -1,12 +1,12 @@
 <div ng-controller="NavCtrl">
 <nav class="row navbar navbar-light bg-faded fixed-top">
-  <div class = "col-sm-8 p-1 menu-group">
+  <div class = "col-lg-8 p-1 menu-group">
     <a class = "navbar-brand" href="#!/home"><img class = "logo" ng-src = "../images/logo.png"></a>
     <a class="nav-item nav-link" href="#!/browse">Browse Trips</a>
     <a class="nav-item nav-link" href="#!/buildtrip">Build Trips</a>
     <a class="nav-item nav-link" href="#!/mytrips">My Trips</a>
   </div>
-  <div class = "col-sm-4">
+  <div class = "col-lg-4">
     <span class = "welcome-text">Welcome, {{user.displayName}}</span>
     <img class = "user-image" ng-src = "{{user.photoURL}}">
     <button ng-click = "switchUserState()" type = "button" class = "btn btn-secondary">{{buttonText}}</button>

@@ -3,7 +3,7 @@
   <div class="container">
     <div class="row">
       <img class="icon icon-sm" ng-src="images/icons/search.png" alt="search">
-      <input class="col-sm-8 form-control" ng-model="searchTerm" type="text" placeholder="Search by a destination or keyword">
+      <input class="col-lg-8 form-control" ng-model="searchTerm" type="text" placeholder="Search by a destination or keyword">
     </div>
     <div class="row">
         <div class = "spinner-container">
@@ -13,7 +13,7 @@
         </div>
 
         
-        <div class="col-sm-3 trip-card browse-trips card" ng-repeat ="trip in trips | filter: searchTerm" ng-show = "!trip.private">
+        <div class="col-lg-3 trip-card browse-trips card" ng-repeat ="trip in trips | filter: searchTerm" ng-show = "!trip.private">
           <img class="card-img-top" ng-src="{{trip.coverPhoto}}" alt="Picture of a place">
           <div class = "card-body">
             <a class ng-href="#!/view/{{trip.id}}"><h4 class = "name">{{trip.name}}</h4></a>
