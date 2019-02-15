@@ -1,5 +1,4 @@
 # Travel Buddy
-## [Check out the deployed app!](https://nss-capstone-75d59.firebaseapp.com/#!/home)
 
 ## This is an app for people who love to travel. 
 It was inspired by my dad, who loves to research and plan trips almost more than he loves to take them. He's collected a lifetime's worth of arcane travel knowledge in a series of vertigo-inducing spreadsheets. When he tries to share his wealth of travel ideas with other people, they take one look at the five-thousand line Excel file and have to lay down. I built him an app to plan and share trips in a more accessible format.
